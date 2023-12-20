@@ -27,4 +27,15 @@ class ChefBuilderTests {
             .isInstanceOf(EmptyStringException::class.java)
             .hasMessage("Property fullName is empty.")
     }
+
+    @Test
+    fun `should throw a EmptyStringException when username is empty`() {
+        Assertions.assertThatThrownBy {
+            ChefBuilder.createBuilder()
+                .withUsername("")
+                .build()
+        }
+            .isInstanceOf(EmptyStringException::class.java)
+            .hasMessage("Property username is empty.")
+    }
 }
