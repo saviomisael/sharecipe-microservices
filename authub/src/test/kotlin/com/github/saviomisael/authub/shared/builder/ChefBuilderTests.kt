@@ -49,4 +49,21 @@ class ChefBuilderTests {
             .isInstanceOf(EmptyStringException::class.java)
             .hasMessage("Property password is empty.")
     }
+
+    @Test
+    fun `should create a Chef instance without throwing exceptions`() {
+        Assertions.assertThatCode {
+            val chef = ChefBuilder.createBuilder()
+                .withEmail("test@gmail.com")
+                .withPassword("12345678")
+                .withUsername("test")
+                .withFullName("Test")
+                .build()
+
+            Assertions.assertThat(chef.email).isEqualTo("test@gmail.com")
+            Assertions.assertThat(chef.password).isEqualTo("12345678")
+            Assertions.assertThat(chef.username).isEqualTo("test")
+            Assertions.assertThat(chef.fullName).isEqualTo("Test")
+        }.doesNotThrowAnyException()
+    }
 }
