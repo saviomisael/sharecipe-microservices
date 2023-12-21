@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ChefDtoRepository : JpaRepository<ChefDto, String> {
     fun findByUsername(username: String): ChefDto?
+    fun findByEmail(email: String): ChefDto?
 }
