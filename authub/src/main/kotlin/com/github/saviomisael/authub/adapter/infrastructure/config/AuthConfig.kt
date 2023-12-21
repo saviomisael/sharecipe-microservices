@@ -21,7 +21,8 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager = configuration.authenticationManager
+    fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager =
+        configuration.authenticationManager
 
     @Bean
     fun userDetailsService(): UserDetailsService = UserDetailsServiceAdapter(repository)

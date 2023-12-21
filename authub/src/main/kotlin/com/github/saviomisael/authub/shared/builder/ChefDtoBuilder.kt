@@ -1,7 +1,6 @@
 package com.github.saviomisael.authub.shared.builder
 
 import com.github.saviomisael.authub.adapter.infrastructure.dto.ChefDto
-import com.github.saviomisael.authub.core.domain.entity.Chef
 import com.github.saviomisael.authub.shared.exceptions.EmptyStringException
 
 class ChefDtoBuilder {
@@ -17,28 +16,28 @@ class ChefDtoBuilder {
     }
 
     fun withFullName(fullNameParam: String): ChefDtoBuilder {
-        if(fullNameParam.isEmpty()) throw EmptyStringException("fullName")
+        if (fullNameParam.isEmpty()) throw EmptyStringException("fullName")
 
         this.fullName = fullNameParam
         return this
     }
 
     fun withUsername(usernameParam: String): ChefDtoBuilder {
-        if(usernameParam.isEmpty()) throw EmptyStringException("username")
+        if (usernameParam.isEmpty()) throw EmptyStringException("username")
 
         this.username = usernameParam
         return this
     }
 
     fun withPassword(passwordParam: String): ChefDtoBuilder {
-        if(passwordParam.isEmpty()) throw EmptyStringException("password")
+        if (passwordParam.isEmpty()) throw EmptyStringException("password")
 
         this.password = passwordParam
         return this
     }
 
     fun withEmail(emailParam: String): ChefDtoBuilder {
-        if(emailParam.isEmpty()) throw EmptyStringException("email")
+        if (emailParam.isEmpty()) throw EmptyStringException("email")
 
         this.email = emailParam
         return this

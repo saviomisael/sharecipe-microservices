@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class AuthubApplication
 
 fun main(args: Array<String>) {
-	runApplication<AuthubApplication>(*args)
+    runApplication<AuthubApplication>(*args)
 }
