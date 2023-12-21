@@ -17,4 +17,6 @@ class ChefRepository(@Autowired val chefDtoRepository: ChefDtoRepository) : IChe
     override fun chefUsernameAlreadyExists(username: String): Boolean {
         return chefDtoRepository.findByUsername(username) != null
     }
+
+    override fun chefEmailAlreadyUsed(email: String) = chefDtoRepository.findByEmail(email) != null
 }
