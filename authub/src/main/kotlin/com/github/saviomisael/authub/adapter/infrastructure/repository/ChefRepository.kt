@@ -13,4 +13,8 @@ class ChefRepository(@Autowired val chefDtoRepository: ChefDtoRepository) : IChe
     override fun saveChefCredentials(chef: Chef): Chef {
         return chefDtoRepository.save(chef.toChefDto()).toChef()
     }
+
+    override fun chefUsernameAlreadyExists(username: String): Boolean {
+        return chefDtoRepository.findByUsername(username) != null
+    }
 }
