@@ -19,7 +19,7 @@ class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChe
     @PostMapping("/api/v1/chefs")
     fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
         try {
-            val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef());
+            val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())
 
             return created(ResponseDto(emptyList<String>(), chefSaved))
         } catch (ex: UsernameAlreadyExistsException) {
