@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class ChefRepository(@Autowired val chefDtoRepository: ChefDtoRepository) : IChefRepository {
+class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository) : IChefRepository {
     override fun saveChefCredentials(chef: Chef): Chef {
         return chefDtoRepository.save(chef.toChefDto()).toChef()
     }
