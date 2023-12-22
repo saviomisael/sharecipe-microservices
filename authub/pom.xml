@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.saviomisael</groupId>
     <artifactId>authub</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>authub</name>
     <description>Microservice for authentication with JWT</description>
     <properties>
@@ -91,6 +91,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.18.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.15.0</version>
@@ -102,6 +108,19 @@
             <artifactId>cucumber-junit-platform-engine</artifactId>
             <version>7.15.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>7.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.7.6</version>
         </dependency>
     </dependencies>
 
