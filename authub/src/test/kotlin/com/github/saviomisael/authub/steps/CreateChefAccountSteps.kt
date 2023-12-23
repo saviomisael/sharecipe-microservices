@@ -26,6 +26,7 @@ class CreateChefAccountSteps @Autowired constructor(
     private val objectMapper: ObjectMapper
 ) {
     private var fullName = ""
+    private var username = ""
     private lateinit var performRequest: ResultActionsDsl
 
     @Given("A person that provide your full name in a invalid way")
@@ -33,11 +34,16 @@ class CreateChefAccountSteps @Autowired constructor(
         fullName = ""
     }
 
+    @Given("A person that provide an invalid username")
+    fun aPersonThatProvideAnInvalidUsername() {
+        username = ""
+    }
+
     @When("This person try to create an account")
     fun this_person_try_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
             contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(CreateChefDto(fullName, "test", "password", "email@email.com"))
+            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, "password", "email@email.com"))
         }
     }
 

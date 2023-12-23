@@ -5,3 +5,8 @@ Feature: Create chef account
     Given A person that provide your full name in a invalid way
     When This person try to create an account
     Then The person should get a bad request response
+
+    Scenario: Username provided is invalid
+      Given A person that provide an invalid username
+      When This person try to create an account
+      Then The person should get a bad request response
