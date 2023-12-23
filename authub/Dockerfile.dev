@@ -1,0 +1,13 @@
+FROM amazoncorretto:21
+
+WORKDIR authub
+
+COPY . .
+
+RUN ./mvnw test
+
+RUN ./mvnw clean package -DskipTests
+
+EXPOSE 8001
+
+CMD ["java", "-Dspring.profiles.active=dev", "-jar", "./target/authub-0.0.1.jar"]
