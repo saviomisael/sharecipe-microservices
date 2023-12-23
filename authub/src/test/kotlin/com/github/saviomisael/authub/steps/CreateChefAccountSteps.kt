@@ -35,17 +35,17 @@ class CreateChefAccountSteps @Autowired constructor(
     }
 
     @Given("A person that provide an invalid username")
-    fun aPersonThatProvideAnInvalidUsername() {
+    fun a_person_that_provide_an_invalid_username() {
         username = ""
     }
 
     @Given("A person that provide a password less than 8 characters to create an account")
-    fun aPersonThatProvideAPasswordLessThanCharactersToCreateAnAccount() {
+    fun a_person_that_provide_a_password_less_than_8_characters_to_create_an_account() {
         password = "123"
     }
 
     @Given("A person that provide a password almost valid but does not have a uppercase letter")
-    fun aPersonThatProvideAPasswordAlmostValidButDoesNotHaveAUppercaseLetter() {
+    fun a_person_that_provide_a_password_almost_valid_but_does_not_have_a_uppercase_letter() {
         password = "test123@"
     }
 
