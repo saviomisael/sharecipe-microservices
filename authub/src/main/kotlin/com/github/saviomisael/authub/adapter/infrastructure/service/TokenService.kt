@@ -8,14 +8,15 @@ import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.Instant
-import java.util.Date
+import java.util.*
 
 @Service
 class TokenService(@Value("\${jwt.secret}") private val secret: String) {
     private val expirationTime: Long = 1000 * 60 * 30
     private val algorithm = SignatureAlgorithm.HS256
 
-    fun decodeToken(token: String) = TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).body.subject)
+    fun decodeToken(token: String) =
+        TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).body.subject)
 
     fun generateToken(userName: String): String {
         val claims: MutableMap<String, Any> = HashMap()

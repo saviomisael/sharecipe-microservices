@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) : BaseController() {
+class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
+    BaseController() {
     @PostMapping("/api/v1/chefs")
     fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
         try {

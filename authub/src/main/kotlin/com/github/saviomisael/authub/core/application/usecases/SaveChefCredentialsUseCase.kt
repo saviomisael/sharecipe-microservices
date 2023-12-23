@@ -25,13 +25,18 @@ class SaveChefCredentialsUseCase(
 
         val emailAlreadyUsed = chefRepository.chefEmailAlreadyUsed(chef.email)
 
-        if(emailAlreadyUsed) throw EmailAlreadyUsedException(chef.email)
+        if (emailAlreadyUsed) throw EmailAlreadyUsedException(chef.email)
 
-        var chefWithPasswordHashed = ChefBuilder.createBuilder().withFullName(chef.fullName).withUsername(chef.username).withEmail(chef.email)
-            .withPassword(passwordEncrypterService.encryptPassword(chef.password)).build()
+        var chefWithPasswordHashed =
+            ChefBuilder.createBuilder().withFullName(chef.fullName).withUsername(chef.username).withEmail(chef.email)
+                .withPassword(passwordEncrypterService.encryptPassword(chef.password)).build()
 
         chefWithPasswordHashed = chefRepository.saveChefCredentials(chefWithPasswordHashed)
 
-        return TokenResultDto(tokenService.generateToken(chefWithPasswordHashed.username), chefWithPasswordHashed.username, chefWithPasswordHashed.fullName)
+        return TokenResultDto(
+            tokenService.generateToken(chefWithPasswordHashed.username),
+            chefWithPasswordHashed.username,
+            chefWithPasswordHashed.fullName
+        )
     }
 }
