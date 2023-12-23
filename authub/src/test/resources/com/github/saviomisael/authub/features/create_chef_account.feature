@@ -10,3 +10,8 @@ Feature: Create chef account
     Given A person that provide an invalid username
     When This person try to create an account
     Then The person should get a bad request response
+
+  Scenario: Password less than 8 characters
+    Given A person that provide a password less than 8 characters to create an account
+    When This person try to create an account
+    Then The person should get a bad request response

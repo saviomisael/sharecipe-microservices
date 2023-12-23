@@ -26,6 +26,7 @@ class CreateChefAccountSteps @Autowired constructor(
 ) {
     private var fullName = ""
     private var username = ""
+    private var password = ""
     private lateinit var performRequest: ResultActionsDsl
 
     @Given("A person that provide your full name in a invalid way")
@@ -38,11 +39,16 @@ class CreateChefAccountSteps @Autowired constructor(
         username = ""
     }
 
+    @Given("A person that provide a password less than 8 characters to create an account")
+    fun aPersonThatProvideAPasswordLessThanCharactersToCreateAnAccount() {
+        password = "123"
+    }
+
     @When("This person try to create an account")
     fun this_person_try_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
             contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, "password", "email@email.com"))
+            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, password, "email@email.com"))
         }
     }
 
