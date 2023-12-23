@@ -15,3 +15,8 @@ Feature: Create chef account
     Given A person that provide a password less than 8 characters to create an account
     When This person try to create an account
     Then The person should get a bad request response
+
+  Scenario: Password without uppercase letter
+    Given A person that provide a password almost valid but does not have a uppercase letter
+    When This person try to create an account
+    Then The person should get a bad request response

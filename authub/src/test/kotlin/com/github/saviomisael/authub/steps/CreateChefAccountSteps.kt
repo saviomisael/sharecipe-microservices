@@ -44,6 +44,11 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "123"
     }
 
+    @Given("A person that provide a password almost valid but does not have a uppercase letter")
+    fun aPersonThatProvideAPasswordAlmostValidButDoesNotHaveAUppercaseLetter() {
+        password = "test123@"
+    }
+
     @When("This person try to create an account")
     fun this_person_try_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
