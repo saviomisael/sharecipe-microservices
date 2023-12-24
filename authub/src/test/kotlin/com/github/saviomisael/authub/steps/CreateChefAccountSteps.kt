@@ -1,7 +1,10 @@
 package com.github.saviomisael.authub.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
+import io.cucumber.java.BeforeStep
+import io.cucumber.java.Scenario
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -22,13 +25,24 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc
 class CreateChefAccountSteps @Autowired constructor(
     private val mockMvc: MockMvc,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val chefDtoRepository: ChefDtoRepository
 ) {
     private var fullName = ""
     private var username = ""
     private var password = ""
     private var email = ""
     private lateinit var performRequest: ResultActionsDsl
+
+    @BeforeStep
+    fun beforeStep(scenario: Scenario) {
+        if(scenario.name.equals("This person tries to create an account")) {
+            mockMvc.post("/api/v1/chefs") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(CreateChefDto("Salamander", "salamander", "salamanDer@123", "salamander@mail.com"))
+            }
+        }
+    }
 
     @Given("A person that provides your full name in a invalid way")
     fun a_person_that_provides_your_full_name_in_a_invalid_way() {
@@ -78,6 +92,14 @@ class CreateChefAccountSteps @Autowired constructor(
         email = ""
     }
 
+    @Given("A person provides an username that already is in use")
+    fun a_person_provides_an_username_that_already_is_in_use() {
+        username = "salamander"
+        fullName = "Salamander"
+        password = "salamanDer@123"
+        email = "salamander@mail.com"
+    }
+
     @When("This person tries to create an account")
     fun this_person_tries_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
@@ -92,6 +114,19 @@ class CreateChefAccountSteps @Autowired constructor(
             .andExpect {
                 status {
                     isBadRequest()
+                }
+                content {
+                    contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+                }
+            }
+    }
+
+    @Then("The person should get an unprocessable entity response")
+    fun the_person_should_get_an_unprocessable_entity_response() {
+        performRequest.andDo { print() }
+            .andExpect {
+                status {
+                    isUnprocessableEntity()
                 }
                 content {
                     contentTypeCompatibleWith(MediaType.APPLICATION_JSON)

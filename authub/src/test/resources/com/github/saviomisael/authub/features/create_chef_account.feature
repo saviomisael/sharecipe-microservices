@@ -45,3 +45,8 @@ Feature: Create chef account
     Given A person provides all the information but the email is invalid
     When This person tries to create an account
     Then The person should get a bad request response
+
+  Scenario: Username already in use
+    Given A person provides an username that already is in use
+    When This person tries to create an account
+    Then The person should get an unprocessable entity response
