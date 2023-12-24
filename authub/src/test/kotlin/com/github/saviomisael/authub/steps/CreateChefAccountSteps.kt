@@ -29,28 +29,28 @@ class CreateChefAccountSteps @Autowired constructor(
     private var password = ""
     private lateinit var performRequest: ResultActionsDsl
 
-    @Given("A person that provide your full name in a invalid way")
-    fun a_person_that_provide_your_full_name_in_a_invalid_way() {
+    @Given("A person that provides your full name in a invalid way")
+    fun a_person_that_provides_your_full_name_in_a_invalid_way() {
         fullName = ""
     }
 
-    @Given("A person that provide an invalid username")
-    fun a_person_that_provide_an_invalid_username() {
+    @Given("A person that provides an invalid username")
+    fun a_person_that_provides_an_invalid_username() {
         username = ""
     }
 
-    @Given("A person that provide a password less than 8 characters to create an account")
-    fun a_person_that_provide_a_password_less_than_8_characters_to_create_an_account() {
+    @Given("A person that provides a password less than 8 characters to create an account")
+    fun a_person_that_provides_a_password_less_than_8_characters_to_create_an_account() {
         password = "123"
     }
 
-    @Given("A person that provide a password almost valid but does not have a uppercase letter")
-    fun a_person_that_provide_a_password_almost_valid_but_does_not_have_a_uppercase_letter() {
+    @Given("A person that provides a password almost valid but does not have a uppercase letter")
+    fun a_person_that_provides_a_password_almost_valid_but_does_not_have_a_uppercase_letter() {
         password = "test123@"
     }
 
-    @Given("A person that provide a password almost valid but does not have a lowercase letter")
-    fun a_person_that_provide_a_password_almost_valid_but_does_not_have_a_lowercase_letter() {
+    @Given("A person that provides a password almost valid but does not have a lowercase letter")
+    fun a_person_that_provides_a_password_almost_valid_but_does_not_have_a_lowercase_letter() {
         password = "TEST123@"
     }
 
@@ -59,8 +59,8 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "test123".repeat("test123".length * 37)
     }
 
-    @When("This person try to create an account")
-    fun this_person_try_to_create_an_account() {
+    @When("This person tries to create an account")
+    fun this_person_tries_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, password, "email@email.com"))
