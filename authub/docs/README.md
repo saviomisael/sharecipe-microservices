@@ -9,3 +9,6 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 ``cd ../``
 
 ``docker compose -f infra/docker-compose.dev.yml up -d && cd authub && ./mvnw test && cd ../infra/ && docker compose down``
+
+# Issues running integration tests
+[Flaky Test](https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/)
