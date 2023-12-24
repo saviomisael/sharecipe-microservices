@@ -25,3 +25,8 @@ Feature: Create chef account
     Given A person that provide a password almost valid but does not have a lowercase letter
     When This person try to create an account
     Then The person should get a bad request response
+
+  Scenario: Password provided has more than 255 characters
+    Given A person provides a password with more than 255 characters
+    When This person try to create an account
+    Then The person should get a bad request response

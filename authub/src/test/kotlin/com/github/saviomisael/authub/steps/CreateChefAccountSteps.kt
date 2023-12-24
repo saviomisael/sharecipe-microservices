@@ -54,6 +54,11 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "TEST123@"
     }
 
+    @Given("A person provides a password with more than 255 characters")
+    fun a_person_provides_a_password_with_more_than_255_characters() {
+        password = "test123".repeat("test123".length * 37)
+    }
+
     @When("This person try to create an account")
     fun this_person_try_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
