@@ -100,6 +100,14 @@ class CreateChefAccountSteps @Autowired constructor(
         email = "salamander@mail.com"
     }
 
+    @Given("A person provides an email that already is in use")
+    fun a_person_provides_an_email_that_already_is_in_use() {
+        username = "salamander1"
+        fullName = "Salamander"
+        password = "salamanDer@123"
+        email = "salamander@mail.com"
+    }
+
     @When("This person tries to create an account")
     fun this_person_tries_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {

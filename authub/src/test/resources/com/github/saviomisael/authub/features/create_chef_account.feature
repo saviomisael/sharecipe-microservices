@@ -50,3 +50,8 @@ Feature: Create chef account
     Given A person provides an username that already is in use
     When This person tries to create an account
     Then The person should get an unprocessable entity response
+
+  Scenario: Email already used
+    Given A person provides an email that already is in use
+    When This person tries to create an account
+    Then The person should get an unprocessable entity response
