@@ -35,3 +35,13 @@ Feature: Create chef account
     Given A person provides a password without numbers
     When This person tries to create an account
     Then The person should get a bad request response
+
+  Scenario: Password provided does not have at least one symbol
+    Given A person provides a password without symbols
+    When This person tries to create an account
+    Then The person should get a bad request response
+
+  Scenario: Email is invalid
+    Given A person provides all the information but the email is invalid
+    When This person tries to create an account
+    Then The person should get a bad request response

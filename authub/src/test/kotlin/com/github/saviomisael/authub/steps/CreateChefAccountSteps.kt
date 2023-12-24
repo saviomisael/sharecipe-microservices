@@ -27,6 +27,7 @@ class CreateChefAccountSteps @Autowired constructor(
     private var fullName = ""
     private var username = ""
     private var password = ""
+    private var email = ""
     private lateinit var performRequest: ResultActionsDsl
 
     @Given("A person that provides your full name in a invalid way")
@@ -64,11 +65,24 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "test_test@"
     }
 
+    @Given("A person provides a password without symbols")
+    fun a_person_provides_a_password_without_symbols() {
+        password = "test123test"
+    }
+
+    @Given("A person provides all the information but the email is invalid")
+    fun a_person_provides_all_the_information_but_the_email_is_invalid() {
+        fullName = "Test"
+        username = "test"
+        password = "Test123@"
+        email = ""
+    }
+
     @When("This person tries to create an account")
     fun this_person_tries_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
             contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, password, "email@email.com"))
+            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, password, email))
         }
     }
 
