@@ -59,6 +59,11 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "test123".repeat("test123".length * 37)
     }
 
+    @Given("A person provides a password without numbers")
+    fun a_person_provides_a_password_without_numbers() {
+        password = "test_test@"
+    }
+
     @When("This person tries to create an account")
     fun this_person_tries_to_create_an_account() {
         performRequest = mockMvc.post("/api/v1/chefs") {
