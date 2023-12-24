@@ -9,9 +9,17 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
   application:
     name: authub
 server:
   port: 8001
 jwt:
   secret: d5efbc8f138194c595b26ea6b84a0afde49dd51991ff4181ea462da8d0fbb9704af535f6f3d01b691c6b1b0c8e610b2bebe6250aeaf84679764bda21719f5912
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
