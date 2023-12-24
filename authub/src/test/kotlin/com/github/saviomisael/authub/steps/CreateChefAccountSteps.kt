@@ -1,7 +1,6 @@
 package com.github.saviomisael.authub.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import io.cucumber.java.BeforeStep
 import io.cucumber.java.Scenario
@@ -25,8 +24,7 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc
 class CreateChefAccountSteps @Autowired constructor(
     private val mockMvc: MockMvc,
-    private val objectMapper: ObjectMapper,
-    private val chefDtoRepository: ChefDtoRepository
+    private val objectMapper: ObjectMapper
 ) {
     private var fullName = ""
     private var username = ""
