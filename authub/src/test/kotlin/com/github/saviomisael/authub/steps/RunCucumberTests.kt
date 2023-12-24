@@ -1,4 +1,4 @@
-package com.github.saviomisael.authub
+package com.github.saviomisael.authub.steps
 
 import io.cucumber.junit.platform.engine.Constants
 import org.junit.platform.suite.api.ConfigurationParameter

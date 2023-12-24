@@ -1,5 +1,6 @@
-package com.github.saviomisael.authub.shared.builder
+package com.github.saviomisael.authub.unit.shared.builder
 
+import com.github.saviomisael.authub.shared.builder.ChefBuilder
 import com.github.saviomisael.authub.shared.exceptions.EmptyStringException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
