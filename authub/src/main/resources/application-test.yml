@@ -1,7 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/authubdb
+    url: jdbc:mysql://localhost:3306/authubdb?createDatabaseIfNotExist=true
     username: root
     password: sharecipe-dev
+  jpa:
+    hibernate:
+      ddl-auto: update
 server:
   port: 8888
