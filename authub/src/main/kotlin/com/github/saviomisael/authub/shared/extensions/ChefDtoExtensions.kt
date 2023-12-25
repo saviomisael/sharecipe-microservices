@@ -8,7 +8,7 @@ fun ChefDto.toChef(): Chef {
     return ChefBuilder.createBuilder()
         .withEmail(this.email)
         .withPassword(this.password)
-        .withUsername(this.password)
+        .withUsername(this.username)
         .withFullName(this.fullName)
         .build()
 }

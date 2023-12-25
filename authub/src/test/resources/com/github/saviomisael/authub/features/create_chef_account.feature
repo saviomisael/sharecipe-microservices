@@ -55,3 +55,8 @@ Feature: Create chef account
     Given A person provides an email that already is in use
     When This person tries to create an account
     Then The person should get an unprocessable entity response
+
+  Scenario: Successful account creation
+    Given A person provides all information to create account with all fields valid
+    When This person tries to create an account
+    Then The person should get a created response

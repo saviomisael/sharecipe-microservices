@@ -2,6 +2,8 @@ package com.github.saviomisael.authub.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
+import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
+import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import io.cucumber.java.BeforeStep
 import io.cucumber.java.Scenario
 import io.cucumber.java.en.Given
@@ -31,16 +33,6 @@ class CreateChefAccountSteps @Autowired constructor(
     private var password = ""
     private var email = ""
     private lateinit var performRequest: ResultActionsDsl
-
-    @BeforeStep
-    fun beforeStep(scenario: Scenario) {
-        if(scenario.name.equals("This person tries to create an account")) {
-            mockMvc.post("/api/v1/chefs") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(CreateChefDto("Salamander", "salamander", "salamanDer@123", "salamander@mail.com"))
-            }
-        }
-    }
 
     @Given("A person that provides your full name in a invalid way")
     fun a_person_that_provides_your_full_name_in_a_invalid_way() {
@@ -96,6 +88,18 @@ class CreateChefAccountSteps @Autowired constructor(
         fullName = "Salamander"
         password = "salamanDer@123"
         email = "salamander@mail.com"
+
+        mockMvc.post("/api/v1/chefs") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(
+                CreateChefDto(
+                    username,
+                    fullName,
+                    password,
+                    email
+                )
+            )
+        }
     }
 
     @Given("A person provides an email that already is in use")
@@ -104,6 +108,14 @@ class CreateChefAccountSteps @Autowired constructor(
         fullName = "Salamander"
         password = "salamanDer@123"
         email = "salamander@mail.com"
+    }
+
+    @Given("A person provides all information to create account with all fields valid")
+    fun a_person_provides_all_information_to_create_account_with_all_fields_valid() {
+        username = "thesalamander"
+        fullName = "The Salamander"
+        password = "salamanDer@123"
+        email = "thesalamander@mail.com"
     }
 
     @When("This person tries to create an account")
@@ -136,6 +148,28 @@ class CreateChefAccountSteps @Autowired constructor(
                 }
                 content {
                     contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+                }
+            }
+    }
+
+    @Then("The person should get a created response")
+    fun the_person_should_get_a_created_response() {
+        performRequest.andDo { print() }
+            .andExpect {
+                status {
+                    isCreated()
+                }
+                content {
+                    contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+                    json("""
+                        {
+                        "errors":[],
+                        "data":{
+                        "username":"$username",
+                        "fullName":"The Salamander"
+                        }
+                        }
+                    """.trimIndent(), false)
                 }
             }
     }
