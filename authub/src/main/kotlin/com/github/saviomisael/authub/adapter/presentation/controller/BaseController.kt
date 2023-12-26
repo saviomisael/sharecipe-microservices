@@ -10,4 +10,7 @@ abstract class BaseController {
     fun <T> unprocessableEntity(body: T): ResponseEntity<T> {
         return ResponseEntity.status(422).body(body)
     }
+
+    fun <T> unauthorized(body: T): ResponseEntity<T> = ResponseEntity.status(401).body(body)
+    fun <T> ok(body: T): ResponseEntity<T> = ResponseEntity.status(200).body(body)
 }
