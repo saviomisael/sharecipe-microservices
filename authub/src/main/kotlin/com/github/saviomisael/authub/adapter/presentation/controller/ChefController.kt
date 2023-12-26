@@ -2,6 +2,7 @@ package com.github.saviomisael.authub.adapter.presentation.controller
 
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
+import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import com.github.saviomisael.authub.core.domain.usecases.ISaveChefCredentialsUseCase
 import com.github.saviomisael.authub.shared.exceptions.EmailAlreadyUsedException
@@ -35,7 +36,7 @@ class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChe
             )
         ]
     )
-    @PostMapping("/api/v1/chefs")
+    @PostMapping(ApiRoutes.ChefRoutes.createChefAccount)
     fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
         try {
             val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())
