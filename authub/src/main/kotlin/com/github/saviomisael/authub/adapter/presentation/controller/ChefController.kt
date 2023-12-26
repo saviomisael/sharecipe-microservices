@@ -7,6 +7,11 @@ import com.github.saviomisael.authub.core.domain.usecases.ISaveChefCredentialsUs
 import com.github.saviomisael.authub.shared.exceptions.EmailAlreadyUsedException
 import com.github.saviomisael.authub.shared.exceptions.UsernameAlreadyExistsException
 import com.github.saviomisael.authub.shared.extensions.toChef
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -17,6 +22,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
     BaseController() {
+
+    @Operation(summary = "Creates a chef account", description = "Returns 201 if successfully")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "201", description = "Account successfully created."),
+            ApiResponse(responseCode = "422", description = "Username or email already used."),
+            ApiResponse(
+                responseCode = "400",
+                description = "Validation failed for the body. It returns a Map<String, String>",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = Map::class))]
+            )
+        ]
+    )
     @PostMapping("/api/v1/chefs")
     fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
         try {
