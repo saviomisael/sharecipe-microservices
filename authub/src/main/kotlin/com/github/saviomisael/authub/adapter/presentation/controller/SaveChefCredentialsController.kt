@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ChefController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
+class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
     BaseController() {
 
     @Operation(summary = "Creates a chef account", description = "Returns 201 if successfully")
