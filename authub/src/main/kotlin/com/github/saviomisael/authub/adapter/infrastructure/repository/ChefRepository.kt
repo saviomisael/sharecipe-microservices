@@ -19,4 +19,5 @@ class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository
     }
 
     override fun chefEmailAlreadyUsed(email: String) = chefDtoRepository.findByEmail(email) != null
+    override fun getByUsername(username: String): Chef? = chefDtoRepository.findByUsername(username)?.toChef()
 }
