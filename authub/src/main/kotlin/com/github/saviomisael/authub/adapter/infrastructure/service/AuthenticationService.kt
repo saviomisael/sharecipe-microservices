@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthenticationService @Autowired constructor(private val authenticationManager: AuthenticationManager) {
-    fun authenticate(username: String, password: String) = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
+    fun credentialsAreCorrect(username: String, password: String) = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password)).isAuthenticated
 }
