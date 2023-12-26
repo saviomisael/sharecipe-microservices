@@ -50,7 +50,17 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }.authorizeHttpRequests {
-                it.requestMatchers("/api/v1/chefs").permitAll()
+                it.requestMatchers("/", "/swagger-resources",
+                    "/swagger-resources/**",
+                    "/configuration/ui",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**",
+                    "/v3/api-docs/**",
+                    "/api/public/**",
+                    "/api/public/authenticate",
+                    "/actuator/*",
+                    "/swagger-ui/**", "/api/v1/chefs").permitAll()
                 it.anyRequest().authenticated()
             }
             .build()
