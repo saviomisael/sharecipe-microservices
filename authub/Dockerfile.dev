@@ -4,7 +4,7 @@ WORKDIR authub
 
 COPY . .
 
-RUN ./mvnw test
+RUN ./mvnw test -Punit-tests
 
 RUN ./mvnw clean package -DskipTests
 
