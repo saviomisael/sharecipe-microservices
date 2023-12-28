@@ -22,9 +22,14 @@ class SignInSteps {
   private var password = ""
   private lateinit var performRequest: ValidatableResponse
 
-  @Given("A chef that wants to log in")
-  fun a_chef_that_wants_to_log_in() {
+  @Given("A chef attempts to log in with a username that is fewer than 2 characters")
+  fun a_chef_attempts_to_log_in_with_a_username_that_is_fewer_than_2_characters() {
     username = "a"
+  }
+
+  @Given("A chef attempts to log in with a username that exceeds 255 characters")
+  fun a_chef_attempts_to_log_in_with_a_username_that_exceeds_255_characters() {
+    username = "a".repeat(256)
   }
 
   @When("This chef tries to log in")

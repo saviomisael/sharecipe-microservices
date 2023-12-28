@@ -2,6 +2,11 @@ Feature: Sign In into sharecipe
   With this any chef will can log in to share your recipes into sharecipe
 
   Scenario: Username does not have minimum length
-    Given A chef that wants to log in
+    Given A chef attempts to log in with a username that is fewer than 2 characters
+    When This chef tries to log in
+    Then Returns a bad request
+
+  Scenario: Username has more than 255 characters
+    Given A chef attempts to log in with a username that exceeds 255 characters
     When This chef tries to log in
     Then Returns a bad request
