@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  authub:
+    build:
+      context: .
+      dockerfile: Dockerfile.qa
+    network_mode: host
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: sharecipe-dev
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-psharecipe-dev",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5

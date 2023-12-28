@@ -2,6 +2,7 @@ package com.github.saviomisael.authub.adapter.infrastructure.config
 
 import com.github.saviomisael.authub.adapter.infrastructure.adapter.UserDetailsServiceAdapter
 import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
+import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,55 +25,64 @@ import org.springframework.web.filter.CorsFilter
 @Configuration
 @EnableWebSecurity
 class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
-    @Bean
-    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+  private val swaggerEndpoints = arrayOf(
+    "/swagger-resources",
+    "/swagger-resources/**",
+    "/configuration/ui",
+    "/configuration/security",
+    "/swagger-ui.html",
+    "/webjars/**",
+    "/v3/api-docs/**",
+    "/api/public/**",
+    "/api/public/authenticate",
+    "/actuator/*",
+    "/swagger-ui/**"
+  )
 
-    @Bean
-    fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager =
-        configuration.authenticationManager
+  private val publicEndpoints = arrayOf(ApiRoutes.ChefRoutes.createChefAccount, ApiRoutes.ChefRoutes.signIn)
 
-    @Bean
-    fun userDetailsService(): UserDetailsService = UserDetailsServiceAdapter(repository)
+  @Bean
+  fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
-    @Bean
-    fun authenticationProvider(): AuthenticationProvider {
-        val authenticationProvider = DaoAuthenticationProvider()
-        authenticationProvider.setUserDetailsService(userDetailsService())
-        authenticationProvider.setPasswordEncoder(passwordEncoder())
+  @Bean
+  fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager =
+    configuration.authenticationManager
 
-        return authenticationProvider
-    }
+  @Bean
+  fun userDetailsService(): UserDetailsService = UserDetailsServiceAdapter(repository)
 
-    @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
-        http.httpBasic(Customizer.withDefaults())
-            .csrf { it.disable() }
-            .sessionManagement {
-                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }.authorizeHttpRequests {
-                it.requestMatchers("/", "/swagger-resources",
-                    "/swagger-resources/**",
-                    "/configuration/ui",
-                    "/configuration/security",
-                    "/swagger-ui.html",
-                    "/webjars/**",
-                    "/v3/api-docs/**",
-                    "/api/public/**",
-                    "/api/public/authenticate",
-                    "/actuator/*",
-                    "/swagger-ui/**", "/api/v1/chefs").permitAll()
-                it.anyRequest().authenticated()
-            }
-            .build()
+  @Bean
+  fun authenticationProvider(): AuthenticationProvider {
+    val authenticationProvider = DaoAuthenticationProvider()
+    authenticationProvider.setUserDetailsService(userDetailsService())
+    authenticationProvider.setPasswordEncoder(passwordEncoder())
 
-    @Bean
-    fun corsFilter(): CorsFilter {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration()
-        config.addAllowedHeader("*")
-        config.addAllowedOrigin("*")
-        config.addAllowedMethod("*")
-        source.registerCorsConfiguration("/**", config)
-        return CorsFilter(source)
-    }
+    return authenticationProvider
+  }
+
+  @Bean
+  fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
+    http.httpBasic(Customizer.withDefaults())
+      .csrf { it.disable() }
+      .sessionManagement {
+        it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      }.authorizeHttpRequests {
+        it.requestMatchers(
+          *swaggerEndpoints,
+          *publicEndpoints
+        ).permitAll()
+        it.anyRequest().authenticated()
+      }
+      .build()
+
+  @Bean
+  fun corsFilter(): CorsFilter {
+    val source = UrlBasedCorsConfigurationSource()
+    val config = CorsConfiguration()
+    config.addAllowedHeader("*")
+    config.addAllowedOrigin("*")
+    config.addAllowedMethod("*")
+    source.registerCorsConfiguration("/**", config)
+    return CorsFilter(source)
+  }
 }

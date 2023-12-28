@@ -2,37 +2,33 @@ package com.github.saviomisael.authub.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
-import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
-import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
-import io.cucumber.java.BeforeStep
-import io.cucumber.java.Scenario
+import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
+import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
-import io.cucumber.spring.CucumberContextConfiguration
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import io.restassured.RestAssured
+import io.restassured.http.ContentType
+import io.restassured.response.ValidatableResponse
+import org.hamcrest.Matchers
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActionsDsl
-import org.springframework.test.web.servlet.post
+import org.springframework.http.HttpStatus
 
-@CucumberContextConfiguration
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
-    properties = ["spring.profiles.active=test"]
+    webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["spring.profiles.active=qa"]
 )
-@AutoConfigureMockMvc
-class CreateChefAccountSteps @Autowired constructor(
-    private val mockMvc: MockMvc,
-    private val objectMapper: ObjectMapper
-) {
+class CreateChefAccountSteps {
+    private val objectMapper = ObjectMapper()
     private var fullName = ""
     private var username = ""
     private var password = ""
     private var email = ""
-    private lateinit var performRequest: ResultActionsDsl
+    private lateinit var performRequest: ValidatableResponse
+
+    @Before
+    fun setup() {
+        RestAssured.port = 8888
+    }
 
     @Given("A person that provides your full name in a invalid way")
     fun a_person_that_provides_your_full_name_in_a_invalid_way() {
@@ -89,17 +85,19 @@ class CreateChefAccountSteps @Autowired constructor(
         password = "salamanDer@123"
         email = "salamander@mail.com"
 
-        mockMvc.post("/api/v1/chefs") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(
-                CreateChefDto(
-                    username,
-                    fullName,
-                    password,
-                    email
+        RestAssured
+            .given()
+            .contentType(ContentType.JSON)
+            .body(
+                objectMapper.writeValueAsString(
+                    CreateChefDto(
+                        username, fullName, password, email
+                    )
                 )
             )
-        }
+            .`when`()
+            .post(ApiRoutes.ChefRoutes.createChefAccount)
+            .then()
     }
 
     @Given("A person provides an email that already is in use")
@@ -120,57 +118,49 @@ class CreateChefAccountSteps @Autowired constructor(
 
     @When("This person tries to create an account")
     fun this_person_tries_to_create_an_account() {
-        performRequest = mockMvc.post("/api/v1/chefs") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(CreateChefDto(fullName, username, password, email))
-        }
+        performRequest = RestAssured
+            .given()
+            .log()
+            .all()
+            .contentType(ContentType.JSON)
+            .body(
+                objectMapper.writeValueAsString(
+                    CreateChefDto(
+                        fullName, username, password, email
+                    )
+                )
+            )
+            .`when`()
+            .post(ApiRoutes.ChefRoutes.createChefAccount)
+            .then()
     }
 
     @Then("The person should get a bad request response")
     fun the_person_should_get_a_bad_request_response() {
-        performRequest.andDo { print() }
-            .andExpect {
-                status {
-                    isBadRequest()
-                }
-                content {
-                    contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-                }
-            }
+        performRequest
+            .log()
+            .all()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .contentType(ContentType.JSON)
     }
 
     @Then("The person should get an unprocessable entity response")
     fun the_person_should_get_an_unprocessable_entity_response() {
-        performRequest.andDo { print() }
-            .andExpect {
-                status {
-                    isUnprocessableEntity()
-                }
-                content {
-                    contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-                }
-            }
+        performRequest
+            .log()
+            .all()
+            .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+            .contentType(ContentType.JSON)
     }
 
     @Then("The person should get a created response")
     fun the_person_should_get_a_created_response() {
-        performRequest.andDo { print() }
-            .andExpect {
-                status {
-                    isCreated()
-                }
-                content {
-                    contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-                    json("""
-                        {
-                        "errors":[],
-                        "data":{
-                        "username":"$username",
-                        "fullName":"The Salamander"
-                        }
-                        }
-                    """.trimIndent(), false)
-                }
-            }
+        performRequest
+            .log()
+            .all()
+            .statusCode(HttpStatus.CREATED.value())
+            .contentType(ContentType.JSON)
+            .body("data.username", Matchers.equalTo("thesalamander"))
+            .body("data.fullName", Matchers.equalTo("The Salamander"))
     }
 }
