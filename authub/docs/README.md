@@ -10,7 +10,7 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 
 ``cd ../``
 
-``docker compose -f docker-compose.qa.yml down && docker compose -f docker-compose.qa.yml up -d && ./mvnw clean test``
+``docker system prune -f && docker compose -f docker-compose.qa.yml down && docker compose -f docker-compose.qa.yml build --no-cache && docker compose -f docker-compose.qa.yml up -d && ./mvnw clean test``
 
 # Issues running integration tests
 
