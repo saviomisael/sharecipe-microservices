@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("dev")
 class SwaggerConfig {
-    @Bean
-    fun openAPI(): OpenAPI {
-        return OpenAPI().info(Info().title("Authub Swagger Docs").description("Documentation of authub REST API").version("1.0.0"))
-    }
+  @Bean
+  fun openAPI(): OpenAPI {
+    return OpenAPI().info(
+      Info().title("Authub Swagger Docs").description("Documentation of authub REST API").version("1.0.0")
+    )
+  }
 }

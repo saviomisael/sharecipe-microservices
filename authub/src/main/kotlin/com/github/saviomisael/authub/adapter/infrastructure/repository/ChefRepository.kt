@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository) : IChefRepository {
-    override fun saveChefCredentials(chef: Chef): Chef {
-        return chefDtoRepository.save(chef.toChefDto()).toChef()
-    }
+  override fun saveChefCredentials(chef: Chef): Chef {
+    return chefDtoRepository.save(chef.toChefDto()).toChef()
+  }
 
-    override fun chefUsernameAlreadyExists(username: String): Boolean {
-        return chefDtoRepository.findByUsername(username) != null
-    }
+  override fun chefUsernameAlreadyExists(username: String): Boolean {
+    return chefDtoRepository.findByUsername(username) != null
+  }
 
-    override fun chefEmailAlreadyUsed(email: String) = chefDtoRepository.findByEmail(email) != null
-    override fun getByUsername(username: String): Chef? = chefDtoRepository.findByUsername(username)?.toChef()
+  override fun chefEmailAlreadyUsed(email: String) = chefDtoRepository.findByEmail(email) != null
+  override fun getByUsername(username: String): Chef? = chefDtoRepository.findByUsername(username)?.toChef()
 }

@@ -11,19 +11,19 @@ import org.springframework.stereotype.Component
 
 @Component
 class SignInUseCase @Autowired constructor(
-    private val authenticationService: AuthenticationService,
-    private val chefRepository: IChefRepository,
-    private val tokenService: TokenService
+  private val authenticationService: AuthenticationService,
+  private val chefRepository: IChefRepository,
+  private val tokenService: TokenService
 ) : ISignInUseCase {
-    override fun handle(username: String, password: String): TokenResultDto {
-        val usernameExists = chefRepository.chefUsernameAlreadyExists(username)
+  override fun handle(username: String, password: String): TokenResultDto {
+    val usernameExists = chefRepository.chefUsernameAlreadyExists(username)
 
-        if(!usernameExists) throw CredentialsInvalidException()
+    if (!usernameExists) throw CredentialsInvalidException()
 
-        if(!authenticationService.credentialsAreCorrect(username, password)) throw CredentialsInvalidException()
+    if (!authenticationService.credentialsAreCorrect(username, password)) throw CredentialsInvalidException()
 
-        val chef = chefRepository.getByUsername(username) ?: throw CredentialsInvalidException()
+    val chef = chefRepository.getByUsername(username) ?: throw CredentialsInvalidException()
 
-        return TokenResultDto(tokenService.generateToken(username), chef.username, chef.fullName)
-    }
+    return TokenResultDto(tokenService.generateToken(username), chef.username, chef.fullName)
+  }
 }

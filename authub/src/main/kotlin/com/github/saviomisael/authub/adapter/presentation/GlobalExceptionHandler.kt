@@ -11,13 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
-    override fun handleMethodArgumentNotValid(
-        ex: MethodArgumentNotValidException,
-        headers: HttpHeaders,
-        status: HttpStatusCode,
-        request: WebRequest
-    ): ResponseEntity<Any>? {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(ex.bindingResult.fieldErrors.associate { it.field to it.defaultMessage })
-    }
+  override fun handleMethodArgumentNotValid(
+    ex: MethodArgumentNotValidException,
+    headers: HttpHeaders,
+    status: HttpStatusCode,
+    request: WebRequest
+  ): ResponseEntity<Any>? {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+      .body(ex.bindingResult.fieldErrors.associate { it.field to it.defaultMessage })
+  }
 }

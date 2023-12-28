@@ -14,29 +14,29 @@ import org.springframework.stereotype.Component
 
 @Component
 class SaveChefCredentialsUseCase(
-    @Autowired private val chefRepository: IChefRepository,
-    @Autowired private val passwordEncrypterService: PasswordEncrypterService,
-    @Autowired private val tokenService: TokenService
+  @Autowired private val chefRepository: IChefRepository,
+  @Autowired private val passwordEncrypterService: PasswordEncrypterService,
+  @Autowired private val tokenService: TokenService
 ) : ISaveChefCredentialsUseCase {
-    override fun handle(chef: Chef): TokenResultDto {
-        val usernameAlreadyExists = chefRepository.chefUsernameAlreadyExists(chef.username)
+  override fun handle(chef: Chef): TokenResultDto {
+    val usernameAlreadyExists = chefRepository.chefUsernameAlreadyExists(chef.username)
 
-        if (usernameAlreadyExists) throw UsernameAlreadyExistsException(chef.username)
+    if (usernameAlreadyExists) throw UsernameAlreadyExistsException(chef.username)
 
-        val emailAlreadyUsed = chefRepository.chefEmailAlreadyUsed(chef.email)
+    val emailAlreadyUsed = chefRepository.chefEmailAlreadyUsed(chef.email)
 
-        if (emailAlreadyUsed) throw EmailAlreadyUsedException(chef.email)
+    if (emailAlreadyUsed) throw EmailAlreadyUsedException(chef.email)
 
-        var chefWithPasswordHashed =
-            ChefBuilder.createBuilder().withFullName(chef.fullName).withUsername(chef.username).withEmail(chef.email)
-                .withPassword(passwordEncrypterService.encryptPassword(chef.password)).build()
+    var chefWithPasswordHashed =
+      ChefBuilder.createBuilder().withFullName(chef.fullName).withUsername(chef.username).withEmail(chef.email)
+        .withPassword(passwordEncrypterService.encryptPassword(chef.password)).build()
 
-        chefWithPasswordHashed = chefRepository.saveChefCredentials(chefWithPasswordHashed)
+    chefWithPasswordHashed = chefRepository.saveChefCredentials(chefWithPasswordHashed)
 
-        return TokenResultDto(
-            tokenService.generateToken(chefWithPasswordHashed.username),
-            chefWithPasswordHashed.username,
-            chefWithPasswordHashed.fullName
-        )
-    }
+    return TokenResultDto(
+      tokenService.generateToken(chefWithPasswordHashed.username),
+      chefWithPasswordHashed.username,
+      chefWithPasswordHashed.fullName
+    )
+  }
 }

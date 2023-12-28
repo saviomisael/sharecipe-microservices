@@ -6,8 +6,6 @@ import org.junit.platform.suite.api.ConfigurationParameter
 import org.junit.platform.suite.api.IncludeEngines
 import org.junit.platform.suite.api.SelectClasspathResource
 import org.junit.platform.suite.api.Suite
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.context.annotation.Profile
 import org.springframework.test.context.ContextConfiguration
 
 @Suite
