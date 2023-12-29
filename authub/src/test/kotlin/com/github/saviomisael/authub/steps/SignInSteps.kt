@@ -47,6 +47,11 @@ class SignInSteps {
     password = "test123@"
   }
 
+  @Given("A chef attempts to log in with a password without any lowercase letter")
+  fun a_chef_attempts_to_log_in_with_a_password_without_any_lowercase_letter() {
+    password = "TEST123@"
+  }
+
   @When("This chef tries to log in")
   fun this_chef_tries_to_log_in() {
     performRequest = RestAssured
