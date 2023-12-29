@@ -14,6 +14,8 @@ spring:
         format_sql: true
   application:
     name: authub
+  profiles:
+    active: dev
 server:
   port: 8001
 jwt:

@@ -1,6 +1,7 @@
 package com.github.saviomisael.authub.steps
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import io.cucumber.java.en.And
@@ -10,6 +11,7 @@ import io.cucumber.java.en.When
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
+import org.assertj.core.api.Assertions
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 
@@ -69,16 +71,18 @@ class SignInSteps {
     password = "Test123@"
   }
 
-  @Given("A chef already have an account")
+  @Given("That a chef already has an account")
   fun `A chef attempts to log in with a wrong password`() {
     RestAssured
       .given()
-      .log()
-      .all()
       .contentType(ContentType.JSON)
-      .body(objectMapper.writeValueAsString(SignInCredentialsDto("user for sign in", "@Test123")))
+      .body(
+        objectMapper.writeValueAsString(
+          CreateChefDto("User test", "user for sign in", "@Test123", "test@email.com")
+        )
+      )
       .`when`()
-      .post(ApiRoutes.ChefRoutes.signIn)
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
       .then()
   }
 
@@ -86,6 +90,12 @@ class SignInSteps {
   fun `Attempts to log in with a wrong password`() {
     username = "user for sign in"
     password = "Test123@"
+  }
+
+  @And("Attempts to log in with correct credentials")
+  fun `Attempts to log in with correct credentials`() {
+    username = "user for sign in"
+    password = "@Test123"
   }
 
   @When("This chef tries to log in")
@@ -109,5 +119,19 @@ class SignInSteps {
   @Then("Returns unauthorized")
   fun `Returns unauthorized`() {
     performRequest.log().all().statusCode(HttpStatus.UNAUTHORIZED.value()).contentType(ContentType.JSON)
+  }
+
+  @Then("Returns ok")
+  fun `Returns ok`() {
+    val response =
+      performRequest.log().all().statusCode(HttpStatus.OK.value()).contentType(ContentType.JSON).extract().response()
+
+    val errors = response.jsonPath().getList<String>("errors")
+    val username = response.jsonPath().getString("data.username")
+    val fullName = response.jsonPath().getString("data.fullName")
+
+    Assertions.assertThat(errors).isEmpty()
+    Assertions.assertThat(username).isEqualTo("user for sign in")
+    Assertions.assertThat(fullName).isEqualTo("User test")
   }
 }

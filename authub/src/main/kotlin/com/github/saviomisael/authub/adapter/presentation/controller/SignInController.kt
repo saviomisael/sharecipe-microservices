@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,7 +33,7 @@ class SignInController @Autowired constructor(private val signInUseCase: ISignIn
       )
     ]
   )
-  @PostMapping(ApiRoutes.ChefRoutes.signIn)
+  @PostMapping(ApiRoutes.ChefRoutes.signIn, produces = [MediaType.APPLICATION_JSON_VALUE])
   fun signIn(@Valid @RequestBody dto: SignInCredentialsDto): ResponseEntity<ResponseDto<TokenResultDto>> {
     try {
       val token = signInUseCase.handle(dto.username, dto.password)

@@ -47,7 +47,13 @@ Feature: Sign In into sharecipe
     Then Returns unauthorized
 
   Scenario: Password is wrong
-    Given A chef already have an account
+    Given That a chef already has an account
     And Attempts to log in with a wrong password
     When This chef tries to log in
     Then Returns unauthorized
+
+  Scenario: Chef can log in successfully
+    Given That a chef already has an account
+    And Attempts to log in with correct credentials
+    When This chef tries to log in
+    Then Returns ok
