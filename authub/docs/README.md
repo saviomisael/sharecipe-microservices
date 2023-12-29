@@ -20,3 +20,5 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 [Differences between Black Box Testing vs White Box Testing](https://www.geeksforgeeks.org/differences-between-black-box-testing-vs-white-box-testing/)
 
 [Is there a difference between white box testing and unit testing?](https://www.onpathtesting.com/blog/difference-between-white-box-testing-and-unit-testing)
+
+[Integration testing: Is it black box or white box testing?](https://www.techtarget.com/searchsoftwarequality/answer/Integration-testing-Is-it-black-box-or-white-box-testing#:~:text=Integration%20testing%20can%20be%20either,the%20system%20they%20are%20testing.)
