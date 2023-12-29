@@ -45,3 +45,8 @@ Feature: Sign In into sharecipe
     Given A chef attempts to log in with an username that does not exist
     When This chef tries to log in
     Then Returns unauthorized
+
+  Scenario: Password is wrong
+    Given A chef attempts to log in with a wrong password
+    When This chef tries to log in
+    Then Returns unauthorized

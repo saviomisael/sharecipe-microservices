@@ -68,6 +68,22 @@ class SignInSteps {
     password = "Test123@"
   }
 
+  @Given("A chef attempts to log in with a wrong password")
+  fun `A chef attempts to log in with a wrong password`() {
+    username = "user for sign in"
+    password = "Test123@"
+
+    RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(objectMapper.writeValueAsString(SignInCredentialsDto(username, password.reversed())))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.signIn)
+      .then()
+  }
+
   @When("This chef tries to log in")
   fun `This chef tries to log in`() {
     performRequest = RestAssured
