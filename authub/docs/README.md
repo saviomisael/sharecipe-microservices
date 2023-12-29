@@ -17,8 +17,27 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 [Flaky Test](https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/)
 
 ## Unit tests = White-box testing & Cucumber tests = Black-box testing?
+
 [Differences between Black Box Testing vs White Box Testing](https://www.geeksforgeeks.org/differences-between-black-box-testing-vs-white-box-testing/)
 
 [Is there a difference between white box testing and unit testing?](https://www.onpathtesting.com/blog/difference-between-white-box-testing-and-unit-testing)
 
 [Integration testing: Is it black box or white box testing?](https://www.techtarget.com/searchsoftwarequality/answer/Integration-testing-Is-it-black-box-or-white-box-testing#:~:text=Integration%20testing%20can%20be%20either,the%20system%20they%20are%20testing.)
+
+## Cucumber API
+
+### @BeforeStep
+If you want to run something before a step, this annotation runs this method in this way, but if you use, for
+example in SignInSteps, this will run before the steps from CreateChefAccountSteps.
+
+```kotlin
+//  This runs before all steps in any feature file
+@BeforeStep
+fun beforeStep(scenario: Scenario) {
+}
+```
+
+### Executing features in parallel
+[By default, when parallel execution is enabled, scenarios and examples are executed in parallel. Due to limitations,
+JUnit 4 could only execute features in parallel. This behaviour can be restored by setting the configuration parameter
+cucumber.execution.execution-mode.feature to same_thread.](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#executing-features-in-parallel)
