@@ -37,6 +37,11 @@ class SignInSteps {
     password = "123"
   }
 
+  @Given("A chef attempts to log in with a password that exceeds 255 characters")
+  fun a_chef_attempts_to_log_in_with_a_password_that_exceeds_255_characters() {
+    password = "a".repeat(256)
+  }
+
   @When("This chef tries to log in")
   fun this_chef_tries_to_log_in() {
     performRequest = RestAssured
