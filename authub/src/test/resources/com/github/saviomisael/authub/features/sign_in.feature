@@ -20,3 +20,8 @@ Feature: Sign In into sharecipe
     Given A chef attempts to log in with a password that exceeds 255 characters
     When This chef tries to log in
     Then Returns a bad request
+
+  Scenario: Password does not have at least one uppercase letter
+    Given A chef attempts to log in with a password without any uppercase letter
+    When This chef tries to log in
+    Then Returns a bad request
