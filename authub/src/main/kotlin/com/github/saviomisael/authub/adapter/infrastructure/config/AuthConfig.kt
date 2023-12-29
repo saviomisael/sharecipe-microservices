@@ -77,11 +77,13 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
 
   @Bean
   fun corsFilter(): CorsFilter {
-    val source = UrlBasedCorsConfigurationSource()
     val config = CorsConfiguration()
     config.addAllowedHeader("*")
     config.addAllowedOrigin("*")
     config.addAllowedMethod("*")
+    config.allowCredentials = true
+
+    val source = UrlBasedCorsConfigurationSource()
     source.registerCorsConfiguration("/**", config)
     return CorsFilter(source)
   }
