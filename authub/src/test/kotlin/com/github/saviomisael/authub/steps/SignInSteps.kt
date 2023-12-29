@@ -3,6 +3,7 @@ package com.github.saviomisael.authub.steps
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
+import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -68,20 +69,23 @@ class SignInSteps {
     password = "Test123@"
   }
 
-  @Given("A chef attempts to log in with a wrong password")
+  @Given("A chef already have an account")
   fun `A chef attempts to log in with a wrong password`() {
-    username = "user for sign in"
-    password = "Test123@"
-
     RestAssured
       .given()
       .log()
       .all()
       .contentType(ContentType.JSON)
-      .body(objectMapper.writeValueAsString(SignInCredentialsDto(username, password.reversed())))
+      .body(objectMapper.writeValueAsString(SignInCredentialsDto("user for sign in", "@Test123")))
       .`when`()
       .post(ApiRoutes.ChefRoutes.signIn)
       .then()
+  }
+
+  @And("Attempts to log in with a wrong password")
+  fun `Attempts to log in with a wrong password`() {
+    username = "user for sign in"
+    password = "Test123@"
   }
 
   @When("This chef tries to log in")
