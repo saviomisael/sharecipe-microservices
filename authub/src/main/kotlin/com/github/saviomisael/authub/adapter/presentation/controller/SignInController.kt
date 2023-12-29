@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class SignInController @Autowired constructor(private val signInUseCase: ISignInUseCase) : BaseController() {
+  private val logger = LoggerFactory.getLogger(SignInController::class.java)
+
   @Operation(summary = "Sign in into sharecipe", description = "Returns 200 if successfully")
   @ApiResponses(
     value = [
@@ -38,8 +41,10 @@ class SignInController @Autowired constructor(private val signInUseCase: ISignIn
     try {
       val token = signInUseCase.handle(dto.username, dto.password)
 
+      logger.info("RESPONSE. Sign in successfully for ${token.username}")
       return ok(ResponseDto(emptyList(), token))
     } catch (ex: CredentialsInvalidException) {
+      logger.error("RESPONSE. ${ex.message}")
       return unauthorized(ResponseDto(listOf(ex.message), null))
     }
   }

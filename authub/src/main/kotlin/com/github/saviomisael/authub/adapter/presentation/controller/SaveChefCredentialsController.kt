@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
   BaseController() {
+  private val logger = LoggerFactory.getLogger(SaveChefCredentialsController::class.java)
+
 
   @Operation(summary = "Creates a chef account", description = "Returns 201 if successfully")
   @ApiResponses(
@@ -41,6 +44,7 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
     try {
       val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())
 
+      logger.info("RESPONSE. Chef created for ${chefSaved.username}")
       return created(ResponseDto(emptyList<String>(), chefSaved))
     } catch (ex: UsernameAlreadyExistsException) {
       return handleException(ex)
@@ -49,5 +53,8 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
     }
   }
 
-  private fun <T> handleException(ex: Exception) = unprocessableEntity(ResponseDto<T>(listOf(ex.message), null))
+  private fun handleException(ex: Exception): ResponseEntity<ResponseDto<TokenResultDto>> {
+    logger.error("RESPONSE. ${ex.message}")
+    return unprocessableEntity(ResponseDto(listOf(ex.message), null))
+  }
 }
