@@ -13,7 +13,7 @@ class AuthenticationService @Autowired constructor(private val authenticationMan
       val authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
 
       return authentication.isAuthenticated
-    } catch(ex: BadCredentialsException) {
+    } catch (ex: BadCredentialsException) {
       return false
     }
   }

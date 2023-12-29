@@ -27,6 +27,7 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 ## Cucumber API
 
 ### @BeforeStep
+
 If you want to run something before a step, this annotation runs this method in this way, but if you use, for
 example in SignInSteps, this will run before the steps from CreateChefAccountSteps.
 
@@ -38,6 +39,7 @@ fun beforeStep(scenario: Scenario) {
 ```
 
 ### Executing features in parallel
+
 [By default, when parallel execution is enabled, scenarios and examples are executed in parallel. Due to limitations,
 JUnit 4 could only execute features in parallel. This behaviour can be restored by setting the configuration parameter
 cucumber.execution.execution-mode.feature to same_thread.](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#executing-features-in-parallel)
