@@ -52,6 +52,11 @@ class SignInSteps {
     password = "TEST123@"
   }
 
+  @Given("A chef attempts to log in with a password without any number")
+  fun `A chef attempts to log in with a password without any number`() {
+    password = "TESTEST@"
+  }
+
   @When("This chef tries to log in")
   fun `This chef tries to log in`() {
     performRequest = RestAssured
