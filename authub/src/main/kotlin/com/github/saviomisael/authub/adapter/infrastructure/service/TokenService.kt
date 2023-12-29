@@ -1,6 +1,7 @@
 package com.github.saviomisael.authub.adapter.infrastructure.service
 
 import com.github.saviomisael.authub.adapter.infrastructure.dto.TokenPayloadDto
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
@@ -15,8 +16,14 @@ class TokenService(@Value("\${jwt.secret}") private val secret: String) {
   private val expirationTime: Long = 1000 * 60 * 30
   private val algorithm = SignatureAlgorithm.HS256
 
-  fun decodeToken(token: String) =
-    TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).body.subject)
+  fun decodeToken(token: String): TokenPayloadDto? {
+    return try {
+      TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).body.subject)
+    } catch (ex: JwtException) {
+      null
+    }
+  }
+
 
   fun generateToken(userName: String): String {
     val claims: MutableMap<String, Any> = HashMap()
