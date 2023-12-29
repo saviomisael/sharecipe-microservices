@@ -62,6 +62,12 @@ class SignInSteps {
     password = "TestTest123"
   }
 
+  @Given("A chef attempts to log in with an username that does not exist")
+  fun `A chef attempts to log in with an username that does not exist`() {
+    username = "unknown"
+    password = "Test123@"
+  }
+
   @When("This chef tries to log in")
   fun `This chef tries to log in`() {
     performRequest = RestAssured
@@ -78,5 +84,10 @@ class SignInSteps {
   @Then("Returns a bad request")
   fun `Returns a bad request`() {
     performRequest.log().all().statusCode(HttpStatus.BAD_REQUEST.value()).contentType(ContentType.JSON)
+  }
+
+  @Then("Returns unauthorized")
+  fun `Returns unauthorized`() {
+    performRequest.log().all().statusCode(HttpStatus.UNAUTHORIZED.value()).contentType(ContentType.JSON)
   }
 }

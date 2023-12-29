@@ -40,3 +40,8 @@ Feature: Sign In into sharecipe
     Given A chef attempts to log in with a password without any symbol
     When This chef tries to log in
     Then Returns a bad request
+
+  Scenario: Username does not exist
+    Given A chef attempts to log in with an username that does not exist
+    When This chef tries to log in
+    Then Returns unauthorized
