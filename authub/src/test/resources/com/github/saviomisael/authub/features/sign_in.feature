@@ -35,3 +35,8 @@ Feature: Sign In into sharecipe
     Given A chef attempts to log in with a password without any number
     When This chef tries to log in
     Then Returns a bad request
+
+  Scenario: Password does not have at least one symbol
+    Given A chef attempts to log in with a password without any symbol
+    When This chef tries to log in
+    Then Returns a bad request
