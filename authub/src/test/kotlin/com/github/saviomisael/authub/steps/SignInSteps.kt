@@ -32,6 +32,11 @@ class SignInSteps {
     username = "a".repeat(256)
   }
 
+  @Given("A chef attempts to log in with a password that is fewer than 8 characters")
+  fun a_chef_attempts_to_log_in_with_a_password_that_is_fewer_than_8_characters() {
+    password = "123"
+  }
+
   @When("This chef tries to log in")
   fun this_chef_tries_to_log_in() {
     performRequest = RestAssured
