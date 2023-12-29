@@ -23,37 +23,37 @@ class SignInSteps {
   private lateinit var performRequest: ValidatableResponse
 
   @Given("A chef attempts to log in with a username that is fewer than 2 characters")
-  fun a_chef_attempts_to_log_in_with_a_username_that_is_fewer_than_2_characters() {
+  fun `A chef attempts to log in with a username that is fewer than 2 characters`() {
     username = "a"
   }
 
   @Given("A chef attempts to log in with a username that exceeds 255 characters")
-  fun a_chef_attempts_to_log_in_with_a_username_that_exceeds_255_characters() {
+  fun `A chef attempts to log in with a username that exceeds 255 characters`() {
     username = "a".repeat(256)
   }
 
   @Given("A chef attempts to log in with a password that is fewer than 8 characters")
-  fun a_chef_attempts_to_log_in_with_a_password_that_is_fewer_than_8_characters() {
+  fun `A chef attempts to log in with a password that is fewer than 8 characters`() {
     password = "123"
   }
 
   @Given("A chef attempts to log in with a password that exceeds 255 characters")
-  fun a_chef_attempts_to_log_in_with_a_password_that_exceeds_255_characters() {
+  fun `A chef attempts to log in with a password that exceeds 255 characters`() {
     password = "a".repeat(256)
   }
 
   @Given("A chef attempts to log in with a password without any uppercase letter")
-  fun a_chef_attempts_to_log_in_with_a_password_without_any_uppercase_letter() {
+  fun `A chef attempts to log in with a password without any uppercase letter`() {
     password = "test123@"
   }
 
   @Given("A chef attempts to log in with a password without any lowercase letter")
-  fun a_chef_attempts_to_log_in_with_a_password_without_any_lowercase_letter() {
+  fun `A chef attempts to log in with a password without any lowercase letter`() {
     password = "TEST123@"
   }
 
   @When("This chef tries to log in")
-  fun this_chef_tries_to_log_in() {
+  fun `This chef tries to log in`() {
     performRequest = RestAssured
       .given()
       .log()
@@ -66,7 +66,7 @@ class SignInSteps {
   }
 
   @Then("Returns a bad request")
-  fun returns_a_bad_request() {
+  fun `Returns a bad request`() {
     performRequest.log().all().statusCode(HttpStatus.BAD_REQUEST.value()).contentType(ContentType.JSON)
   }
 }

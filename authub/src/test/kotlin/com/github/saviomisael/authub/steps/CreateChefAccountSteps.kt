@@ -31,47 +31,47 @@ class CreateChefAccountSteps {
   }
 
   @Given("A person that provides your full name in a invalid way")
-  fun a_person_that_provides_your_full_name_in_a_invalid_way() {
+  fun `A person that provides your full name in a invalid way`() {
     fullName = ""
   }
 
   @Given("A person that provides an invalid username")
-  fun a_person_that_provides_an_invalid_username() {
+  fun `A person that provides an invalid username`() {
     username = ""
   }
 
   @Given("A person that provides a password less than 8 characters to create an account")
-  fun a_person_that_provides_a_password_less_than_8_characters_to_create_an_account() {
+  fun `A person that provides a password less than 8 characters to create an account`() {
     password = "123"
   }
 
   @Given("A person that provides a password almost valid but does not have a uppercase letter")
-  fun a_person_that_provides_a_password_almost_valid_but_does_not_have_a_uppercase_letter() {
+  fun `A person that provides a password almost valid but does not have a uppercase letter`() {
     password = "test123@"
   }
 
   @Given("A person that provides a password almost valid but does not have a lowercase letter")
-  fun a_person_that_provides_a_password_almost_valid_but_does_not_have_a_lowercase_letter() {
+  fun `A person that provides a password almost valid but does not have a lowercase letter`() {
     password = "TEST123@"
   }
 
   @Given("A person provides a password with more than 255 characters")
-  fun a_person_provides_a_password_with_more_than_255_characters() {
+  fun `A person provides a password with more than 255 characters`() {
     password = "test123".repeat("test123".length * 37)
   }
 
   @Given("A person provides a password without numbers")
-  fun a_person_provides_a_password_without_numbers() {
+  fun `A person provides a password without numbers`() {
     password = "test_test@"
   }
 
   @Given("A person provides a password without symbols")
-  fun a_person_provides_a_password_without_symbols() {
+  fun `A person provides a password without symbols`() {
     password = "test123test"
   }
 
   @Given("A person provides all the information but the email is invalid")
-  fun a_person_provides_all_the_information_but_the_email_is_invalid() {
+  fun `A person provides all the information but the email is invalid`() {
     fullName = "Test"
     username = "test"
     password = "Test123@"
@@ -79,7 +79,7 @@ class CreateChefAccountSteps {
   }
 
   @Given("A person provides an username that already is in use")
-  fun a_person_provides_an_username_that_already_is_in_use() {
+  fun `A person provides an username that already is in use`() {
     username = "salamander"
     fullName = "Salamander"
     password = "salamanDer@123"
@@ -101,7 +101,7 @@ class CreateChefAccountSteps {
   }
 
   @Given("A person provides an email that already is in use")
-  fun a_person_provides_an_email_that_already_is_in_use() {
+  fun `A person provides an email that already is in use`() {
     username = "salamander1"
     fullName = "Salamander"
     password = "salamanDer@123"
@@ -109,7 +109,7 @@ class CreateChefAccountSteps {
   }
 
   @Given("A person provides all information to create account with all fields valid")
-  fun a_person_provides_all_information_to_create_account_with_all_fields_valid() {
+  fun `A person provides all information to create account with all fields valid`() {
     username = "thesalamander"
     fullName = "The Salamander"
     password = "salamanDer@123"
@@ -117,7 +117,7 @@ class CreateChefAccountSteps {
   }
 
   @When("This person tries to create an account")
-  fun this_person_tries_to_create_an_account() {
+  fun `This person tries to create an account`() {
     performRequest = RestAssured
       .given()
       .log()
@@ -136,7 +136,7 @@ class CreateChefAccountSteps {
   }
 
   @Then("The person should get a bad request response")
-  fun the_person_should_get_a_bad_request_response() {
+  fun `The person should get a bad request response`() {
     performRequest
       .log()
       .all()
@@ -145,7 +145,7 @@ class CreateChefAccountSteps {
   }
 
   @Then("The person should get an unprocessable entity response")
-  fun the_person_should_get_an_unprocessable_entity_response() {
+  fun `The person should get an unprocessable entity response`() {
     performRequest
       .log()
       .all()
@@ -154,7 +154,7 @@ class CreateChefAccountSteps {
   }
 
   @Then("The person should get a created response")
-  fun the_person_should_get_a_created_response() {
+  fun `The person should get a created response`() {
     performRequest
       .log()
       .all()
