@@ -36,6 +36,8 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
     ) token: String
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
     return try {
+      if (!token.startsWith("Bearer ")) return unauthorized(ResponseDto(listOf("Token provided invalid."), null))
+
       val tokenDto = generateRefreshTokenUseCase.handle(token.split(" ")[1])
       logger.info("RESPONSE. Generate refresh token for ${tokenDto.username}")
       created(ResponseDto(emptyList(), tokenDto))

@@ -18,7 +18,7 @@ class TokenService(@Value("\${jwt.secret}") private val secret: String) {
 
   fun decodeToken(token: String): TokenPayloadDto? {
     return try {
-      TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token).body.subject)
+      TokenPayloadDto(Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).body.subject)
     } catch (ex: JwtException) {
       null
     }
