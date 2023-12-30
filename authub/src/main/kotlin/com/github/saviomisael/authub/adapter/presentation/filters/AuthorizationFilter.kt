@@ -34,14 +34,14 @@ class AuthorizationFilter @Autowired constructor(
       val decodedToken = tokenService.decodeToken(token.split(" ")[1])
 
       if (decodedToken == null) {
-        handleTokenInvalid(response, "Token provided invalid.")
+        handleTokenInvalid(response, "Token provided is invalid.")
         return
       }
 
       val chefExists = chefRepository.chefUsernameAlreadyExists(decodedToken.username)
 
       if (!chefExists) {
-        handleTokenInvalid(response, "Token provided invalid.")
+        handleTokenInvalid(response, "Token provided is invalid.")
         return
       }
 
