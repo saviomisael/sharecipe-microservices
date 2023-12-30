@@ -13,14 +13,8 @@ class GenerateRefreshTokenUseCase @Autowired constructor(
   private val tokenService: TokenService,
   private val chefRepository: IChefRepository
 ) : IGenerateRefreshTokenUseCase {
-  override fun handle(token: String): TokenResultDto {
-    val decodedToken = tokenService.decodeToken(token) ?: throw TokenInvalidException()
-
-    val chefExists = chefRepository.chefUsernameAlreadyExists(decodedToken.username)
-
-    if (!chefExists) throw TokenInvalidException()
-
-    val chef = chefRepository.getByUsername(decodedToken.username) ?: throw TokenInvalidException()
+  override fun handle(username: String): TokenResultDto {
+    val chef = chefRepository.getByUsername(username) ?: throw TokenInvalidException()
 
     return TokenResultDto(tokenService.generateToken(chef.username), chef.username, chef.fullName)
   }

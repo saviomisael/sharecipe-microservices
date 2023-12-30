@@ -8,11 +8,11 @@ import com.github.saviomisael.authub.shared.exceptions.TokenInvalidException
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -30,15 +30,12 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
   )
   @PostMapping(ApiRoutes.ChefRoutes.refreshToken)
   fun generateRefreshToken(
-    @RequestHeader(
-      value = "Authorization",
-      required = true
-    ) token: String
+    request: HttpServletRequest
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
     return try {
-      if (!token.startsWith("Bearer ")) return unauthorized(ResponseDto(listOf("Token provided invalid."), null))
+      val username = request.getAttribute("username").toString()
 
-      val tokenDto = generateRefreshTokenUseCase.handle(token.split(" ")[1])
+      val tokenDto = generateRefreshTokenUseCase.handle(username)
       logger.info("RESPONSE. Generate refresh token for ${tokenDto.username}")
       created(ResponseDto(emptyList(), tokenDto))
     } catch (ex: TokenInvalidException) {
