@@ -24,7 +24,6 @@ class TokenService(@Value("\${jwt.secret}") private val secret: String) {
     }
   }
 
-
   fun generateToken(userName: String): String {
     val claims: MutableMap<String, Any> = HashMap()
 

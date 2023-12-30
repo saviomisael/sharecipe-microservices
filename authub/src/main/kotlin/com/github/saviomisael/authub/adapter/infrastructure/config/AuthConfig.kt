@@ -2,14 +2,12 @@ package com.github.saviomisael.authub.adapter.infrastructure.config
 
 import com.github.saviomisael.authub.adapter.infrastructure.adapter.UserDetailsServiceAdapter
 import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
-import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -24,7 +22,9 @@ import org.springframework.web.filter.CorsFilter
 
 @Configuration
 @EnableWebSecurity
-class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
+class AuthConfig(
+  @Autowired private val repository: ChefDtoRepository
+) {
   private val swaggerEndpoints = arrayOf(
     "/swagger-resources",
     "/swagger-resources/**",
@@ -39,7 +39,7 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
     "/swagger-ui/**"
   )
 
-  private val publicEndpoints = arrayOf(ApiRoutes.ChefRoutes.createChefAccount, ApiRoutes.ChefRoutes.signIn)
+  private val publicEndpoints = arrayOf("/api/**")
 
   @Bean
   fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
@@ -62,7 +62,10 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
 
   @Bean
   fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
-    http.httpBasic(Customizer.withDefaults())
+    http
+      .httpBasic {
+        it.disable()
+      }
       .csrf { it.disable() }
       .sessionManagement {
         it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -73,13 +76,14 @@ class AuthConfig(@Autowired private val repository: ChefDtoRepository) {
         ).permitAll()
         it.anyRequest().authenticated()
       }
+      .authenticationProvider(authenticationProvider())
       .build()
 
   @Bean
   fun corsFilter(): CorsFilter {
     val config = CorsConfiguration()
     config.addAllowedHeader("*")
-    config.addAllowedOrigin("*")
+    config.addAllowedOriginPattern("*")
     config.addAllowedMethod("*")
     config.allowCredentials = true
 
