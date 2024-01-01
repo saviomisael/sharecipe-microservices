@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.presentation.controller
 
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
@@ -25,8 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUseCase: ISaveChefCredentialsUseCase) :
   BaseController() {
-  private val logger = LoggerFactory.getLogger(SaveChefCredentialsController::class.java)
-
+  private val logger = LogHandler(SaveChefCredentialsController::class.java)
 
   @Operation(summary = "Creates a chef account", description = "Returns 201 if successfully")
   @ApiResponses(
@@ -46,7 +46,7 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
     try {
       val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())
 
-      logger.info("RESPONSE. Chef created for ${chefSaved.username}")
+      logger.logSuccessResponse("Chef created for ${chefSaved.username}")
       return created(ResponseDto(emptyList<String>(), chefSaved))
     } catch (ex: UsernameAlreadyExistsException) {
       return handleException(ex)
@@ -56,7 +56,8 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
   }
 
   private fun handleException(ex: Exception): ResponseEntity<ResponseDto<TokenResultDto>> {
-    logger.error("RESPONSE. ${ex.message}")
+    logger.logResponseException(ex)
+
     return unprocessableEntity(ResponseDto(listOf(ex.message), null))
   }
 }
