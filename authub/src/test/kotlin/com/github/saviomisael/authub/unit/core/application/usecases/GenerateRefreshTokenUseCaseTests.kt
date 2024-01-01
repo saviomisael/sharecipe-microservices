@@ -1,6 +1,5 @@
 package com.github.saviomisael.authub.unit.core.application.usecases
 
-import com.github.saviomisael.authub.adapter.infrastructure.dto.TokenPayloadDto
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
 import com.github.saviomisael.authub.core.application.usecases.GenerateRefreshTokenUseCase
 import com.github.saviomisael.authub.core.domain.repository.IChefRepository
@@ -8,7 +7,6 @@ import com.github.saviomisael.authub.core.domain.usecases.IGenerateRefreshTokenU
 import com.github.saviomisael.authub.shared.exceptions.TokenInvalidException
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
