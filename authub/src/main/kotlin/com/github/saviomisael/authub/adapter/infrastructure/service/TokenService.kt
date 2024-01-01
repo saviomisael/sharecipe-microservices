@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.infrastructure.service
 
+import com.github.saviomisael.authub.adapter.infrastructure.dto.TokenDto
 import com.github.saviomisael.authub.adapter.infrastructure.dto.TokenPayloadDto
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
@@ -24,16 +25,23 @@ class TokenService(@Value("\${jwt.secret}") private val secret: String) {
     }
   }
 
-  fun generateToken(userName: String): String {
+  fun generateToken(userName: String): TokenDto {
     val claims: MutableMap<String, Any> = HashMap()
 
-    return Jwts.builder()
-      .setClaims(claims)
-      .setSubject(userName)
-      .setIssuedAt(Date.from(Instant.now()))
-      .setExpiration(Date.from(Instant.now().plusMillis(expirationTime)))
-      .signWith(getSignKey(), algorithm)
-      .compact()
+    val now = Instant.now()
+    val expiresAt = now.plusMillis(expirationTime)
+
+    return TokenDto(
+      Jwts.builder()
+        .setClaims(claims)
+        .setSubject(userName)
+        .setIssuedAt(Date.from(now))
+        .setNotBefore(Date.from(now.minusMillis(1000)))
+        .setExpiration(Date.from(expiresAt))
+        .signWith(getSignKey(), algorithm)
+        .compact(),
+      Date.from(expiresAt)
+    )
   }
 
   private fun getSignKey() = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret))

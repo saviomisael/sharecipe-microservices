@@ -33,10 +33,13 @@ class SaveChefCredentialsUseCase(
 
     chefWithPasswordHashed = chefRepository.saveChefCredentials(chefWithPasswordHashed)
 
+    val tokenInfo = tokenService.generateToken(chefWithPasswordHashed.username)
+
     return TokenResultDto(
-      tokenService.generateToken(chefWithPasswordHashed.username),
+      tokenInfo.token,
       chefWithPasswordHashed.username,
-      chefWithPasswordHashed.fullName
+      chefWithPasswordHashed.fullName,
+      tokenInfo.expiresAt
     )
   }
 }

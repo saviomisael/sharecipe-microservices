@@ -16,6 +16,8 @@ class GenerateRefreshTokenUseCase @Autowired constructor(
   override fun handle(username: String): TokenResultDto {
     val chef = chefRepository.getByUsername(username) ?: throw TokenInvalidException()
 
-    return TokenResultDto(tokenService.generateToken(chef.username), chef.username, chef.fullName)
+    val tokenInfo = tokenService.generateToken(chef.username)
+
+    return TokenResultDto(tokenInfo.token, chef.username, chef.fullName, tokenInfo.expiresAt)
   }
 }

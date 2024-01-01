@@ -24,6 +24,8 @@ class SignInUseCase @Autowired constructor(
 
     val chef = chefRepository.getByUsername(username) ?: throw CredentialsInvalidException()
 
-    return TokenResultDto(tokenService.generateToken(username), chef.username, chef.fullName)
+    val tokenInfo = tokenService.generateToken(username)
+
+    return TokenResultDto(tokenInfo.token, chef.username, chef.fullName, tokenInfo.expiresAt)
   }
 }
