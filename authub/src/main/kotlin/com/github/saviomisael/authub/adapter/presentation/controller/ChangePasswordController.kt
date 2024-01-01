@@ -4,7 +4,6 @@ import com.github.saviomisael.authub.adapter.presentation.dto.ChangePasswordDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.core.domain.usecases.IChangePasswordUseCase
-import com.github.saviomisael.authub.shared.exceptions.ChefNotFoundException
 import com.github.saviomisael.authub.shared.extensions.getUsername
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -37,8 +36,8 @@ class ChangePasswordController @Autowired constructor(private val useCase: IChan
         )]
       ),
       ApiResponse(
-        responseCode = "404",
-        description = "chef does not exist.",
+        responseCode = "401",
+        description = "chef is not authorized to change his password",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
       )
     ]
@@ -47,14 +46,8 @@ class ChangePasswordController @Autowired constructor(private val useCase: IChan
     @Valid @RequestBody dto: ChangePasswordDto,
     request: HttpServletRequest
   ): ResponseEntity<Any> {
-    val username = request.getUsername()
+    useCase.handle(request.getUsername(), dto.password)
 
-    try {
-      useCase.handle(username, dto.password)
-
-      return noContent()
-    } catch (ex: ChefNotFoundException) {
-      return notFound(ResponseDto(listOf(ex.message), null))
-    }
+    return noContent()
   }
 }

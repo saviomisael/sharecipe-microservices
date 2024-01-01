@@ -14,6 +14,5 @@ class ChangePasswordUseCase @Autowired constructor(
 ) : IChangePasswordUseCase {
   override fun handle(username: String, newPassword: String) {
     chefRepository.changePassword(username, passwordEncrypterService.encryptPassword(newPassword))
-      ?: throw ChefNotFoundException(username)
   }
 }

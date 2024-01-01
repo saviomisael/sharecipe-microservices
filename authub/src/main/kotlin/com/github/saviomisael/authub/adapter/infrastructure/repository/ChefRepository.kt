@@ -20,11 +20,11 @@ class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository
 
   override fun chefEmailAlreadyUsed(email: String) = chefDtoRepository.findByEmail(email) != null
   override fun getByUsername(username: String): Chef? = chefDtoRepository.findByUsername(username)?.toChef()
-  override fun changePassword(username: String, newPasswordEncrypted: String): Chef? {
-    val chefFromDb = chefDtoRepository.findByUsername(username) ?: return null
+  override fun changePassword(username: String, newPasswordEncrypted: String) {
+    val chefFromDb = chefDtoRepository.getByUsername(username)
 
     chefFromDb.password = newPasswordEncrypted
 
-    return chefDtoRepository.save(chefFromDb).toChef()
+    chefDtoRepository.save(chefFromDb)
   }
 }

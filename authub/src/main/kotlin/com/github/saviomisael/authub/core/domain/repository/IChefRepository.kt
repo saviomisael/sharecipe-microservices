@@ -7,5 +7,5 @@ interface IChefRepository {
   fun chefUsernameAlreadyExists(username: String): Boolean
   fun chefEmailAlreadyUsed(email: String): Boolean
   fun getByUsername(username: String): Chef?
-  fun changePassword(username: String, newPasswordEncrypted: String): Chef?
+  fun changePassword(username: String, newPasswordEncrypted: String)
 }
