@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class LogHandler<T>(private val clazz: Class<T>) {
+class LogHandler<T>(clazz: Class<T>) {
   private val logger = LoggerFactory.getLogger(clazz)
 
   fun logSuccessResponse(msg: String) {
