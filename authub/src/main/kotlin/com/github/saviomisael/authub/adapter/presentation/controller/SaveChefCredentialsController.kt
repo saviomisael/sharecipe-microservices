@@ -17,6 +17,7 @@ import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -40,6 +41,7 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
     ]
   )
   @PostMapping(ApiRoutes.ChefRoutes.createChefAccount)
+  @Transactional
   fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
     try {
       val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())

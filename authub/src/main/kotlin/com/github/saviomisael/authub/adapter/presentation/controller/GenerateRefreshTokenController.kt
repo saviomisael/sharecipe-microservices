@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -29,6 +30,7 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
     ]
   )
   @PostMapping(ApiRoutes.ChefRoutes.refreshToken)
+  @Transactional
   fun generateRefreshToken(
     request: HttpServletRequest
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
