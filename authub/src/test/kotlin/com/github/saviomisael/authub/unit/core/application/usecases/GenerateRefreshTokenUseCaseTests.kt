@@ -19,9 +19,7 @@ class GenerateRefreshTokenUseCaseTests {
 
   @Test
   fun `should throws TokenInvalidException when chef username does not exist`() {
-    every { chefRepositoryMock.chefUsernameAlreadyExists(any()) } returns false
-
-    every { tokenService.decodeToken("token") } returns TokenPayloadDto("username")
+    every { chefRepositoryMock.getByUsername(any()) } returns null
 
     useCase = GenerateRefreshTokenUseCase(tokenService, chefRepositoryMock)
 
@@ -29,9 +27,5 @@ class GenerateRefreshTokenUseCaseTests {
       .isThrownBy {
         useCase.handle("token")
       }
-
-    verify(exactly = 1) {
-      tokenService.decodeToken(any())
-    }
   }
 }
