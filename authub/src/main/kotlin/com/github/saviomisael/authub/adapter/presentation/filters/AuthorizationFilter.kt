@@ -20,7 +20,7 @@ class AuthorizationFilter @Autowired constructor(
   private val objectMapper: ObjectMapper,
   private val chefRepository: IChefRepository
 ) : OncePerRequestFilter() {
-  private val privateEndpoints = listOf(ApiRoutes.ChefRoutes.refreshToken)
+  private val privateEndpoints = listOf(ApiRoutes.ChefRoutes.refreshToken, ApiRoutes.ChefRoutes.changePasswords)
 
   override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
     if (privateEndpoints.contains(request.requestURI)) {
