@@ -5,6 +5,7 @@ import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import com.github.saviomisael.authub.core.domain.usecases.IGenerateRefreshTokenUseCase
 import com.github.saviomisael.authub.shared.exceptions.TokenInvalidException
+import com.github.saviomisael.authub.shared.extensions.getUsername
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -21,7 +22,6 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
   BaseController() {
   private val logger = LoggerFactory.getLogger(GenerateRefreshTokenController::class.java)
 
-
   @Operation(summary = "Validate tokens and generate a new token", description = "Returns 201 with the new token")
   @ApiResponses(
     value = [
@@ -35,12 +35,11 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
     request: HttpServletRequest
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
     return try {
-      val username = request.getAttribute("username").toString()
-
-      val tokenDto = generateRefreshTokenUseCase.handle(username)
+      val tokenDto = generateRefreshTokenUseCase.handle(request.getUsername())
       logger.info("RESPONSE. Generate refresh token for ${tokenDto.username}")
       created(ResponseDto(emptyList(), tokenDto))
     } catch (ex: TokenInvalidException) {
+      logger.error(ex.message)
       unauthorized(ResponseDto(listOf(ex.message), null))
     }
   }
