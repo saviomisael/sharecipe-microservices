@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.presentation.controller
 
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangePasswordDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ChangePasswordController @Autowired constructor(private val useCase: IChangePasswordUseCase) : BaseController() {
+  private val logger = LogHandler(ChangePasswordController::class.java)
+
   @PatchMapping(ApiRoutes.ChefRoutes.changePasswords)
   @Operation(summary = "Change your password.", description = "Returns 204 if successfully")
   @ApiResponses(
@@ -53,6 +56,7 @@ class ChangePasswordController @Autowired constructor(private val useCase: IChan
   ): ResponseEntity<Any> {
     useCase.handle(request.getUsername(), dto.password)
 
+    logger.logSuccessResponse("Password changed for ${request.getUsername()}")
     return noContent()
   }
 }
