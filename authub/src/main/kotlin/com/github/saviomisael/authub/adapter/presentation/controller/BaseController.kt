@@ -7,4 +7,6 @@ abstract class BaseController {
   fun <T> unprocessableEntity(body: T): ResponseEntity<T> = ResponseEntity.status(422).body(body)
   fun <T> unauthorized(body: T): ResponseEntity<T> = ResponseEntity.status(401).body(body)
   fun <T> ok(body: T): ResponseEntity<T> = ResponseEntity.status(200).body(body)
+  fun <T> notFound(body: T): ResponseEntity<T> = ResponseEntity.status(404).body(body)
+  fun noContent(): ResponseEntity<Any> = ResponseEntity.noContent().build()
 }
