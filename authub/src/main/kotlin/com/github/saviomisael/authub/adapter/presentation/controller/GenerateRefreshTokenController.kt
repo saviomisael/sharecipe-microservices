@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.presentation.controller
 
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class GenerateRefreshTokenController @Autowired constructor(private val generateRefreshTokenUseCase: IGenerateRefreshTokenUseCase) :
   BaseController() {
-  private val logger = LoggerFactory.getLogger(GenerateRefreshTokenController::class.java)
+  private val logger = LogHandler(GenerateRefreshTokenController::class.java)
 
   @Operation(summary = "Validate tokens and generate a new token", description = "Returns 201 with the new token")
   @ApiResponses(
@@ -36,10 +37,10 @@ class GenerateRefreshTokenController @Autowired constructor(private val generate
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
     return try {
       val tokenDto = generateRefreshTokenUseCase.handle(request.getUsername())
-      logger.info("RESPONSE. Generate refresh token for ${tokenDto.username}")
+      logger.logSuccessResponse("Generate refresh token for ${tokenDto.username}")
       created(ResponseDto(emptyList(), tokenDto))
     } catch (ex: TokenInvalidException) {
-      logger.error(ex.message)
+      logger.logResponseException(ex)
       unauthorized(ResponseDto(listOf(ex.message), null))
     }
   }
