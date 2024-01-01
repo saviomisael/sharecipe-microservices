@@ -8,6 +8,12 @@ Feature: Change password for a chef
 
   Scenario: The new password is fewer than 8 characters
     Given A chef that creates his account
-    And Wants to change his password with one that is less than 8 characters
+    And Wants to change his password with one that has less than 8 characters
+    When He tries to change his password
+    Then Returns a bad request for invalid password
+
+  Scenario: The new password has more than 255 characters
+    Given A chef that creates his account
+    And Wants to change his password with one that has more than 255 characters
     When He tries to change his password
     Then Returns a bad request for invalid password

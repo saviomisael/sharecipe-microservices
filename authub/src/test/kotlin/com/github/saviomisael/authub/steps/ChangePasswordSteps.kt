@@ -13,6 +13,7 @@ import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
 import org.assertj.core.api.Assertions
 import org.springframework.http.HttpStatus
+import java.util.UUID
 
 class ChangePasswordSteps {
   private val objectMapper = ObjectMapper()
@@ -36,23 +37,30 @@ class ChangePasswordSteps {
         objectMapper.writeValueAsString(
           CreateChefDto(
             "User wants change password",
-            "userwantschangepassword",
+            "userwantschangepassword-${UUID.randomUUID()}",
             "@Test123",
-            "userwantschangepassword@email.com"
+            "userwantschangepassword-${UUID.randomUUID()}@email.com"
           )
         )
       )
       .`when`()
       .post(ApiRoutes.ChefRoutes.createChefAccount)
       .then()
+      .log()
+      .all()
       .extract()
       .jsonPath()
       .getString("data.token")
   }
 
-  @And("Wants to change his password with one that is less than 8 characters")
+  @And("Wants to change his password with one that has less than 8 characters")
   fun `Wants to change his password with one that is less than 8 characters`() {
     newPassword = "123"
+  }
+
+  @And("Wants to change his password with one that has more than 255 characters")
+  fun `Wants to change his password with one that has more than 255 characters`() {
+    newPassword = "a".repeat(256)
   }
 
   @When("He tries to change his password")
