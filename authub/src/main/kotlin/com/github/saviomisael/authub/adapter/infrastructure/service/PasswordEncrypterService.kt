@@ -6,8 +6,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class PasswordEncrypterService(@Autowired private val passwordEncoder: PasswordEncoder) {
-  fun encryptPassword(password: String) = passwordEncoder.encode(password)
-
-  fun comparePasswords(passwordEncrypted: String, passwordToValidate: String) =
-    passwordEncoder.matches(passwordToValidate, passwordEncrypted)
+  fun encryptPassword(password: String): String = passwordEncoder.encode(password)
 }
