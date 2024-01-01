@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.presentation.controller
 
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class SignInController @Autowired constructor(private val signInUseCase: ISignInUseCase) : BaseController() {
-  private val logger = LoggerFactory.getLogger(SignInController::class.java)
+  private val logger = LogHandler(SignInController::class.java)
 
   @Operation(summary = "Sign in into sharecipe", description = "Returns 200 if successfully")
   @ApiResponses(
@@ -43,10 +44,10 @@ class SignInController @Autowired constructor(private val signInUseCase: ISignIn
     try {
       val token = signInUseCase.handle(dto.username, dto.password)
 
-      logger.info("RESPONSE. Sign in successfully for ${token.username}")
+      logger.logSuccessResponse("Sign in successfully for ${token.username}")
       return ok(ResponseDto(emptyList(), token))
     } catch (ex: CredentialsInvalidException) {
-      logger.error("RESPONSE. ${ex.message}")
+      logger.logResponseException(ex)
       return unauthorized(ResponseDto(listOf(ex.message), null))
     }
   }
