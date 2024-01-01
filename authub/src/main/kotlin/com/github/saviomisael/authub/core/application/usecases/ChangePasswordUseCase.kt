@@ -3,7 +3,6 @@ package com.github.saviomisael.authub.core.application.usecases
 import com.github.saviomisael.authub.adapter.infrastructure.service.PasswordEncrypterService
 import com.github.saviomisael.authub.core.domain.repository.IChefRepository
 import com.github.saviomisael.authub.core.domain.usecases.IChangePasswordUseCase
-import com.github.saviomisael.authub.shared.exceptions.ChefNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
