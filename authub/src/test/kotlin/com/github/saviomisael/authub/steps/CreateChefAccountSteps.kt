@@ -14,9 +14,6 @@ import org.hamcrest.Matchers
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 
-@SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["spring.profiles.active=qa"]
-)
 class CreateChefAccountSteps {
   private val objectMapper = ObjectMapper()
   private var fullName = ""

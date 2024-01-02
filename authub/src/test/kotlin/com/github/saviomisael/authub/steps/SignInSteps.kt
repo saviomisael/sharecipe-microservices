@@ -15,10 +15,6 @@ import org.assertj.core.api.Assertions
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 
-@SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
-  properties = ["spring.profiles.active=qa"]
-)
 class SignInSteps {
   private val objectMapper = ObjectMapper()
   private var username = ""
