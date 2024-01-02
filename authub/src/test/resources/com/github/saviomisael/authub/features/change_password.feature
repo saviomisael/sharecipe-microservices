@@ -41,3 +41,9 @@ Feature: Change password for a chef
     And Wants to change his password with one that does not have any special digit
     When He tries to change his password
     Then Returns a bad request for invalid password
+
+  Scenario: A chef created his account and change his password successfully
+    Given A chef that creates his account
+    And Wants to change his password with a valid new password
+    When He tries to change his password
+    Then Returns a no content response

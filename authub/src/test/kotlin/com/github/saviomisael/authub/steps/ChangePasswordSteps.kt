@@ -83,6 +83,11 @@ class ChangePasswordSteps {
     newPassword = "TEstTest123"
   }
 
+  @And("Wants to change his password with a valid new password")
+  fun `Wants to change his password with a valid new password`() {
+    newPassword = "Test123@"
+  }
+
   @When("He tries to change his password")
   fun `He tries to change his password`() {
     performRequest = RestAssured
@@ -120,5 +125,13 @@ class ChangePasswordSteps {
       .all()
       .contentType(ContentType.JSON)
       .statusCode(HttpStatus.BAD_REQUEST.value())
+  }
+
+  @Then("Returns a no content response")
+  fun `Returns a no content response`() {
+    performRequest
+      .log()
+      .all()
+      .statusCode(HttpStatus.NO_CONTENT.value())
   }
 }
