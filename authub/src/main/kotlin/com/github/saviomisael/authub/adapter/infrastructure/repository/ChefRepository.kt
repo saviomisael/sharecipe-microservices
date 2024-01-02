@@ -27,4 +27,12 @@ class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository
 
     chefDtoRepository.save(chefFromDb)
   }
+
+  override fun changeUsername(username: String, newUsername: String): Chef {
+    val chef = chefDtoRepository.getByUsername(username)
+
+    chef.username = newUsername
+
+    return chefDtoRepository.save(chef).toChef()
+  }
 }

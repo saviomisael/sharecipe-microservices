@@ -8,4 +8,5 @@ interface IChefRepository {
   fun chefEmailAlreadyUsed(email: String): Boolean
   fun getByUsername(username: String): Chef?
   fun changePassword(username: String, newPasswordEncrypted: String)
+  fun changeUsername(username: String, newUsername: String): Chef
 }
