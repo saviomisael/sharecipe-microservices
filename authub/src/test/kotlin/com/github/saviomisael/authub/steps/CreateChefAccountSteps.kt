@@ -22,11 +22,6 @@ class CreateChefAccountSteps {
   private var email = ""
   private lateinit var performRequest: ValidatableResponse
 
-  @Before
-  fun setup() {
-    RestAssured.port = 8888
-  }
-
   @Given("A person that provides your full name in a invalid way")
   fun `A person that provides your full name in a invalid way`() {
     fullName = ""

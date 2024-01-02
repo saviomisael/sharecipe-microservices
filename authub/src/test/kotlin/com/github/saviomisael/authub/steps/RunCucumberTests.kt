@@ -1,7 +1,9 @@
 package com.github.saviomisael.authub.steps
 
+import io.cucumber.java.Before
 import io.cucumber.junit.platform.engine.Constants
 import io.cucumber.spring.CucumberContextConfiguration
+import io.restassured.RestAssured
 import org.junit.platform.suite.api.ConfigurationParameter
 import org.junit.platform.suite.api.IncludeEngines
 import org.junit.platform.suite.api.SelectClasspathResource
@@ -19,4 +21,9 @@ import org.springframework.test.context.ContextConfiguration
 )
 @ContextConfiguration
 @CucumberContextConfiguration
-class RunCucumberTests
+class RunCucumberTests {
+  @Before
+  fun setup() {
+    RestAssured.port = 8888
+  }
+}
