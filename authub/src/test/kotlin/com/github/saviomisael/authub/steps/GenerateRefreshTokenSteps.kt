@@ -10,7 +10,6 @@ import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
 import org.assertj.core.api.Assertions
 import org.hamcrest.Matchers
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 
 class GenerateRefreshTokenSteps {

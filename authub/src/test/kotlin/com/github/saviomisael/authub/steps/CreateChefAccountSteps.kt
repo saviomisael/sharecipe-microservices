@@ -3,7 +3,6 @@ package com.github.saviomisael.authub.steps
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
-import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -11,7 +10,6 @@ import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
 import org.hamcrest.Matchers
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 
 class CreateChefAccountSteps {

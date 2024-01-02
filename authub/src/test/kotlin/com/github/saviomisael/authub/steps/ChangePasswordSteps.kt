@@ -13,7 +13,7 @@ import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
 import org.assertj.core.api.Assertions
 import org.springframework.http.HttpStatus
-import java.util.UUID
+import java.util.*
 
 class ChangePasswordSteps {
   private val objectMapper = ObjectMapper()
