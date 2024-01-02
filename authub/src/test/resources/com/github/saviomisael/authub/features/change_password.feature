@@ -47,3 +47,10 @@ Feature: Change password for a chef
     And Wants to change his password with a valid new password
     When He tries to change his password
     Then Returns a no content response
+
+  Scenario: A chef already has an account and is logged-in and wants to change his password
+    Given A chef that creates his account
+    And Is logged-in
+    And Wants to change his password with a valid new password
+    When He tries to change his password
+    Then Returns a no content response

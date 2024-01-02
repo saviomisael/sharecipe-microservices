@@ -3,6 +3,7 @@ package com.github.saviomisael.authub.steps
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangePasswordDto
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
+import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
@@ -19,6 +20,8 @@ class ChangePasswordSteps {
   private val objectMapper = ObjectMapper()
   private var token = ""
   private var newPassword = ""
+  private var password = ""
+  private var username = ""
   private lateinit var performRequest: ValidatableResponse
 
   @Given("A user without a token")
@@ -28,6 +31,9 @@ class ChangePasswordSteps {
 
   @Given("A chef that creates his account")
   fun `A chef that creates his account`() {
+    username = "userwantschangepassword-${UUID.randomUUID()}"
+    password = "@Test123"
+
     token = RestAssured
       .given()
       .log()
@@ -37,8 +43,8 @@ class ChangePasswordSteps {
         objectMapper.writeValueAsString(
           CreateChefDto(
             "User wants change password",
-            "userwantschangepassword-${UUID.randomUUID()}",
-            "@Test123",
+            username,
+            password,
             "userwantschangepassword-${UUID.randomUUID()}@email.com"
           )
         )
@@ -86,6 +92,25 @@ class ChangePasswordSteps {
   @And("Wants to change his password with a valid new password")
   fun `Wants to change his password with a valid new password`() {
     newPassword = "Test123@"
+  }
+
+  @And("Is logged-in")
+  fun `Is logged-in`() {
+    token = RestAssured
+      .given()
+      .log()
+      .all()
+      .body(SignInCredentialsDto(username, password))
+      .contentType(ContentType.JSON)
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.signIn)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
   }
 
   @When("He tries to change his password")
