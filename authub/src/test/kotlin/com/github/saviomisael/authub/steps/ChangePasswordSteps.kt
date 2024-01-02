@@ -63,6 +63,11 @@ class ChangePasswordSteps {
     newPassword = "a".repeat(256)
   }
 
+  @And("Wants to change his password with one that does not have any uppercase letter")
+  fun `Wants to change his password with one that does not have any uppercase letter`() {
+    newPassword = "test123@"
+  }
+
   @When("He tries to change his password")
   fun `He tries to change his password`() {
     performRequest = RestAssured
