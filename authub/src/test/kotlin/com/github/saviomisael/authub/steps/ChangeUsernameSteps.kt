@@ -10,6 +10,7 @@ import io.cucumber.java.en.When
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import io.restassured.response.ValidatableResponse
+import org.hamcrest.Matchers
 import org.springframework.http.HttpStatus
 import java.util.*
 
@@ -54,6 +55,11 @@ class ChangeUsernameSteps {
     username = "a".repeat(256)
   }
 
+  @And("Wants to change his username with a valid username")
+  fun `Wants to change his username with a valid username`() {
+    username = "linus-torvalds"
+  }
+
   @When("He tries to change his username")
   fun `He tries to log in`() {
     performRequest = RestAssured
@@ -84,5 +90,16 @@ class ChangeUsernameSteps {
       .all()
       .statusCode(HttpStatus.BAD_REQUEST.value())
       .contentType(ContentType.JSON)
+  }
+
+  @Then("Returns a ok status code with a new token")
+  fun `Returns a ok status code with a new token`() {
+    performRequest
+      .log()
+      .all()
+      .statusCode(HttpStatus.OK.value())
+      .contentType(ContentType.JSON)
+      .body("data.username", Matchers.equalTo("linus-torvalds"))
+      .body("data.token", Matchers.not(""))
   }
 }

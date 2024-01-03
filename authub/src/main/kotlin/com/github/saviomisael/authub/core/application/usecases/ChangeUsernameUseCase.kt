@@ -17,6 +17,6 @@ class ChangeUsernameUseCase @Autowired constructor(
     // TODO - Update recipes with new username
     val tokenInfo = tokenService.generateToken(chef.username)
 
-    return TokenResultDto(tokenInfo.token, username, chef.fullName, tokenInfo.expiresAt)
+    return TokenResultDto(tokenInfo.token, chef.username, chef.fullName, tokenInfo.expiresAt)
   }
 }

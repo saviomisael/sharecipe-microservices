@@ -17,3 +17,9 @@ Feature: Change chef username
     And Wants to change his username with a username longer than 255 characters
     When He tries to change his username
     Then Returns a bad request because new username is invalid
+
+  Scenario: Chef changed his username successfully
+    Given A chef is logged-in in the system
+    And Wants to change his username with a valid username
+    When He tries to change his username
+    Then Returns a ok status code with a new token
