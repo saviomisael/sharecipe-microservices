@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 class ChangePasswordController @Autowired constructor(private val useCase: IChangePasswordUseCase) : BaseController() {
   private val logger = LogHandler(ChangePasswordController::class.java)
 
-  @PatchMapping(ApiRoutes.ChefRoutes.changePasswords)
+  @PatchMapping(ApiRoutes.ChefRoutes.changePassword)
   @Operation(summary = "Change your password.", description = "Returns 204 if successfully")
   @ApiResponses(
     value = [

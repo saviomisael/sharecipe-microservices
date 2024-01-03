@@ -9,6 +9,7 @@ object ApiRoutes {
     const val createChefAccount = "$BASE/chefs/"
     const val signIn = "$BASE/chefs/tokens/"
     const val refreshToken = "$BASE/chefs/tokens/refresh-tokens/"
-    const val changePasswords = "$BASE/chefs/passwords/"
+    const val changePassword = "$BASE/chefs/passwords/"
+    const val changeUsername = "$BASE/chefs/usernames/"
   }
 }

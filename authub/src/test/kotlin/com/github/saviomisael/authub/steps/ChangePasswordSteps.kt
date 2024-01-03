@@ -123,7 +123,7 @@ class ChangePasswordSteps {
       .header("Authorization", "Bearer $token")
       .body(objectMapper.writeValueAsString(ChangePasswordDto(newPassword)))
       .`when`()
-      .patch(ApiRoutes.ChefRoutes.changePasswords)
+      .patch(ApiRoutes.ChefRoutes.changePassword)
       .then()
   }
 
