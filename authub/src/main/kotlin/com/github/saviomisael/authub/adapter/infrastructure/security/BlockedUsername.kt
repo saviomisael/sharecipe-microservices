@@ -16,10 +16,11 @@ class BlockedUsername {
   lateinit var expiresBlockAt: Instant
 
   companion object {
-    fun build(username: String) {
+    fun build(username: String): BlockedUsername {
       val blockedUsername = BlockedUsername()
       blockedUsername.username = username
       blockedUsername.expiresBlockAt = Instant.now().plusMinutes(30)
+      return blockedUsername
     }
   }
 
