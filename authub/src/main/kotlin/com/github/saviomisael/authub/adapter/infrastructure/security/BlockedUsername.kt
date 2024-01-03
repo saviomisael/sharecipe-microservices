@@ -19,7 +19,7 @@ class BlockedUsername {
     fun build(username: String): BlockedUsername {
       val blockedUsername = BlockedUsername()
       blockedUsername.username = username
-      blockedUsername.expiresBlockAt = Instant.now().plusMinutes(30)
+      blockedUsername.expiresBlockAt = Instant.now().plusMinutes(35)
       return blockedUsername
     }
   }
