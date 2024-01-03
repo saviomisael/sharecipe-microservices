@@ -1,6 +1,5 @@
 package com.github.saviomisael.authub.steps
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import io.cucumber.java.en.Given
@@ -13,7 +12,6 @@ import org.hamcrest.Matchers
 import org.springframework.http.HttpStatus
 
 class CreateChefAccountSteps {
-  private val objectMapper = ObjectMapper()
   private var fullName = ""
   private var username = ""
   private var password = ""
@@ -79,10 +77,8 @@ class CreateChefAccountSteps {
       .given()
       .contentType(ContentType.JSON)
       .body(
-        objectMapper.writeValueAsString(
-          CreateChefDto(
-            username, fullName, password, email
-          )
+        CreateChefDto(
+          username, fullName, password, email
         )
       )
       .`when`()
@@ -114,10 +110,8 @@ class CreateChefAccountSteps {
       .all()
       .contentType(ContentType.JSON)
       .body(
-        objectMapper.writeValueAsString(
-          CreateChefDto(
-            fullName, username, password, email
-          )
+        CreateChefDto(
+          fullName, username, password, email
         )
       )
       .`when`()

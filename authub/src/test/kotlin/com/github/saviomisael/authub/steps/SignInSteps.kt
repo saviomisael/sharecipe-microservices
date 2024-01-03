@@ -1,6 +1,5 @@
 package com.github.saviomisael.authub.steps
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
@@ -15,7 +14,6 @@ import org.assertj.core.api.Assertions
 import org.springframework.http.HttpStatus
 
 class SignInSteps {
-  private val objectMapper = ObjectMapper()
   private var username = ""
   private var password = ""
   private lateinit var performRequest: ValidatableResponse
@@ -72,9 +70,7 @@ class SignInSteps {
       .given()
       .contentType(ContentType.JSON)
       .body(
-        objectMapper.writeValueAsString(
-          CreateChefDto("User test", "user for sign in", "@Test123", "test@email.com")
-        )
+        CreateChefDto("User test", "user for sign in", "@Test123", "test@email.com")
       )
       .`when`()
       .post(ApiRoutes.ChefRoutes.createChefAccount)
@@ -100,7 +96,7 @@ class SignInSteps {
       .log()
       .all()
       .contentType(ContentType.JSON)
-      .body(objectMapper.writeValueAsString(SignInCredentialsDto(username, password)))
+      .body(SignInCredentialsDto(username, password))
       .`when`()
       .post(ApiRoutes.ChefRoutes.signIn)
       .then()

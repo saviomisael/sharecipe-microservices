@@ -1,6 +1,5 @@
 package com.github.saviomisael.authub.steps
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangePasswordDto
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.SignInCredentialsDto
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus
 import java.util.*
 
 class ChangePasswordSteps {
-  private val objectMapper = ObjectMapper()
   private var token = ""
   private var newPassword = ""
   private var password = ""
@@ -40,13 +38,11 @@ class ChangePasswordSteps {
       .all()
       .contentType(ContentType.JSON)
       .body(
-        objectMapper.writeValueAsString(
-          CreateChefDto(
-            "User wants change password",
-            username,
-            password,
-            "userwantschangepassword-${UUID.randomUUID()}@email.com"
-          )
+        CreateChefDto(
+          "User wants change password",
+          username,
+          password,
+          "userwantschangepassword-${UUID.randomUUID()}@email.com"
         )
       )
       .`when`()
@@ -121,7 +117,7 @@ class ChangePasswordSteps {
       .all()
       .contentType(ContentType.JSON)
       .header("Authorization", "Bearer $token")
-      .body(objectMapper.writeValueAsString(ChangePasswordDto(newPassword)))
+      .body(ChangePasswordDto(newPassword))
       .`when`()
       .patch(ApiRoutes.ChefRoutes.changePassword)
       .then()
