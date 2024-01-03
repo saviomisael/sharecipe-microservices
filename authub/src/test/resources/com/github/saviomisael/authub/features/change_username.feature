@@ -3,5 +3,11 @@ Feature: Change chef username
 
   Scenario: Chef is not logged-in
     Given A chef does not have a token
-    When He tries to log in
+    When He tries to change his username
     Then Returns unauthorized because he does not have a token
+
+  Scenario: New username is less than 2 characters
+    Given A chef is logged-in in the system
+    And Wants to change his username with a username less than 2 characters
+    When He tries to change his username
+    Then Returns a bad request because new username is invalid
