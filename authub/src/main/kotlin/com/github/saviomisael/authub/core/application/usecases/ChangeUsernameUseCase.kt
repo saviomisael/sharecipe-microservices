@@ -14,6 +14,7 @@ class ChangeUsernameUseCase @Autowired constructor(
 ) : IChangeUsernameUseCase {
   override fun handle(username: String, newUsername: String): TokenResultDto {
     val chef = chefRepository.changeUsername(username, newUsername)
+    chefRepository.blockUsername(username)
     // TODO - Update recipes with new username
     val tokenInfo = tokenService.generateToken(chef.username)
 
