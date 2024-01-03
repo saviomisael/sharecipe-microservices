@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile.qa
     network_mode: host
+    env_file:
+      - dev.jvm.conf
     depends_on:
       mysql:
         condition: service_healthy
