@@ -25,3 +25,10 @@ logging:
     org:
       hibernate:
         type: trace
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+      base-path: "/authub/actuator/"

@@ -42,6 +42,8 @@ class AuthConfig(
     "/swagger-ui/**"
   )
 
+  private val actuatorEndpoints = arrayOf("/authub/actuator/**")
+
   private val publicEndpoints = arrayOf("/api/**")
 
   @Bean
@@ -75,7 +77,8 @@ class AuthConfig(
       }.authorizeHttpRequests {
         it.requestMatchers(
           *swaggerEndpoints,
-          *publicEndpoints
+          *publicEndpoints,
+          *actuatorEndpoints
         ).permitAll()
         it.anyRequest().authenticated()
       }
