@@ -9,4 +9,7 @@ interface IChefRepository {
   fun getByUsername(username: String): Chef?
   fun changePassword(username: String, newPasswordEncrypted: String)
   fun changeUsername(username: String, newUsername: String): Chef
+  fun isUsernameBlocked(username: String): Boolean
+  fun blockUsername(username: String)
+  fun unblockUsername(username: String)
 }

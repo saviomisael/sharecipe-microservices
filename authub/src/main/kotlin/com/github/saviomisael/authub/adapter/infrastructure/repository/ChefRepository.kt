@@ -1,6 +1,8 @@
 package com.github.saviomisael.authub.adapter.infrastructure.repository
 
+import com.github.saviomisael.authub.adapter.infrastructure.persistence.BlockedUsernameRepository
 import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
+import com.github.saviomisael.authub.adapter.infrastructure.security.BlockedUsername
 import com.github.saviomisael.authub.core.domain.entity.Chef
 import com.github.saviomisael.authub.core.domain.repository.IChefRepository
 import com.github.saviomisael.authub.shared.extensions.toChef
@@ -9,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository) : IChefRepository {
+class ChefRepository @Autowired constructor(
+  private val chefDtoRepository: ChefDtoRepository,
+  private val blockedUsernameRepository: BlockedUsernameRepository
+) : IChefRepository {
   override fun saveChefCredentials(chef: Chef): Chef {
     return chefDtoRepository.save(chef.toChefDto()).toChef()
   }
@@ -34,5 +39,19 @@ class ChefRepository(@Autowired private val chefDtoRepository: ChefDtoRepository
     chef.username = newUsername
 
     return chefDtoRepository.save(chef).toChef()
+  }
+
+  override fun isUsernameBlocked(username: String): Boolean {
+    val blockedUsername = blockedUsernameRepository.findByUsername(username) ?: return false
+
+    return blockedUsername.isBlocked()
+  }
+
+  override fun blockUsername(username: String) {
+    blockedUsernameRepository.save(BlockedUsername.build(username))
+  }
+
+  override fun unblockUsername(username: String) {
+    blockedUsernameRepository.deleteByUsername(username)
   }
 }
