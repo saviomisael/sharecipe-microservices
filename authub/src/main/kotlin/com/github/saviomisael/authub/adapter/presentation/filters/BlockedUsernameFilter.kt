@@ -1,13 +1,10 @@
 package com.github.saviomisael.authub.adapter.presentation.filters
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.infrastructure.service.BlockedUsernameService
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
-import com.github.saviomisael.authub.adapter.presentation.dto.ChangeUsernameDto
-import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.shared.extensions.getBody
