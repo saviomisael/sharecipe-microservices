@@ -92,33 +92,15 @@ class BlockedUsernameFilter @Autowired constructor(
     }
   }
 
-  private class TokenValidation : ValidateUsername {
-    override fun isValidUsername(
-      request: HttpServletRequest,
-      blockedUsernameService: BlockedUsernameService,
-      tokenService: TokenService
-    ): Boolean {
-      val token = request.getHeader("Authorization").split(" ")[1]
-
-      val username = tokenService.decodeToken(token)?.username ?: return false
-
-      return blockedUsernameService.isAvailableUsername(username)
-    }
-  }
-
   private class ChangeUsernameValidation : ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
       blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
-      var isValid = TokenValidation().isValidUsername(request, blockedUsernameService, tokenService)
-
       val usernameToValidate = objectMapper.readTree(request.getBody()).at("/newUsername").asText()
 
-      isValid = isValid && blockedUsernameService.isAvailableUsername(usernameToValidate)
-
-      return isValid
+      return blockedUsernameService.isAvailableUsername(usernameToValidate)
     }
   }
 }
