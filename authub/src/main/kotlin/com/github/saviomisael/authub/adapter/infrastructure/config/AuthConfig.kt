@@ -3,6 +3,7 @@ package com.github.saviomisael.authub.adapter.infrastructure.config
 import com.github.saviomisael.authub.adapter.infrastructure.adapter.UserDetailsServiceAdapter
 import com.github.saviomisael.authub.adapter.infrastructure.persistence.ChefDtoRepository
 import com.github.saviomisael.authub.adapter.presentation.filters.AuthorizationFilter
+import com.github.saviomisael.authub.adapter.presentation.filters.BlockedUsernameFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,9 +25,10 @@ import org.springframework.web.filter.CorsFilter
 
 @Configuration
 @EnableWebSecurity
-class AuthConfig(
-  @Autowired private val repository: ChefDtoRepository,
-  private val authorizationFilter: AuthorizationFilter
+class AuthConfig @Autowired constructor(
+  private val repository: ChefDtoRepository,
+  private val authorizationFilter: AuthorizationFilter,
+  private val blockedUsernameFilter: BlockedUsernameFilter
 ) {
   private val swaggerEndpoints = arrayOf(
     "/swagger-resources",
@@ -84,6 +86,7 @@ class AuthConfig(
       }
       .authenticationProvider(authenticationProvider())
       .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
+      .addFilterBefore(blockedUsernameFilter, AuthorizationFilter::class.java)
       .build()
 
   @Bean
