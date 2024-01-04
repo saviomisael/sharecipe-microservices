@@ -41,11 +41,7 @@ class ChefRepository @Autowired constructor(
     return chefDtoRepository.save(chef).toChef()
   }
 
-  override fun isUsernameBlocked(username: String): Boolean {
-    val blockedUsername = blockedUsernameRepository.findByUsername(username) ?: return false
-
-    return blockedUsername.isBlocked()
-  }
+  override fun getBlockedUsername(username: String) = blockedUsernameRepository.findByUsername(username)
 
   override fun blockUsername(username: String) {
     blockedUsernameRepository.save(BlockedUsername.build(username))
