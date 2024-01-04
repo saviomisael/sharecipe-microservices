@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.steps
 
+import com.github.saviomisael.authub.adapter.presentation.dto.ChangePasswordDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangeUsernameDto
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
@@ -55,6 +56,25 @@ class BlockUsernameSteps {
       .getString("data.token")
   }
 
+  @Given("A chef is logged-in as spacca3")
+  fun `A chef is logged-in as spacca3`() {
+    oldUserToken = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("full name for old user", "spacca3", "@Test123", "oldemail3${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
+  }
+
   @And("Changes his username to pava")
   fun `Changes his username to pava`() {
     RestAssured
@@ -87,6 +107,22 @@ class BlockUsernameSteps {
       .all()
   }
 
+  @And("Changes his username to pava3")
+  fun `Changes his username to pava3`() {
+    RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .header("Authorization", "Bearer $oldUserToken")
+      .body(ChangeUsernameDto("pava3"))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
+      .then()
+      .log()
+      .all()
+  }
+
   @When("Another person tries to create an account with spacca username")
   fun `Another person tries to create an account with spacca username`() {
     performRequest = RestAssured
@@ -112,6 +148,19 @@ class BlockUsernameSteps {
       .then()
   }
 
+  @When("He tries to change his password for his old username")
+  fun `He tries to change his password for his old username`() {
+    performRequest = RestAssured
+      .given()
+      .log()
+      .all()
+      .header("Authorization", "Bearer $oldUserToken")
+      .body(ChangePasswordDto("@TEStTes123"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.changePassword)
+      .then()
+  }
+
   @Then("Returns a 422 status code")
   fun `Returns a 422 status code`() {
     performRequest
@@ -121,8 +170,8 @@ class BlockUsernameSteps {
       .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
   }
 
-  @Then("Returns a 401 status code because spacca2 does not exist")
-  fun `Returns a 401 status code because spacca2 does not exist`() {
+  @Then("Returns a 401 status code because old username does not exist")
+  fun `Returns a 401 status code because old username does not exist`() {
     performRequest
       .log()
       .all()
