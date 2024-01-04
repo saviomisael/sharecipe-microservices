@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class IsAvailableUsernameService @Autowired constructor(private val chefRepository: IChefRepository) {
+class BlockedUsernameService @Autowired constructor(private val chefRepository: IChefRepository) {
   fun isAvailableUsername(username: String): Boolean {
     val blockedUsername = chefRepository.getBlockedUsername(username) ?: return true
 
@@ -14,5 +14,9 @@ class IsAvailableUsernameService @Autowired constructor(private val chefReposito
     if (isAvailableUsername) chefRepository.unblockUsername(username)
 
     return isAvailableUsername
+  }
+
+  fun blockUsername(username: String) {
+    chefRepository.blockUsername(username)
   }
 }

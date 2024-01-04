@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.core.application.usecases
 
+import com.github.saviomisael.authub.adapter.infrastructure.service.BlockedUsernameService
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import com.github.saviomisael.authub.core.domain.repository.IChefRepository
@@ -10,11 +11,12 @@ import org.springframework.stereotype.Component
 @Component
 class ChangeUsernameUseCase @Autowired constructor(
   private val chefRepository: IChefRepository,
-  private val tokenService: TokenService
+  private val tokenService: TokenService,
+  private val blockedUsernameService: BlockedUsernameService
 ) : IChangeUsernameUseCase {
   override fun handle(username: String, newUsername: String): TokenResultDto {
     val chef = chefRepository.changeUsername(username, newUsername)
-    chefRepository.blockUsername(username)
+    blockedUsernameService.blockUsername(username)
     // TODO - Update recipes with new username
     val tokenInfo = tokenService.generateToken(chef.username)
 

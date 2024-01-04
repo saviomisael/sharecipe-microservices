@@ -1,7 +1,7 @@
 package com.github.saviomisael.authub.adapter.presentation.filters
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.saviomisael.authub.adapter.infrastructure.service.IsAvailableUsernameService
+import com.github.saviomisael.authub.adapter.infrastructure.service.BlockedUsernameService
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangeUsernameDto
 import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class BlockedUsernameFilter @Autowired constructor(
-  private val isAvailableUsernameService: IsAvailableUsernameService,
+  private val blockedUsernameService: BlockedUsernameService,
   private val tokenService: TokenService
 ) :
   OncePerRequestFilter() {
@@ -42,7 +42,7 @@ class BlockedUsernameFilter @Autowired constructor(
       return
     }
 
-    val isValidUsername = selectedStrategy.isValidUsername(request, isAvailableUsernameService, tokenService)
+    val isValidUsername = selectedStrategy.isValidUsername(request, blockedUsernameService, tokenService)
 
     if (isValidUsername) {
       filterChain.doFilter(request, response)
@@ -61,7 +61,7 @@ class BlockedUsernameFilter @Autowired constructor(
 
     fun isValidUsername(
       request: HttpServletRequest,
-      isAvailableUsernameService: IsAvailableUsernameService,
+      blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean
   }
@@ -70,40 +70,40 @@ class BlockedUsernameFilter @Autowired constructor(
     ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
-      isAvailableUsernameService: IsAvailableUsernameService,
+      blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
       val bodyConverted = objectMapper.readValue(request.getBody(), CreateChefDto::class.java)
 
-      return isAvailableUsernameService.isAvailableUsername(bodyConverted.username)
+      return blockedUsernameService.isAvailableUsername(bodyConverted.username)
     }
   }
 
   internal class TokenValidation : ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
-      isAvailableUsernameService: IsAvailableUsernameService,
+      blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
       val token = request.getHeader("Authorization").split(" ")[1]
 
       val username = tokenService.decodeToken(token)?.username ?: return false
 
-      return isAvailableUsernameService.isAvailableUsername(username)
+      return blockedUsernameService.isAvailableUsername(username)
     }
   }
 
   internal class ChangeUsernameValidation : ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
-      isAvailableUsernameService: IsAvailableUsernameService,
+      blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
-      var isValid = TokenValidation().isValidUsername(request, isAvailableUsernameService, tokenService)
+      var isValid = TokenValidation().isValidUsername(request, blockedUsernameService, tokenService)
 
       val body = objectMapper.readValue(request.getBody(), ChangeUsernameDto::class.java)
 
-      isValid = isValid && isAvailableUsernameService.isAvailableUsername(body.newUsername)
+      isValid = isValid && blockedUsernameService.isAvailableUsername(body.newUsername)
 
       return isValid
     }
