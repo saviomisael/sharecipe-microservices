@@ -2,9 +2,11 @@ package com.github.saviomisael.authub.adapter.presentation.filters
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.saviomisael.authub.adapter.infrastructure.adapter.CachedBodyHttpServletRequest
 import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.infrastructure.service.BlockedUsernameService
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
+import com.github.saviomisael.authub.adapter.presentation.dto.CreateChefDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.shared.extensions.getBody
@@ -26,8 +28,6 @@ class BlockedUsernameFilter @Autowired constructor(
 
   private val strategy = mapOf(
     ApiRoutes.ChefRoutes.createChefAccount to CreateChefAccountValidation(),
-    ApiRoutes.ChefRoutes.refreshToken to TokenValidation(),
-    ApiRoutes.ChefRoutes.changePassword to TokenValidation(),
     ApiRoutes.ChefRoutes.changeUsername to ChangeUsernameValidation()
   )
 
@@ -45,10 +45,14 @@ class BlockedUsernameFilter @Autowired constructor(
     }
 
     try {
-      val isValidUsername = selectedStrategy.isValidUsername(request, blockedUsernameService, tokenService)
+      val cachedBodyHttpServletRequest = CachedBodyHttpServletRequest(request)
+      val requestToUse = CachedBodyHttpServletRequest(cachedBodyHttpServletRequest)
+
+      val isValidUsername =
+        selectedStrategy.isValidUsername(cachedBodyHttpServletRequest, blockedUsernameService, tokenService)
 
       if (isValidUsername) {
-        filterChain.doFilter(request, response)
+        filterChain.doFilter(requestToUse, response)
         return
       }
     } catch (ex: Exception) {
@@ -64,7 +68,7 @@ class BlockedUsernameFilter @Autowired constructor(
     return
   }
 
-  internal interface ValidateUsername {
+  private interface ValidateUsername {
     val objectMapper: ObjectMapper
       get() = ObjectMapper().registerKotlinModule()
 
@@ -75,20 +79,20 @@ class BlockedUsernameFilter @Autowired constructor(
     ): Boolean
   }
 
-  internal class CreateChefAccountValidation :
+  private class CreateChefAccountValidation :
     ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
       blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
-      val usernameToValidate = objectMapper.readTree(request.getBody()).at("/username").asText()
+      val dto = objectMapper.readValue(request.getBody(), CreateChefDto::class.java)
 
-      return blockedUsernameService.isAvailableUsername(usernameToValidate)
+      return blockedUsernameService.isAvailableUsername(dto.username)
     }
   }
 
-  internal class TokenValidation : ValidateUsername {
+  private class TokenValidation : ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
       blockedUsernameService: BlockedUsernameService,
@@ -102,7 +106,7 @@ class BlockedUsernameFilter @Autowired constructor(
     }
   }
 
-  internal class ChangeUsernameValidation : ValidateUsername {
+  private class ChangeUsernameValidation : ValidateUsername {
     override fun isValidUsername(
       request: HttpServletRequest,
       blockedUsernameService: BlockedUsernameService,
@@ -116,6 +120,5 @@ class BlockedUsernameFilter @Autowired constructor(
 
       return isValid
     }
-
   }
 }
