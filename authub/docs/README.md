@@ -12,7 +12,7 @@ java -jar -Dspring.profiles.active=dev authub-0.0.1.jar
 
 ``docker system prune -f && docker compose -f docker-compose.qa.yml down && docker compose -f docker-compose.qa.yml build --no-cache && docker compose -f docker-compose.qa.yml up -d && ./mvnw clean test``
 
-# Issues about testing
+# Authub Issues
 
 [Flaky Test](https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/)
 
@@ -43,3 +43,21 @@ fun beforeStep(scenario: Scenario) {
 [By default, when parallel execution is enabled, scenarios and examples are executed in parallel. Due to limitations,
 JUnit 4 could only execute features in parallel. This behaviour can be restored by setting the configuration parameter
 cucumber.execution.execution-mode.feature to same_thread.](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-junit-platform-engine#executing-features-in-parallel)
+
+## ContentCachingRequestWrapper (ChatGPT answer)
+
+`ContentCachingRequestWrapper` is a class provided by Spring Framework that extends the standard
+`HttpServletRequestWrapper`. It is part of Spring's support for request and response content caching.
+
+This wrapper allows the content of the original request's body to be read multiple times. Normally, once the input
+stream of the request body is consumed, it cannot be read again. However, ContentCachingRequestWrapper captures the
+request body content and provides methods to access it multiple times.
+
+Here are some key points about ContentCachingRequestWrapper:
+
+Content Caching:
+
+When you wrap an incoming HttpServletRequest with ContentCachingRequestWrapper, it captures the input stream of the
+request body and caches its content.
+This allows you to read the request body multiple times, which can be useful in certain scenarios, such as logging,
+debugging, or processing the request body multiple times.
