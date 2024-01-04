@@ -1,6 +1,9 @@
 package com.github.saviomisael.authub.adapter.presentation.filters
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.infrastructure.service.BlockedUsernameService
 import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangeUsernameDto
@@ -22,6 +25,8 @@ class BlockedUsernameFilter @Autowired constructor(
   private val tokenService: TokenService
 ) :
   OncePerRequestFilter() {
+  private val logHandler = LogHandler(BlockedUsernameFilter::class.java)
+
   private val strategy = mapOf(
     ApiRoutes.ChefRoutes.createChefAccount to CreateChefAccountValidation(),
     ApiRoutes.ChefRoutes.refreshToken to TokenValidation(),
@@ -42,13 +47,20 @@ class BlockedUsernameFilter @Autowired constructor(
       return
     }
 
-    val isValidUsername = selectedStrategy.isValidUsername(request, blockedUsernameService, tokenService)
+    try {
+      val isValidUsername = selectedStrategy.isValidUsername(request, blockedUsernameService, tokenService)
 
-    if (isValidUsername) {
-      filterChain.doFilter(request, response)
+      if (isValidUsername) {
+        filterChain.doFilter(request, response)
+        return
+      }
+    } catch (ex: Exception) {
+      logHandler.logResponseException(ex)
+      response.status = 500
       return
     }
 
+    logHandler.logResponseException(RuntimeException("Username is not available."))
     response.status = 422
     response.writer.write(ObjectMapper().writeValueAsString(ResponseDto(listOf("Username is not available."), null)))
     response.contentType = MediaType.APPLICATION_JSON_VALUE
@@ -57,7 +69,7 @@ class BlockedUsernameFilter @Autowired constructor(
 
   internal interface ValidateUsername {
     val objectMapper: ObjectMapper
-      get() = ObjectMapper()
+      get() = ObjectMapper().registerKotlinModule()
 
     fun isValidUsername(
       request: HttpServletRequest,
@@ -73,9 +85,9 @@ class BlockedUsernameFilter @Autowired constructor(
       blockedUsernameService: BlockedUsernameService,
       tokenService: TokenService
     ): Boolean {
-      val bodyConverted = objectMapper.readValue(request.getBody(), CreateChefDto::class.java)
+      val usernameToValidate = objectMapper.readTree(request.getBody()).at("/username").asText()
 
-      return blockedUsernameService.isAvailableUsername(bodyConverted.username)
+      return blockedUsernameService.isAvailableUsername(usernameToValidate)
     }
   }
 
@@ -101,9 +113,9 @@ class BlockedUsernameFilter @Autowired constructor(
     ): Boolean {
       var isValid = TokenValidation().isValidUsername(request, blockedUsernameService, tokenService)
 
-      val body = objectMapper.readValue(request.getBody(), ChangeUsernameDto::class.java)
+      val usernameToValidate = objectMapper.readTree(request.getBody()).at("/newUsername").asText()
 
-      isValid = isValid && blockedUsernameService.isAvailableUsername(body.newUsername)
+      isValid = isValid && blockedUsernameService.isAvailableUsername(usernameToValidate)
 
       return isValid
     }
