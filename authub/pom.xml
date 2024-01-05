@@ -20,6 +20,7 @@
     <jwt.version>0.11.5</jwt.version>
     <swagger.version>2.1.0</swagger.version>
     <restassured.version>5.3.1</restassured.version>
+    <springcloud.version>4.0.2</springcloud.version>
   </properties>
 
   <dependencyManagement>
@@ -31,10 +32,19 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
       <dependency>
         <groupId>io.cucumber</groupId>
         <artifactId>cucumber-bom</artifactId>
         <version>${cucumber.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2023.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -95,6 +105,12 @@
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>${swagger.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <version>${springcloud.version}</version>
     </dependency>
 
     <dependency>
