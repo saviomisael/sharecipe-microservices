@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "Dosis Bold", cursive;
+  src: url("../fonts/dosis.bold.ttf");
+}
+
+@font-face {
+  font-family: "Bitter Regular", serif;
+  src: url("../fonts/bitter.regular.otf");
+}
+
+@font-face {
+  font-family: "Bold Lining Regular";
+  src: url("../fonts/BoldLining.ttf");
+}
+
+.mat-body,
+.mat-body-2,
+.mat-body-strong,
+.mat-subtitle-2,
+.mat-small,
+.mat-caption {
+  font-family: "Bitter Regular", serif;
+}
+
+.mat-headline-1,
+.mat-headline-2,
+.mat-headline-3,
+.mat-headline-4,
+.mat-headline-5,
+.mat-headline-6,
+.mat-h1,
+.mat-h2,
+.mat-h3,
+.mat-h4,
+.mat-h5,
+.mat-h6,
+.mat-body-1,
+.mat-subtitle-1,
+.mat-typography h1,
+.mat-typography h2,
+.mat-typography h3,
+.mat-typography h4,
+.mat-typography h5,
+.mat-typography h6 {
+  font-family: "Dosis Bold", cursive;
+  font-weight: 500;
+}
+
+.logo-font {
+  font-family: "Bold Lining Regular";
+}
