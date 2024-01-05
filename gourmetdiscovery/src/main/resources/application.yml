@@ -1,1 +1,7 @@
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+      base-path: "/gourmetdiscovery/actuator/"
