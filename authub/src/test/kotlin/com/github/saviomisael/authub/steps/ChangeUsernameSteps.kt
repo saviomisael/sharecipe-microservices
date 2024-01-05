@@ -16,6 +16,7 @@ import java.util.*
 
 class ChangeUsernameSteps {
   private var token = ""
+  private var secondChefToken = ""
   private var username = ""
   private lateinit var performRequest: ValidatableResponse
 
@@ -45,6 +46,21 @@ class ChangeUsernameSteps {
       .getString("data.token")
   }
 
+  @Given("A chef with username wally is created")
+  fun `A chef with username wally is created`() {
+    RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("Wayne", "wally", "@Test123", "wayne-${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+  }
+
   @And("Wants to change his username with a username less than 2 characters")
   fun `Wants to change his username with a username less than 2 characters`() {
     username = "a"
@@ -60,8 +76,27 @@ class ChangeUsernameSteps {
     username = "linus-torvalds"
   }
 
+  @And("A chef is logged-in as barry")
+  fun `A chef is logged-in as barry`() {
+    secondChefToken = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("Wayne", "barry", "@Test123", "wayne-${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
+  }
+
   @When("He tries to change his username")
-  fun `He tries to log in`() {
+  fun `He tries to change his username`() {
     performRequest = RestAssured
       .given()
       .log()
@@ -69,6 +104,20 @@ class ChangeUsernameSteps {
       .contentType(ContentType.JSON)
       .header("Authorization", "Bearer $token")
       .body(ChangeUsernameDto(username))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
+      .then()
+  }
+
+  @When("He tries to change his username to wally")
+  fun `He tries to change his username to wally`() {
+    performRequest = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .header("Authorization", "Bearer $secondChefToken")
+      .body(ChangeUsernameDto("wally"))
       .`when`()
       .patch(ApiRoutes.ChefRoutes.changeUsername)
       .then()
@@ -101,5 +150,14 @@ class ChangeUsernameSteps {
       .contentType(ContentType.JSON)
       .body("data.username", Matchers.equalTo("linus-torvalds"))
       .body("data.token", Matchers.not(""))
+  }
+
+  @Then("Returns 422 status code because someone is using the wally username")
+  fun `Returns 422 status code because someone is using the wally username`() {
+    performRequest
+      .log()
+      .all()
+      .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+      .contentType(ContentType.JSON)
   }
 }

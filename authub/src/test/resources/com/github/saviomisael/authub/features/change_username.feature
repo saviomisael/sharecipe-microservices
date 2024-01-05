@@ -23,3 +23,9 @@ Feature: Change chef username
     And Wants to change his username with a valid username
     When He tries to change his username
     Then Returns a ok status code with a new token
+
+  Scenario: A chef tries to change his username with an username that already exists
+    Given A chef with username wally is created
+    And A chef is logged-in as barry
+    When He tries to change his username to wally
+    Then Returns 422 status code because someone is using the wally username
