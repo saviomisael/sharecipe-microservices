@@ -1,10 +1,12 @@
 package com.github.saviomisael.authub.adapter.presentation.controller
 
+import com.github.saviomisael.authub.adapter.infrastructure.logging.LogHandler
 import com.github.saviomisael.authub.adapter.presentation.dto.ChangeUsernameDto
 import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import com.github.saviomisael.authub.adapter.presentation.v1.ApiRoutes
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import com.github.saviomisael.authub.core.domain.usecases.IChangeUsernameUseCase
+import com.github.saviomisael.authub.shared.exceptions.UsernameAlreadyExistsException
 import com.github.saviomisael.authub.shared.extensions.getUsername
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ChangeUsernameController @Autowired constructor(private val useCase: IChangeUsernameUseCase) : BaseController() {
+  private val logHandler = LogHandler(ChangeUsernameController::class.java)
+
   @Operation(summary = "Change username of a chef", description = "Returns 200 with the new token")
   @ApiResponses(
     value = [
@@ -34,7 +38,14 @@ class ChangeUsernameController @Autowired constructor(private val useCase: IChan
     @RequestBody @Valid dto: ChangeUsernameDto,
     request: HttpServletRequest
   ): ResponseEntity<ResponseDto<TokenResultDto>> {
-    val token = useCase.handle(request.getUsername(), dto.newUsername)
-    return ok(ResponseDto(emptyList(), token))
+    try {
+      val token = useCase.handle(request.getUsername(), dto.newUsername)
+
+      logHandler.logSuccessResponse("username ${request.getUsername()} changed to ${dto.newUsername}")
+      return ok(ResponseDto(emptyList(), token))
+    } catch (ex: UsernameAlreadyExistsException) {
+      logHandler.logResponseException(ex)
+      return unprocessableEntity(ResponseDto(listOf(ex.message), null))
+    }
   }
 }

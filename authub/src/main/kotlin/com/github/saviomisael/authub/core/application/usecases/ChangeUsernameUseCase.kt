@@ -5,6 +5,7 @@ import com.github.saviomisael.authub.adapter.infrastructure.service.TokenService
 import com.github.saviomisael.authub.core.domain.dto.TokenResultDto
 import com.github.saviomisael.authub.core.domain.repository.IChefRepository
 import com.github.saviomisael.authub.core.domain.usecases.IChangeUsernameUseCase
+import com.github.saviomisael.authub.shared.exceptions.UsernameAlreadyExistsException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -16,6 +17,9 @@ class ChangeUsernameUseCase @Autowired constructor(
 ) : IChangeUsernameUseCase {
   override fun handle(username: String, newUsername: String): TokenResultDto {
     // TODO - Check if newusername is available
+    val newUsernameAlreadyExists = chefRepository.chefUsernameAlreadyExists(newUsername)
+
+    if (newUsernameAlreadyExists) throw UsernameAlreadyExistsException(newUsername)
 
     val chef = chefRepository.changeUsername(username, newUsername)
     blockedUsernameService.blockUsername(username)
