@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 class ChangePasswordController @Autowired constructor(private val useCase: IChangePasswordUseCase) : BaseController() {
   private val logger = LogHandler(ChangePasswordController::class.java)
 
+  @Transactional
   @PatchMapping(ApiRoutes.ChefRoutes.changePassword)
   @Operation(summary = "Change your password.", description = "Returns 204 if successfully")
   @ApiResponses(
@@ -46,9 +47,6 @@ class ChangePasswordController @Autowired constructor(private val useCase: IChan
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
       )
     ]
-  )
-  @Transactional(
-    isolation = Isolation.SERIALIZABLE
   )
   fun changePassword(
     @Valid @RequestBody dto: ChangePasswordDto,

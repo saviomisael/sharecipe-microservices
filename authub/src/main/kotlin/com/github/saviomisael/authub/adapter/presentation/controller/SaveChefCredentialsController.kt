@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,6 +28,7 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
   BaseController() {
   private val logger = LogHandler(SaveChefCredentialsController::class.java)
 
+  @Transactional
   @Operation(summary = "Creates a chef account", description = "Returns 201 if successfully")
   @ApiResponses(
     value = [
@@ -40,7 +42,6 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
     ]
   )
   @PostMapping(ApiRoutes.ChefRoutes.createChefAccount)
-  @Transactional
   fun createChef(@Valid @RequestBody dto: CreateChefDto): ResponseEntity<ResponseDto<TokenResultDto>> {
     try {
       val chefSaved = saveChefCredentialsUseCase.handle(dto.toChef())

@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 class ChangeUsernameController @Autowired constructor(private val useCase: IChangeUsernameUseCase) : BaseController() {
   private val logHandler = LogHandler(ChangeUsernameController::class.java)
 
+  @Transactional
   @Operation(summary = "Change username of a chef", description = "Returns 200 with the new token")
   @ApiResponses(
     value = [
@@ -33,7 +35,6 @@ class ChangeUsernameController @Autowired constructor(private val useCase: IChan
     ]
   )
   @PatchMapping(ApiRoutes.ChefRoutes.changeUsername)
-  @Transactional
   fun changeUsername(
     @RequestBody @Valid dto: ChangeUsernameDto,
     request: HttpServletRequest
