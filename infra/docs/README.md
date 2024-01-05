@@ -1,1 +1,1 @@
-This folder has two docker compose files to simulate a production and a homologation environment
+This folder has a docker compose configuration for one MySQL server to use in all microservices
