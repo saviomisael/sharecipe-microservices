@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  authub:
+  authubqa:
     build:
       context: .
       dockerfile: Dockerfile.qa
@@ -9,9 +9,9 @@ services:
     env_file:
       - dev.jvm.conf
     depends_on:
-      mysql:
+      mysqlqa:
         condition: service_healthy
-  mysql:
+  mysqlqa:
     image: mysql:8.0
     restart: always
     ports:
