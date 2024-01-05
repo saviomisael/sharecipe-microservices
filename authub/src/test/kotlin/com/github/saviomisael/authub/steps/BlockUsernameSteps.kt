@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus
 import java.util.*
 
 class BlockUsernameSteps {
+  private var secondChefToken = ""
   private var oldUserToken = ""
   private lateinit var performRequest: ValidatableResponse
 
@@ -94,6 +95,25 @@ class BlockUsernameSteps {
       .getString("data.token")
   }
 
+  @Given("A chef is logged-in as spacca5")
+  fun `A chef is logged-in as spacca5`() {
+    oldUserToken = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("full name for old user", "spacca5", "@Test123", "oldemail5${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
+  }
+
   @And("Changes his username to pava")
   fun `Changes his username to pava`() {
     RestAssured
@@ -158,6 +178,41 @@ class BlockUsernameSteps {
       .all()
   }
 
+  @And("Changes his username to pava5")
+  fun `Changes his username to pava5`() {
+    RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .header("Authorization", "Bearer $oldUserToken")
+      .body(ChangeUsernameDto("pava5"))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
+      .then()
+      .log()
+      .all()
+  }
+
+  @And("A chef is logged-in as bida")
+  fun `A chef is logged-in as bida`() {
+    secondChefToken = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("full name for old user", "bida", "@Test123", "bida${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
+  }
+
   @When("Another person tries to create an account with spacca username")
   fun `Another person tries to create an account with spacca username`() {
     performRequest = RestAssured
@@ -207,6 +262,22 @@ class BlockUsernameSteps {
       .`when`()
       .patch(ApiRoutes.ChefRoutes.changeUsername)
       .then()
+  }
+
+  @When("bida tries to change his username to spacca5")
+  fun `bida tries to change his username to spacca5`() {
+    performRequest = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .header("Authorization", "Bearer $secondChefToken")
+      .body(ChangeUsernameDto("spacca5"))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
+      .then()
+      .log()
+      .all()
   }
 
   @Then("Returns a 422 status code")

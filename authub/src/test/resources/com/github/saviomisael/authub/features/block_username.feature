@@ -24,3 +24,10 @@ Feature: Block username for 35 minutes
     And Changes his username to pava4
     When He tries to change his username for his old username
     Then Returns a 401 status code because old username does not exist
+
+  Scenario: A chef changes his username with a blocked username
+    Given A chef is logged-in as spacca5
+    And Changes his username to pava5
+    And A chef is logged-in as bida
+    When bida tries to change his username to spacca5
+    Then Returns a 422 status code
