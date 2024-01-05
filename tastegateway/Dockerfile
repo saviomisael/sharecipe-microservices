@@ -8,6 +8,6 @@ COPY . .
 
 RUN ./mvnw clean package -DskipTests
 
-EXPOSE 80
+EXPOSE 3333
 
 CMD ["java", "-Dspring.profiles.active=dev", "-jar", "./target/tastegateway-0.0.1.jar"]
