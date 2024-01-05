@@ -5,3 +5,14 @@ management:
         include:
           - health
       base-path: "/gourmetdiscovery/actuator/"
+server:
+  port: 8761
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  dashboard:
+    path: /dashboard
+spring:
+  application:
+    name: gourmet-discovery

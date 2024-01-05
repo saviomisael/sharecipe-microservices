@@ -2,12 +2,14 @@ package com.github.saviomisael.gourmetdiscovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
-public class GourmetdiscoveryApplication {
+@EnableEurekaServer
+public class GourmetDiscoveryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GourmetdiscoveryApplication.class, args);
+		SpringApplication.run(GourmetDiscoveryApplication.class, args);
 	}
 
 }
