@@ -18,3 +18,9 @@ Feature: Block username for 35 minutes
     And Changes his username to pava3
     When He tries to change his password for his old username
     Then Returns a 401 status code because old username does not exist
+
+  Scenario: A chef changes his username and wants to change the username for his old username
+    Given A chef is logged-in as spacca4
+    And Changes his username to pava4
+    When He tries to change his username for his old username
+    Then Returns a 401 status code because old username does not exist

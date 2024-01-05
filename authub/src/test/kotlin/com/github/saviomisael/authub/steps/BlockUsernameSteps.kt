@@ -75,6 +75,25 @@ class BlockUsernameSteps {
       .getString("data.token")
   }
 
+  @Given("A chef is logged-in as spacca4")
+  fun `A chef is logged-in as spacca4`() {
+    oldUserToken = RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .body(CreateChefDto("full name for old user", "spacca4", "@Test123", "oldemail4${UUID.randomUUID()}@email.com"))
+      .`when`()
+      .post(ApiRoutes.ChefRoutes.createChefAccount)
+      .then()
+      .log()
+      .all()
+      .extract()
+      .response()
+      .jsonPath()
+      .getString("data.token")
+  }
+
   @And("Changes his username to pava")
   fun `Changes his username to pava`() {
     RestAssured
@@ -123,6 +142,22 @@ class BlockUsernameSteps {
       .all()
   }
 
+  @And("Changes his username to pava4")
+  fun `Changes his username to pava4`() {
+    RestAssured
+      .given()
+      .log()
+      .all()
+      .contentType(ContentType.JSON)
+      .header("Authorization", "Bearer $oldUserToken")
+      .body(ChangeUsernameDto("pava4"))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
+      .then()
+      .log()
+      .all()
+  }
+
   @When("Another person tries to create an account with spacca username")
   fun `Another person tries to create an account with spacca username`() {
     performRequest = RestAssured
@@ -158,6 +193,19 @@ class BlockUsernameSteps {
       .body(ChangePasswordDto("@TEStTes123"))
       .`when`()
       .post(ApiRoutes.ChefRoutes.changePassword)
+      .then()
+  }
+
+  @When("He tries to change his username for his old username")
+  fun `He tries to change his username for his old username`() {
+    performRequest = RestAssured
+      .given()
+      .log()
+      .all()
+      .header("Authorization", "Bearer $oldUserToken")
+      .body(ChangeUsernameDto("potatohat"))
+      .`when`()
+      .patch(ApiRoutes.ChefRoutes.changeUsername)
       .then()
   }
 
