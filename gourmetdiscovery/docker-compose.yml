@@ -4,7 +4,7 @@ services:
   gourmetdiscovery:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     network_mode: host
     deploy:
       resources:
