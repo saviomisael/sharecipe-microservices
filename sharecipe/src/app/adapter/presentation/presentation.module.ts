@@ -5,6 +5,6 @@ import { CreateAccountFormComponent } from './presenters/create-account-form/cre
 @NgModule({
   declarations: [CreateAccountFormComponent],
   imports: [CommonModule],
-  exports: [CreateAccountFormComponent],
+  exports: [],
 })
 export class PresentationModule {}
