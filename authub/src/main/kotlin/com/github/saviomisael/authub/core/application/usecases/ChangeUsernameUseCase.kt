@@ -16,7 +16,6 @@ class ChangeUsernameUseCase @Autowired constructor(
   private val blockedUsernameService: BlockedUsernameService
 ) : IChangeUsernameUseCase {
   override fun handle(username: String, newUsername: String): TokenResultDto {
-    // TODO - Check if newusername is available
     val newUsernameAlreadyExists = chefRepository.chefUsernameAlreadyExists(newUsername)
 
     if (newUsernameAlreadyExists) throw UsernameAlreadyExistsException(newUsername)
