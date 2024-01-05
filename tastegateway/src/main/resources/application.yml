@@ -1,1 +1,25 @@
-
+server:
+  port: 80
+spring:
+  application:
+    name: taste-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: authub
+          uri: lb://authub
+          predicates:
+            - Path=/authub/actuator/**
+        - id: authub
+          uri: lb://authub
+          predicates:
+            - Path=/api/v1/chefs/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}-${random.uuid}

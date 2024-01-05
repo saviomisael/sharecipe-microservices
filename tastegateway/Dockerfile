@@ -1,0 +1,13 @@
+FROM amazoncorretto:21
+
+ENV TZ=UTC
+
+WORKDIR tastegateway
+
+COPY . .
+
+RUN ./mvnw clean package -DskipTests
+
+EXPOSE 80
+
+CMD ["java", "-Dspring.profiles.active=dev", "-jar", "./target/tastegateway-0.0.1.jar"]

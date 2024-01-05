@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  tastegateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 512M
+    env_file:
+      - dev.jvm.conf
