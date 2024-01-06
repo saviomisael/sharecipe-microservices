@@ -1,0 +1,9 @@
+.chef-icon {
+  width: 2rem;
+  height: 2rem;
+
+  & > .icon {
+    width: 100%;
+    height: 100%;
+  }
+}
