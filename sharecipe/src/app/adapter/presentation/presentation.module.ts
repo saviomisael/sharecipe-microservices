@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { PresentersModule } from './presenters/presenters.module';
+import { ContainersModule } from './containers/containers.module';
 
 @NgModule({
-  imports: [PresentersModule],
+  imports: [ContainersModule],
 })
 export class PresentationModule {}

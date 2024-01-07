@@ -23,6 +23,10 @@ import { SharecipeLogoComponent } from './sharecipe-logo/sharecipe-logo.componen
     ReactiveFormsModule,
     MatButtonModule,
   ],
-  exports: [ChefIconComponent, CreateAccountFormComponent],
+  exports: [
+    ChefIconComponent,
+    CreateAccountFormComponent,
+    SharecipeLogoComponent,
+  ],
 })
 export class PresentersModule {}

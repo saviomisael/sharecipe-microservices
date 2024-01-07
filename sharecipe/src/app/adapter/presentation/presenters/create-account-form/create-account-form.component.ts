@@ -18,7 +18,7 @@ interface CreateAccountFormData {
 })
 export class CreateAccountFormComponent implements OnInit {
   form!: FormGroup;
-  @Output() onSubmit = new EventEmitter<Chef>();
+  @Output() onCreateAccount = new EventEmitter<Chef>();
   private isValidConfirmPassword = true;
 
   constructor(private readonly formBuilder: FormBuilder) {}
@@ -60,7 +60,7 @@ export class CreateAccountFormComponent implements OnInit {
 
   handleSubmit({ email, fullName, password, username }: CreateAccountFormData) {
     if (this.form.valid) {
-      this.onSubmit.emit({
+      this.onCreateAccount.emit({
         email,
         fullName,
         password,
