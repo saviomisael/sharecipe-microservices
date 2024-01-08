@@ -9,6 +9,8 @@ import com.github.saviomisael.authub.core.domain.usecases.IChangeUsernameUseCase
 import com.github.saviomisael.authub.shared.exceptions.UsernameAlreadyExistsException
 import com.github.saviomisael.authub.shared.extensions.getUsername
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.servlet.http.HttpServletRequest
@@ -31,7 +33,11 @@ class ChangeUsernameController @Autowired constructor(private val useCase: IChan
     value = [
       ApiResponse(responseCode = "200", description = "Username changed successfully."),
       ApiResponse(responseCode = "401", description = "Token is invalid."),
-      ApiResponse(responseCode = "400", description = "New username must have must have between 2 and 255 characters.")
+      ApiResponse(
+        responseCode = "400",
+        description = "Validation failed for the body.",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
+      )
     ]
   )
   @PatchMapping(ApiRoutes.ChefRoutes.changeUsername)

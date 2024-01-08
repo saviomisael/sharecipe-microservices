@@ -34,8 +34,8 @@ class SignInController @Autowired constructor(private val signInUseCase: ISignIn
       ApiResponse(responseCode = "401", description = "Username or password are wrong."),
       ApiResponse(
         responseCode = "400",
-        description = "Validation failed for the body. It returns a Map<String, String>",
-        content = [Content(mediaType = "application/json", schema = Schema(implementation = Map::class))]
+        description = "Validation failed for the body.",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
       )
     ]
   )

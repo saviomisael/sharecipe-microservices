@@ -36,8 +36,8 @@ class SaveChefCredentialsController(@Autowired private val saveChefCredentialsUs
       ApiResponse(responseCode = "422", description = "Username or email already used."),
       ApiResponse(
         responseCode = "400",
-        description = "Validation failed for the body. It returns a dictionary",
-        content = [Content(mediaType = "application/json", schema = Schema(implementation = Map::class))]
+        description = "Validation failed for the body.",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
       )
     ]
   )

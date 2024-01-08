@@ -33,13 +33,8 @@ class ChangePasswordController @Autowired constructor(private val useCase: IChan
       ApiResponse(responseCode = "204", description = "Changed password successfully."),
       ApiResponse(
         responseCode = "400",
-        description = "Validation failed for the body. It returns a dictionary",
-        content = [Content(
-          mediaType = "application/json", schema = Schema(
-            type = "object",
-            additionalProperties = Schema.AdditionalPropertiesValue.TRUE
-          )
-        )]
+        description = "Validation failed for the body.",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ResponseDto::class))]
       ),
       ApiResponse(
         responseCode = "401",
