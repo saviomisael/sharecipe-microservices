@@ -112,7 +112,7 @@ export class CreateAccountFormComponent implements OnInit {
 
   get isInvalidConfirmPassword() {
     return (
-      !this.isValidConfirmPassword && this.isInvalidField('confirmPassword')
+      !this.isValidConfirmPassword || this.isInvalidField('confirmPassword')
     );
   }
 
