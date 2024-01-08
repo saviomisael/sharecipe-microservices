@@ -7,7 +7,6 @@ import {
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfrastructureModule } from '../../../infrastructure/infrastructure.module';
-import { PresentersModule } from '../../presenters/presenters.module';
 import { ErrorsListComponent } from './errors-list.component';
 
 const meta: Meta<ErrorsListComponent> = {
@@ -16,11 +15,7 @@ const meta: Meta<ErrorsListComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [ErrorsListComponent],
-      imports: [
-        PresentersModule,
-        BrowserAnimationsModule,
-        InfrastructureModule,
-      ],
+      imports: [BrowserAnimationsModule, InfrastructureModule],
     }),
   ],
   render: (args: ErrorsListComponent) => ({
