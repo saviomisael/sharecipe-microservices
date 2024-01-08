@@ -1,5 +1,6 @@
 package com.github.saviomisael.authub.adapter.presentation
 
+import com.github.saviomisael.authub.adapter.presentation.dto.ResponseDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -18,6 +19,6 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     request: WebRequest
   ): ResponseEntity<Any>? {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-      .body(ex.bindingResult.fieldErrors.associate { it.field to it.defaultMessage })
+      .body(ResponseDto(ex.bindingResult.fieldErrors.map { it.defaultMessage }, null))
   }
 }
