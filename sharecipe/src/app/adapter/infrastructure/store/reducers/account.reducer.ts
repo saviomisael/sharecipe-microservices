@@ -4,14 +4,14 @@ import {
   showCreateAccountErrors,
 } from '../actions/account.actions';
 
-interface InitialState {
+export interface AccountState {
   token: string;
   username: string;
   expiresAt: string;
   createAccountErrors: string[];
 }
 
-const initialState: InitialState = {
+const initialState: AccountState = {
   token: '',
   username: '',
   expiresAt: '',
@@ -22,7 +22,7 @@ export const accountReducer = createReducer(
   initialState,
   on(
     setAccountInfo,
-    (state, { expiresAt, token, username }): InitialState => ({
+    (state, { expiresAt, token, username }): AccountState => ({
       ...state,
       expiresAt,
       token,
@@ -31,7 +31,7 @@ export const accountReducer = createReducer(
   ),
   on(
     showCreateAccountErrors,
-    (state, { errors }): InitialState => ({
+    (state, { errors }): AccountState => ({
       ...state,
       createAccountErrors: errors,
     })
