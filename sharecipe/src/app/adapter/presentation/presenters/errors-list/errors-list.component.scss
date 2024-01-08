@@ -1,0 +1,10 @@
+@import "../../assets/styles/colors.scss";
+
+.errors-list {
+  & > .error {
+    color: $warning-color;
+    font-weight: 600;
+    text-transform: lowercase;
+    text-align: center;
+  }
+}
