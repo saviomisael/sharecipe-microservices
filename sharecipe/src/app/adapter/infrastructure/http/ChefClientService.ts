@@ -1,36 +1,42 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subscription, catchError } from 'rxjs';
 import { Chef } from '../../../core/models/Chef';
+import { CreateAccountFacade } from '../facades/CreateAccountFacade';
 import { HttpClientAdapter } from './HttpClientAdapter';
 import { IChefClientService } from './contracts/IChefClientService';
 import { CreateAccountResponseDto } from './responses/CreateAccountResponseDto';
-import { ResponseDto } from './responses/ResponseDto';
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
   private createAccountSubscription: Subscription | null = null;
 
-  constructor(private httpClient: HttpClientAdapter) {}
+  constructor(
+    private httpClient: HttpClientAdapter,
+    private createAccountFacade: CreateAccountFacade
+  ) {}
 
-  createAccount(
-    chef: Chef
-  ): ResponseDto<CreateAccountResponseDto> | ResponseDto<null> {
+  createAccount(chef: Chef): void {
     this.createAccountSubscription = this.httpClient
       .post<Chef, CreateAccountResponseDto>('/api/v1/chefs/', chef)
       .pipe(
-        catchError((error, caught) => {
-          console.log('ERRO', error);
+        catchError((error: HttpErrorResponse, caught) => {
+          this.unsubscribeCreateAccount();
+
+          this.createAccountFacade.showErrors(error.error.errors);
+
           return caught;
         })
       )
       .subscribe({
-        next: (response) => console.log('NEXT', response),
+        next: ({ data: { expiresAt, token, username } }) => {
+          this.createAccountFacade.createAccount({
+            expiresAt,
+            token,
+            username,
+          });
+        },
       });
-
-    return {
-      data: null,
-      errors: [],
-    };
   }
 
   unsubscribeCreateAccount() {
