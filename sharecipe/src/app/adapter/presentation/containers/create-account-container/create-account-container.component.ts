@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Chef } from '../../../../core/models/Chef';
+import { ChefClientService } from '../../../infrastructure/http/ChefClientService';
 
 @Component({
   selector: 'app-create-account-container',
@@ -7,9 +8,9 @@ import { Chef } from '../../../../core/models/Chef';
   styleUrl: './create-account-container.component.scss',
 })
 export class CreateAccountContainerComponent {
-  handleCreateAccountSubmit(data: Chef) {
-    // TODO - integrate with backend
+  constructor(private chefClientService: ChefClientService) {}
 
-    console.log(data);
+  handleCreateAccountSubmit(data: Chef) {
+    this.chefClientService.createAccount(data);
   }
 }
