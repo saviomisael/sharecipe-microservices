@@ -9,11 +9,12 @@ import {logout} from "../actions/account.actions";
 export class LogoutDispatcher implements IVoidDispatcher {
   constructor(private store: Store, private localStorage: LocalStorageService, @Inject(PLATFORM_ID) private platformId: any) {
   }
-    dispatch(): void {
-        if(isPlatformBrowser(this.platformId)) {
-          this.localStorage.logout()
-        }
 
-        this.store.dispatch(logout())
+  dispatch(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.localStorage.logout()
     }
+
+    this.store.dispatch(logout())
+  }
 }
