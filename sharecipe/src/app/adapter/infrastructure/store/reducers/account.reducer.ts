@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+  clearCreateAccountErrors,
   setAccountInfo,
   showCreateAccountErrors,
 } from '../actions/account.actions';
@@ -34,6 +35,13 @@ export const accountReducer = createReducer(
     (state, { errors }): AccountState => ({
       ...state,
       createAccountErrors: errors,
+    })
+  ),
+  on(
+    clearCreateAccountErrors,
+    (state): AccountState => ({
+      ...state,
+      createAccountErrors: [],
     })
   )
 );

@@ -1,11 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { CreateAccountFacade } from './facades/CreateAccountFacade';
 import { ChefClientService } from './http/ChefClientService';
 import { HttpClientAdapter } from './http/HttpClientAdapter';
 import { LocalStorageService } from './services/LocalStorageService';
 import { CreateAccountDispatcher } from './store/dispatchers/CreateAccountDispatcher';
+import { ClearCreateAccountErrorsHandler } from './store/handlers/ClearCreateAccountErrorsHandler';
 import { CreateAccountErrorHandler } from './store/handlers/CreateAccountErrorHandler';
-import { CreateAccountFacade } from './facades/CreateAccountFacade';
 
 @NgModule({
   imports: [HttpClientModule],
@@ -16,6 +17,7 @@ import { CreateAccountFacade } from './facades/CreateAccountFacade';
     CreateAccountDispatcher,
     CreateAccountErrorHandler,
     CreateAccountFacade,
+    ClearCreateAccountErrorsHandler,
   ],
 })
 export class InfrastructureModule {}

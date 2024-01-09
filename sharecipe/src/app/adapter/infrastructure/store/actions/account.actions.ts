@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 export const setAccountInfo = createAction(
-  '[ACCOUNT] Add info',
+  '[ACCOUNT] Add account info',
   props<{
     username: string;
     token: string;
@@ -10,6 +10,10 @@ export const setAccountInfo = createAction(
 );
 
 export const showCreateAccountErrors = createAction(
-  '[ACCOUNT] Show errors',
+  '[ACCOUNT] Show create account errors',
   props<{ errors: string[] }>()
+);
+
+export const clearCreateAccountErrors = createAction(
+  '[ACCOUNT] Clear create account errors'
 );
