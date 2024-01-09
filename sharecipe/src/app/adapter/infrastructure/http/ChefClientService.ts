@@ -23,7 +23,11 @@ export class ChefClientService implements IChefClientService {
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeCreateAccount();
 
-          this.createAccountFacade.showErrors(error.error.errors);
+          const errors = error.statusText.includes('Unknown')
+            ? ['Service unavailable, try again later']
+            : error.error.errors;
+
+          this.createAccountFacade.showErrors(errors);
 
           return caught;
         })
