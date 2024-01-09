@@ -3,7 +3,12 @@
 </header>
 
 <main>
+  <div class="errors-container" *ngIf="errors$ | async as errors">
+    <app-errors-list [errors]="errors"></app-errors-list>
+  </div>
+
   <app-create-account-form
     (onCreateAccount)="handleCreateAccountSubmit($event)"
+    (onFormChange)="handleFormChange()"
   ></app-create-account-form>
 </main>
