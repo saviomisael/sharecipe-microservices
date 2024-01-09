@@ -16,7 +16,7 @@ export class ChefClientService implements IChefClientService {
     private createAccountFacade: CreateAccountFacade
   ) {}
 
-  createAccount(chef: Chef): void {
+  createAccount(chef: Chef, createdSuccess: () => void): void {
     this.createAccountSubscription = this.httpClient
       .post<Chef, CreateAccountResponseDto>('/api/v1/chefs/', chef)
       .pipe(
@@ -39,6 +39,7 @@ export class ChefClientService implements IChefClientService {
             token,
             username,
           });
+          createdSuccess();
         },
       });
   }

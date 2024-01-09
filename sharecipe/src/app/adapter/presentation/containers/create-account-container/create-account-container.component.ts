@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Chef } from '../../../../core/models/Chef';
 import { ChefClientService } from '../../../infrastructure/http/ChefClientService';
+import { AuthService } from '../../../infrastructure/services/AuthService';
 import { ClearCreateAccountErrorsHandler } from '../../../infrastructure/store/handlers/ClearCreateAccountErrorsHandler';
 import { selectCreateAccountErrors } from '../../../infrastructure/store/selectors/account.selectors';
 
@@ -17,10 +19,16 @@ export class CreateAccountContainerComponent implements OnDestroy, OnInit {
   constructor(
     private chefClientService: ChefClientService,
     private store: Store,
-    private clearCreateAccountErrorsHandler: ClearCreateAccountErrorsHandler
+    private clearCreateAccountErrorsHandler: ClearCreateAccountErrorsHandler,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (await this.authService.isLoggedIn()) {
+      this.redirectToHome();
+    }
+
     this.errors$ = this.store.select(selectCreateAccountErrors);
   }
 
@@ -29,10 +37,14 @@ export class CreateAccountContainerComponent implements OnDestroy, OnInit {
   }
 
   handleCreateAccountSubmit(data: Chef) {
-    this.chefClientService.createAccount(data);
+    this.chefClientService.createAccount(data, this.redirectToHome.bind(this));
   }
 
   handleFormChange() {
     this.clearCreateAccountErrorsHandler.handle();
+  }
+
+  private redirectToHome() {
+    this.router.navigate(['/']);
   }
 }

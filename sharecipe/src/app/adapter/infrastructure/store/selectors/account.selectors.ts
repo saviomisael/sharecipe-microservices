@@ -7,3 +7,8 @@ export const selectCreateAccountErrors = createSelector(
   selectAccountState,
   (state: AccountState) => state.createAccountErrors
 );
+
+export const selectExpiresAt = createSelector(
+  selectAccountState,
+  (state: AccountState) => state.expiresAt
+);
