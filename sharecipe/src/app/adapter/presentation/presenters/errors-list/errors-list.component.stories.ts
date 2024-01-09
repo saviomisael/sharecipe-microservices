@@ -1,9 +1,4 @@
-import {
-  Meta,
-  StoryObj,
-  argsToTemplate,
-  moduleMetadata,
-} from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfrastructureModule } from '../../../infrastructure/infrastructure.module';
@@ -22,9 +17,6 @@ const meta: Meta<ErrorsListComponent> = {
     props: {
       ...args,
     },
-    template: `<app-create-account-form ${argsToTemplate(
-      args
-    )}></app-create-account-form>`,
   }),
 };
 
