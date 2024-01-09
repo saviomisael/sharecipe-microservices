@@ -19,7 +19,7 @@
 .mat-subtitle-2,
 .mat-small,
 .mat-caption {
-  font-family: "Bitter Regular", serif;
+  @extend %general-font;
 }
 
 .mat-headline-1,
@@ -42,6 +42,18 @@
 .mat-typography h4,
 .mat-typography h5,
 .mat-typography h6 {
+  @extend %title-font;
+}
+
+%general-font {
+  font-family: "Bitter Regular", serif;
+}
+
+%title-font {
   font-family: "Dosis Bold", cursive;
   font-weight: 500;
+}
+
+%logo-font {
+  font-family: "Bold Lining Regular";
 }

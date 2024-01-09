@@ -1,7 +1,9 @@
 @import "../../assets/styles/colors.scss";
+@import "../../assets/styles/fonts.scss";
 
 .logo-font {
-  font-family: "Bold Lining Regular";
+  @extend %logo-font;
+
   font-size: 8.5rem;
   color: $logo-color;
 }

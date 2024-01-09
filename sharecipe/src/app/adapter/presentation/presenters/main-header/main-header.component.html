@@ -1,12 +1,20 @@
 <header class="main-header">
   <app-sharecipe-logo></app-sharecipe-logo>
 
+  <div class="welcome-box">
+    <p class="message general-font">Welcome {{ username }}</p>
+  </div>
+
   <div class="routes">
     <a routerLink="/profile">
-      <mat-icon class="route-link mat-icon-lg" title="go to profile page"
+      <mat-icon class="route-link" title="go to profile page"
       >person
       </mat-icon
       >
     </a>
+
+    <button class="logoutbtn" (click)="handleLogoutClick()">
+      <mat-icon class="route-link" title="logout">logout</mat-icon>
+    </button>
   </div>
 </header>

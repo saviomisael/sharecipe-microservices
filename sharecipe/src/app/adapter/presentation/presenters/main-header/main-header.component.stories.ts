@@ -20,6 +20,8 @@ type Story = StoryObj<MainHeaderComponent>;
 
 export const Default: Story = {
   render: () => ({
-    props: {},
+    props: {
+      username: 'torvalds'
+    },
   }),
 };

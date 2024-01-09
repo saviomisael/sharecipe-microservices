@@ -1,4 +1,5 @@
 @import "../../assets/styles/colors.scss";
+@import "../../assets/styles/fonts.scss";
 
 $icon-size: 4rem;
 
@@ -11,6 +12,13 @@ $icon-size: 4rem;
 
   & > .routes {
     margin-right: 5rem;
+    display: flex;
+    gap: 3rem;
+
+    & > .logoutbtn {
+      background: none;
+      border: none;
+    }
   }
 
   &::before {
@@ -31,4 +39,15 @@ $icon-size: 4rem;
   height: $icon-size;
   font-size: $icon-size;
   width: $icon-size;
+}
+
+.welcome-box {
+  margin-top: 3rem;
+
+  & > .message {
+    @extend %logo-font;
+
+    color: $logo-color;
+    font-size: 5rem;
+  }
 }
