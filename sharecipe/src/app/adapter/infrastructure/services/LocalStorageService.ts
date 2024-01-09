@@ -22,4 +22,10 @@ export class LocalStorageService {
       username: atob(username),
     };
   }
+
+  logout() {
+    localStorage.removeItem('t')
+    localStorage.removeItem('e')
+    localStorage.removeItem('u')
+  }
 }

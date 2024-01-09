@@ -8,6 +8,7 @@ import {LocalStorageService} from './services/LocalStorageService';
 import {CreateAccountDispatcher} from './store/dispatchers/CreateAccountDispatcher';
 import {ClearCreateAccountErrorsHandler} from './store/handlers/ClearCreateAccountErrorsHandler';
 import {CreateAccountErrorHandler} from './store/handlers/CreateAccountErrorHandler';
+import {LogoutDispatcher} from "./store/dispatchers/LogoutDispatcher";
 
 @NgModule({
   imports: [HttpClientModule],
@@ -20,6 +21,7 @@ import {CreateAccountErrorHandler} from './store/handlers/CreateAccountErrorHand
     CreateAccountFacade,
     ClearCreateAccountErrorsHandler,
     AuthService,
+    LogoutDispatcher
   ],
 })
 export class InfrastructureModule {

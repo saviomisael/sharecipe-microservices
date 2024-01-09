@@ -1,5 +1,5 @@
 import {createReducer, on} from '@ngrx/store';
-import {clearCreateAccountErrors, setAccountInfo, showCreateAccountErrors,} from '../actions/account.actions';
+import {clearCreateAccountErrors, logout, setAccountInfo, showCreateAccountErrors,} from '../actions/account.actions';
 
 export interface AccountState {
   token: string;
@@ -39,5 +39,11 @@ export const accountReducer = createReducer(
       ...state,
       createAccountErrors: [],
     })
-  )
+  ),
+  on(logout, (state: AccountState): AccountState => ({
+    ...state,
+    expiresAt: '',
+    token: '',
+    username: ''
+  }))
 );

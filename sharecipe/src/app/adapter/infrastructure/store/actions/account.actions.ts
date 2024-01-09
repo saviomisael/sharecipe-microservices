@@ -17,3 +17,5 @@ export const showCreateAccountErrors = createAction(
 export const clearCreateAccountErrors = createAction(
   '[ACCOUNT] Clear create account errors'
 );
+
+export const logout = createAction('[ACCOUNT] logout')
