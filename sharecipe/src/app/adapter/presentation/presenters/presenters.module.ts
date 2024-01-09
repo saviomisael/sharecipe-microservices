@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CreateAccountFormComponent } from './create-account-form/create-account-form.component';
 import { ErrorsListComponent } from './errors-list/errors-list.component';
 import { ChefIconComponent } from './icons/chef-icon/chef-icon.component';
+import { MainHeaderComponent } from './main-header/main-header.component';
 import { SharecipeLogoComponent } from './sharecipe-logo/sharecipe-logo.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { SharecipeLogoComponent } from './sharecipe-logo/sharecipe-logo.componen
     CreateAccountFormComponent,
     SharecipeLogoComponent,
     ErrorsListComponent,
+    MainHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { SharecipeLogoComponent } from './sharecipe-logo/sharecipe-logo.componen
     CreateAccountFormComponent,
     SharecipeLogoComponent,
     ErrorsListComponent,
+    MainHeaderComponent,
   ],
 })
 export class PresentersModule {}

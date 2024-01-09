@@ -1,0 +1,34 @@
+@import "../../assets/styles/colors.scss";
+
+$icon-size: 4rem;
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 1rem;
+
+  & > .routes {
+    margin-right: 5rem;
+  }
+
+  &::before {
+    content: "";
+    width: 90%;
+    padding: 0.1rem;
+    background-color: $logo-color;
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.route-link {
+  color: $logo-color;
+  height: $icon-size;
+  font-size: $icon-size;
+  width: $icon-size;
+}
