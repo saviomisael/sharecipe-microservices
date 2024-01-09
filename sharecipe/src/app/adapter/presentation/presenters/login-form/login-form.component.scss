@@ -1,0 +1,32 @@
+@import "../../assets/styles/components.scss";
+@import "../../assets/styles/colors";
+
+.login-form {
+  @extend %form-center;
+}
+
+.input-box {
+  @extend %input-box;
+}
+
+.login-submit {
+  transition: all 0.3s;
+  margin-top: -2rem;
+  text-transform: uppercase;
+
+  &.-has-errors {
+    margin-top: 3rem;
+  }
+}
+
+.create-account-link {
+  text-align: center;
+  color: lighten(#f8933f, 10%);
+  text-transform: uppercase;
+  align-self: center;
+  font-size: 1.3rem !important;
+
+  &:hover {
+    border-bottom: 1px solid #f8933f;
+  }
+}

@@ -10,6 +10,7 @@ import {ErrorsListComponent} from './errors-list/errors-list.component';
 import {ChefIconComponent} from './icons/chef-icon/chef-icon.component';
 import {MainHeaderComponent} from './main-header/main-header.component';
 import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component';
+import {LoginFormComponent} from "./login-form/login-form.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component'
     SharecipeLogoComponent,
     ErrorsListComponent,
     MainHeaderComponent,
+    LoginFormComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component'
     SharecipeLogoComponent,
     ErrorsListComponent,
     MainHeaderComponent,
+    LoginFormComponent
   ],
 })
 export class PresentersModule {
