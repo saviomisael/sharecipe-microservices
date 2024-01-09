@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {selectUsername} from "../../../infrastructure/store/selectors/account.selectors";
 import {Observable} from "rxjs";
@@ -10,16 +10,18 @@ import {LogoutDispatcher} from "../../../infrastructure/store/dispatchers/Logout
   templateUrl: './main-header-wrapper.component.html',
   styleUrl: './main-header-wrapper.component.scss'
 })
-export class MainHeaderWrapperComponent {
+export class MainHeaderWrapperComponent implements OnInit {
+  username$!: Observable<string>;
+
   constructor(private store: Store, private router: Router, private logoutDispatcher: LogoutDispatcher) {
   }
 
-  get username$(): Observable<string> {
-    return this.store.select(selectUsername)
+  ngOnInit(): void {
+    this.username$ = this.store.select(selectUsername);
   }
 
   handleLogoutClick() {
-    this.logoutDispatcher.dispatch()
-    this.router.navigate(['/login'])
+    this.logoutDispatcher.dispatch();
+    this.router.navigate(['/login']);
   }
 }

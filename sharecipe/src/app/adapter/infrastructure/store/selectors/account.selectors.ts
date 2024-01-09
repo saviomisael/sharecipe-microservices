@@ -15,5 +15,5 @@ export const selectExpiresAt = createSelector(
 
 export const selectUsername = createSelector(
   selectAccountState,
-  (state: AccountState) => state.username
+  ({username}: AccountState) => username,
 )

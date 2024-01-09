@@ -1,1 +1,1 @@
-<app-main-header [username]="username$ | async" (onLogout)="handleLogoutClick()"></app-main-header>
+<app-main-header *ngIf="username$ | async as username" [username]="username" (onLogout)="handleLogoutClick()"></app-main-header>
