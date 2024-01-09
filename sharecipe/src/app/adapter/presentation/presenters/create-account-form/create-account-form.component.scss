@@ -1,23 +1,12 @@
 @import "../../assets/styles/colors.scss";
+@import "../../assets/styles/components.scss";
 
 .create-account-form {
-  width: 25vw;
-  margin: 0 auto;
-  margin-top: 4vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 3rem;
+  @extend %form-center;
 }
 
 .input-box {
-  width: 100%;
-
-  & .hint {
-    text-align: center;
-    z-index: 9;
-    color: $warning-color;
-  }
+  @extend %input-box;
 
   &.-confirmpassword {
     margin-top: 4.5rem;

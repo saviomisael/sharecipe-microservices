@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {Chef} from '../../../../core/models/Chef';
 import {passwordValidator} from '../../validators/passwordValidator';
+import {isInvalidField} from "../../validators/isInvalidField";
 
 interface CreateAccountFormData {
   fullName: string;
@@ -29,24 +30,24 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   }
 
   get isInvalidFullName() {
-    return this.isInvalidField('fullName');
+    return isInvalidField(this.form, 'fullName');
   }
 
   get isInvalidUsername() {
-    return this.isInvalidField('username');
+    return isInvalidField(this.form, 'username');
   }
 
   get isInvalidEmail() {
-    return this.isInvalidField('email');
+    return isInvalidField(this.form, 'email');
   }
 
   get isInvalidPassword() {
-    return this.isInvalidField('password');
+    return isInvalidField(this.form, 'password');
   }
 
   get isInvalidConfirmPassword() {
     return (
-      !this.isValidConfirmPassword || this.isInvalidField('confirmPassword')
+      !this.isValidConfirmPassword || isInvalidField(this.form, 'confirmPassword')
     );
   }
 
@@ -117,16 +118,6 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
     const {value} = event.target as HTMLInputElement;
 
     this.isValidConfirmPassword = value === this.form.get('password')?.value;
-  }
-
-  private isInvalidField(field: string) {
-    const input = this.form.get(field);
-
-    if (!input?.dirty) return false;
-
-    const errors = input?.errors;
-
-    return Boolean(errors);
   }
 
   private passwordsAreDifferent() {
