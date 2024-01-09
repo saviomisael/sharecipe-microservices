@@ -1,5 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Chef } from '../../../../core/models/Chef';
 import { passwordValidator } from '../../validators/passwordValidator';
 
@@ -16,12 +23,20 @@ interface CreateAccountFormData {
   templateUrl: './create-account-form.component.html',
   styleUrl: './create-account-form.component.scss',
 })
-export class CreateAccountFormComponent implements OnInit {
-  form!: FormGroup;
+export class CreateAccountFormComponent implements OnInit, OnDestroy {
   @Output() onCreateAccount = new EventEmitter<Chef>();
+  @Output() onFormChange = new EventEmitter();
+
+  form!: FormGroup;
   private isValidConfirmPassword = true;
+  private formChangesSubscription: Subscription | null = null;
 
   constructor(private readonly formBuilder: FormBuilder) {}
+
+  ngOnDestroy(): void {
+    if (this.formChangesSubscription)
+      this.formChangesSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -55,6 +70,10 @@ export class CreateAccountFormComponent implements OnInit {
         ],
       ],
       confirmPassword: ['', Validators.required],
+    });
+
+    this.formChangesSubscription = this.form.valueChanges.subscribe(() => {
+      this.onFormChange.emit();
     });
   }
 
