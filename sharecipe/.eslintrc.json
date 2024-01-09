@@ -1,9 +1,13 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -31,12 +35,16 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": [
           "error",
-          { "argsIgnorePattern": "^_" }
+          {
+            "argsIgnorePattern": "^_"
+          }
         ]
       }
     },
     {
-      "files": ["*.html"],
+      "files": [
+        "*.html"
+      ],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
@@ -51,9 +59,15 @@
       }
     },
     {
-      "files": ["*.ts"],
-      "extends": ["plugin:@ngrx/recommended"]
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended"
+      ]
     }
   ],
-  "extends": ["plugin:storybook/recommended"]
+  "extends": [
+    "plugin:storybook/recommended"
+  ]
 }

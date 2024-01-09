@@ -1,11 +1,6 @@
-import {
-  Meta,
-  StoryObj,
-  argsToTemplate,
-  moduleMetadata,
-} from '@storybook/angular';
+import {argsToTemplate, Meta, moduleMetadata, StoryObj,} from '@storybook/angular';
 
-import { SharecipeLogoComponent } from './sharecipe-logo.component';
+import {SharecipeLogoComponent} from './sharecipe-logo.component';
 
 const meta: Meta<SharecipeLogoComponent> = {
   component: SharecipeLogoComponent,

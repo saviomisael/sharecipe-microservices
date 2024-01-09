@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class LocalStorageService {
@@ -14,7 +14,7 @@ export class LocalStorageService {
     const username = localStorage.getItem('u');
 
     if (!token || !expiresAt || !username)
-      return { token: null, expiresAt: null, username: null };
+      return {token: null, expiresAt: null, username: null};
 
     return {
       token: atob(token),

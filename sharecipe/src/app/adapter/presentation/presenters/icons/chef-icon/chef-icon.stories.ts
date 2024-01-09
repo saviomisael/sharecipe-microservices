@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import {Meta, StoryObj} from '@storybook/angular';
 
-import { ChefIconComponent } from './chef-icon.component';
+import {ChefIconComponent} from './chef-icon.component';
 
 const meta: Meta<ChefIconComponent> = {
   component: ChefIconComponent,

@@ -1,8 +1,8 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import {Meta, moduleMetadata, StoryObj} from '@storybook/angular';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InfrastructureModule } from '../../../infrastructure/infrastructure.module';
-import { ErrorsListComponent } from './errors-list.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {InfrastructureModule} from '../../../infrastructure/infrastructure.module';
+import {ErrorsListComponent} from './errors-list.component';
 
 const meta: Meta<ErrorsListComponent> = {
   component: ErrorsListComponent,

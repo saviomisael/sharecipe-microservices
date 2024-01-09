@@ -1,14 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Chef } from '../../../../core/models/Chef';
-import { passwordValidator } from '../../validators/passwordValidator';
+import {Component, EventEmitter, OnDestroy, OnInit, Output,} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {Chef} from '../../../../core/models/Chef';
+import {passwordValidator} from '../../validators/passwordValidator';
 
 interface CreateAccountFormData {
   fullName: string;
@@ -31,7 +25,38 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   private isValidConfirmPassword = true;
   private formChangesSubscription: Subscription | null = null;
 
-  constructor(private readonly formBuilder: FormBuilder) {}
+  constructor(private readonly formBuilder: FormBuilder) {
+  }
+
+  get isInvalidFullName() {
+    return this.isInvalidField('fullName');
+  }
+
+  get isInvalidUsername() {
+    return this.isInvalidField('username');
+  }
+
+  get isInvalidEmail() {
+    return this.isInvalidField('email');
+  }
+
+  get isInvalidPassword() {
+    return this.isInvalidField('password');
+  }
+
+  get isInvalidConfirmPassword() {
+    return (
+      !this.isValidConfirmPassword || this.isInvalidField('confirmPassword')
+    );
+  }
+
+  get formIsInvalid() {
+    return this.form.invalid || this.passwordsAreDifferent();
+  }
+
+  get passwordStyles() {
+    return this.isInvalidPassword ? 'input-box -confirmpassword' : 'input-box';
+  }
 
   ngOnDestroy(): void {
     if (this.formChangesSubscription)
@@ -77,7 +102,7 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleSubmit({ email, fullName, password, username }: CreateAccountFormData) {
+  handleSubmit({email, fullName, password, username}: CreateAccountFormData) {
     if (this.form.valid) {
       this.onCreateAccount.emit({
         email,
@@ -89,7 +114,7 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   }
 
   handleConfirmPasswordInput(event: Event) {
-    const { value } = event.target as HTMLInputElement;
+    const {value} = event.target as HTMLInputElement;
 
     this.isValidConfirmPassword = value === this.form.get('password')?.value;
   }
@@ -111,35 +136,5 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
     if (password == null || confirmPassword == null) return true;
 
     return password.value !== confirmPassword.value;
-  }
-
-  get isInvalidFullName() {
-    return this.isInvalidField('fullName');
-  }
-
-  get isInvalidUsername() {
-    return this.isInvalidField('username');
-  }
-
-  get isInvalidEmail() {
-    return this.isInvalidField('email');
-  }
-
-  get isInvalidPassword() {
-    return this.isInvalidField('password');
-  }
-
-  get isInvalidConfirmPassword() {
-    return (
-      !this.isValidConfirmPassword || this.isInvalidField('confirmPassword')
-    );
-  }
-
-  get formIsInvalid() {
-    return this.form.invalid || this.passwordsAreDifferent();
-  }
-
-  get passwordStyles() {
-    return this.isInvalidPassword ? 'input-box -confirmpassword' : 'input-box';
   }
 }

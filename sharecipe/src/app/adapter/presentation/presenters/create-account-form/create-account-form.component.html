@@ -1,71 +1,76 @@
 <form
-  class="create-account-form"
-  [formGroup]="form"
   (ngSubmit)="handleSubmit(form.value)"
+  [formGroup]="form"
+  class="create-account-form"
 >
   <mat-form-field class="input-box">
     <mat-label>Full Name</mat-label>
-    <input class="input" type="text" matInput formControlName="fullName" />
+    <input class="input" formControlName="fullName" matInput type="text"/>
     <mat-icon matSuffix>
       <app-chef-icon></app-chef-icon>
     </mat-icon>
-    <mat-hint class="hint" *ngIf="isInvalidFullName"
-      >Full Name must have between 2 and 255 characters</mat-hint
+    <mat-hint *ngIf="isInvalidFullName" class="hint"
+    >Full Name must have between 2 and 255 characters
+    </mat-hint
     >
 
-    <br />
+    <br/>
   </mat-form-field>
 
   <mat-form-field class="input-box">
     <mat-label>Username</mat-label>
-    <input class="input" type="text" matInput formControlName="username" />
+    <input class="input" formControlName="username" matInput type="text"/>
     <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-hint class="hint" *ngIf="isInvalidUsername"
-      >Username must have between 2 and 255 characters</mat-hint
+    <mat-hint *ngIf="isInvalidUsername" class="hint"
+    >Username must have between 2 and 255 characters
+    </mat-hint
     >
   </mat-form-field>
 
   <mat-form-field class="input-box">
     <mat-label>Email</mat-label>
-    <input class="input" type="email" matInput formControlName="email" />
+    <input class="input" formControlName="email" matInput type="email"/>
     <mat-icon matSuffix>email</mat-icon>
-    <mat-hint class="hint" *ngIf="isInvalidEmail"
-      >Email provided is invalid</mat-hint
+    <mat-hint *ngIf="isInvalidEmail" class="hint"
+    >Email provided is invalid
+    </mat-hint
     >
   </mat-form-field>
 
   <mat-form-field class="input-box">
     <mat-label>Password</mat-label>
-    <input class="input" type="password" matInput formControlName="password" />
+    <input class="input" formControlName="password" matInput type="password"/>
     <mat-icon matSuffix>lock</mat-icon>
-    <mat-hint class="hint" *ngIf="isInvalidPassword"
-      >You need to use a strong password with at least 8 characters, an
+    <mat-hint *ngIf="isInvalidPassword" class="hint"
+    >You need to use a strong password with at least 8 characters, an
       uppercase letter, a lowercase letter, a number, and a special
-      character</mat-hint
+      character
+    </mat-hint
     >
   </mat-form-field>
 
   <mat-form-field [ngClass]="passwordStyles">
     <mat-label>Confirm Password</mat-label>
     <input
-      class="input"
-      type="password"
-      matInput
-      formControlName="confirmPassword"
       (input)="handleConfirmPasswordInput($event)"
+      class="input"
+      formControlName="confirmPassword"
+      matInput
+      type="password"
     />
     <mat-icon matSuffix>lock</mat-icon>
-    <mat-hint class="hint" *ngIf="isInvalidConfirmPassword"
-      >Password and Confirm Password are not the same</mat-hint
+    <mat-hint *ngIf="isInvalidConfirmPassword" class="hint"
+    >Password and Confirm Password are not the same
+    </mat-hint
     >
   </mat-form-field>
 
   <button
-    type="submit"
-    mat-stroked-button
-    color="primary"
     [disabled]="formIsInvalid"
     class="create-account-submit"
+    color="primary"
+    mat-stroked-button
+    type="submit"
   >
     Create Account
   </button>

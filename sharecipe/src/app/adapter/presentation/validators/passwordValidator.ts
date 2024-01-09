@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import {AbstractControl, ValidatorFn} from '@angular/forms';
 
 const hasUpperCaseLetter = (value: string): boolean => /[A-Z]+/.test(value);
 
@@ -10,8 +10,8 @@ const hasSpecialCharacter = (value: string): boolean =>
   /[^A-Za-z0-9]+/.test(value);
 
 export const passwordValidator: ValidatorFn = (control: AbstractControl) => {
-  const { value } = control;
-  const isNotValid = { passwordStrength: true };
+  const {value} = control;
+  const isNotValid = {passwordStrength: true};
 
   if (!value) return isNotValid;
 

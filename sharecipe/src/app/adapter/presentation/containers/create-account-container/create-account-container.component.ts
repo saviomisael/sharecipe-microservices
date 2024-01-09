@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Chef } from '../../../../core/models/Chef';
-import { ChefClientService } from '../../../infrastructure/http/ChefClientService';
-import { AuthService } from '../../../infrastructure/services/AuthService';
-import { ClearCreateAccountErrorsHandler } from '../../../infrastructure/store/handlers/ClearCreateAccountErrorsHandler';
-import { selectCreateAccountErrors } from '../../../infrastructure/store/selectors/account.selectors';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {Chef} from '../../../../core/models/Chef';
+import {ChefClientService} from '../../../infrastructure/http/ChefClientService';
+import {AuthService} from '../../../infrastructure/services/AuthService';
+import {ClearCreateAccountErrorsHandler} from '../../../infrastructure/store/handlers/ClearCreateAccountErrorsHandler';
+import {selectCreateAccountErrors} from '../../../infrastructure/store/selectors/account.selectors';
 
 @Component({
   selector: 'app-create-account-container',
@@ -22,7 +22,8 @@ export class CreateAccountContainerComponent implements OnDestroy, OnInit {
     private clearCreateAccountErrorsHandler: ClearCreateAccountErrorsHandler,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   async ngOnInit(): Promise<void> {
     if (await this.authService.isLoggedIn()) {

@@ -1,9 +1,9 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { setAccountInfo } from '../store/actions/account.actions';
-import { selectExpiresAt } from '../store/selectors/account.selectors';
-import { LocalStorageService } from './LocalStorageService';
+import {isPlatformBrowser} from '@angular/common';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {setAccountInfo} from '../store/actions/account.actions';
+import {selectExpiresAt} from '../store/selectors/account.selectors';
+import {LocalStorageService} from './LocalStorageService';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,8 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private store: Store,
     private localService: LocalStorageService
-  ) {}
+  ) {
+  }
 
   async isLoggedIn(): Promise<boolean> {
     this.loadAccountInfo();

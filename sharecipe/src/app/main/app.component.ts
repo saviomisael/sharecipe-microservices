@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { InfrastructureModule } from '../adapter/infrastructure/infrastructure.module';
-import { PresentationModule } from '../adapter/presentation/presentation.module';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {InfrastructureModule} from '../adapter/infrastructure/infrastructure.module';
+import {PresentationModule} from '../adapter/presentation/presentation.module';
 
 @Component({
   selector: 'app-root',

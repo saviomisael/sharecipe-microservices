@@ -1,8 +1,8 @@
-import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import {Meta, moduleMetadata, StoryObj} from '@storybook/angular';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PresentersModule } from '../presenters.module';
-import { MainHeaderComponent } from './main-header.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {PresentersModule} from '../presenters.module';
+import {MainHeaderComponent} from './main-header.component';
 
 const meta: Meta<MainHeaderComponent> = {
   component: MainHeaderComponent,

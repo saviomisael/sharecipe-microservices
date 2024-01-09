@@ -1,9 +1,5 @@
-import { createReducer, on } from '@ngrx/store';
-import {
-  clearCreateAccountErrors,
-  setAccountInfo,
-  showCreateAccountErrors,
-} from '../actions/account.actions';
+import {createReducer, on} from '@ngrx/store';
+import {clearCreateAccountErrors, setAccountInfo, showCreateAccountErrors,} from '../actions/account.actions';
 
 export interface AccountState {
   token: string;
@@ -23,7 +19,7 @@ export const accountReducer = createReducer(
   initialState,
   on(
     setAccountInfo,
-    (state, { expiresAt, token, username }): AccountState => ({
+    (state, {expiresAt, token, username}): AccountState => ({
       ...state,
       expiresAt,
       token,
@@ -32,7 +28,7 @@ export const accountReducer = createReducer(
   ),
   on(
     showCreateAccountErrors,
-    (state, { errors }): AccountState => ({
+    (state, {errors}): AccountState => ({
       ...state,
       createAccountErrors: errors,
     })
