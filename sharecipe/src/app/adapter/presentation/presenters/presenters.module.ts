@@ -11,6 +11,7 @@ import {ChefIconComponent} from './icons/chef-icon/chef-icon.component';
 import {MainHeaderComponent} from './main-header/main-header.component';
 import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component';
 import {LoginFormComponent} from "./login-form/login-form.component";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {LoginFormComponent} from "./login-form/login-form.component";
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
+    RouterModule
   ],
   exports: [
     ChefIconComponent,

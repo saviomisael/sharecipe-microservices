@@ -25,11 +25,7 @@ export class CreateAccountContainerComponent implements OnDestroy, OnInit {
   ) {
   }
 
-  async ngOnInit(): Promise<void> {
-    if (await this.authService.isLoggedIn()) {
-      this.redirectToHome();
-    }
-
+  ngOnInit(): void {
     this.errors$ = this.store.select(selectCreateAccountErrors);
   }
 
