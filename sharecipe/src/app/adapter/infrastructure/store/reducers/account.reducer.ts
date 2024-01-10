@@ -1,11 +1,19 @@
 import {createReducer, on} from '@ngrx/store';
-import {clearCreateAccountErrors, logout, setAccountInfo, showCreateAccountErrors,} from '../actions/account.actions';
+import {
+  clearCreateAccountErrors,
+  clearLoginErrors,
+  logout,
+  setAccountInfo,
+  showCreateAccountErrors,
+  showLoginErrors,
+} from '../actions/account.actions';
 
 export interface AccountState {
   token: string;
   username: string;
   expiresAt: string;
   createAccountErrors: string[];
+  loginErrors: string[];
 }
 
 const initialState: AccountState = {
@@ -13,6 +21,7 @@ const initialState: AccountState = {
   username: '',
   expiresAt: '',
   createAccountErrors: [],
+  loginErrors: []
 };
 
 export const accountReducer = createReducer(
@@ -45,5 +54,13 @@ export const accountReducer = createReducer(
     expiresAt: '',
     token: '',
     username: ''
+  })),
+  on(showLoginErrors, (state: AccountState, {errors}): AccountState => ({
+    ...state,
+    loginErrors: errors
+  })),
+  on(clearLoginErrors, (state: AccountState): AccountState => ({
+    ...state,
+    loginErrors: []
   }))
 );

@@ -19,3 +19,10 @@ export const clearCreateAccountErrors = createAction(
 );
 
 export const logout = createAction('[ACCOUNT] logout')
+
+export const showLoginErrors = createAction(
+  '[LOGIN] Show login errors',
+  props<{ errors: string[] }>()
+)
+
+export const clearLoginErrors = createAction('[LOGIN] clear login errors')
