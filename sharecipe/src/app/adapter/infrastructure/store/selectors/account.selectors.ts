@@ -17,3 +17,8 @@ export const selectUsername = createSelector(
   selectAccountState,
   ({username}: AccountState) => username,
 )
+
+export const selectLoginErrors = createSelector(
+  selectAccountState,
+  ({loginErrors}: AccountState) => loginErrors
+)
