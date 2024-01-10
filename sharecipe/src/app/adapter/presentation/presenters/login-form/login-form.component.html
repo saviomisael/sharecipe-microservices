@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="handleSubmit(form.value)" class="login-form">
+<form (ngSubmit)="handleSubmit(form.value)" [formGroup]="form" class="login-form">
   <mat-form-field class="input-box">
     <mat-label>Username</mat-label>
     <input class="input" formControlName="username" matInput type="text"/>

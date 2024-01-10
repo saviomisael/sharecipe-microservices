@@ -10,5 +10,4 @@ export class LoginContainerComponent {
   handleLoginSubmit(data: LoginCredentialsDto) {
     console.log(data)
   }
-
 }
