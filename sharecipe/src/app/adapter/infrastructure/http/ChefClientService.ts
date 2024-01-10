@@ -5,7 +5,7 @@ import {Chef} from '../../../core/models/Chef';
 import {CreateAccountFacade} from '../facades/CreateAccountFacade';
 import {HttpClientAdapter} from './HttpClientAdapter';
 import {IChefClientService} from './contracts/IChefClientService';
-import {CreateAccountResponseDto} from './responses/CreateAccountResponseDto';
+import {TokenResponseDto} from './responses/TokenResponseDto';
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
@@ -19,7 +19,7 @@ export class ChefClientService implements IChefClientService {
 
   createAccount(chef: Chef, createdSuccess: () => void): void {
     this.createAccountSubscription = this.httpClient
-      .post<Chef, CreateAccountResponseDto>('/api/v1/chefs/', chef)
+      .post<Chef, TokenResponseDto>('/api/v1/chefs/', chef)
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeCreateAccount();

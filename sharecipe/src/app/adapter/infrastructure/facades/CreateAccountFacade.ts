@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CreateAccountResponseDto} from '../http/responses/CreateAccountResponseDto';
+import {TokenResponseDto} from '../http/responses/TokenResponseDto';
 import {CreateAccountDispatcher} from '../store/dispatchers/CreateAccountDispatcher';
 import {CreateAccountErrorHandler} from '../store/handlers/CreateAccountErrorHandler';
 
@@ -15,7 +15,7 @@ export class CreateAccountFacade {
                   expiresAt,
                   username,
                   token,
-                }: Omit<CreateAccountResponseDto, 'fullName'>) {
+                }: Omit<TokenResponseDto, 'fullName'>) {
     this.createAccountDispatcher.dispatch({expiresAt, token, username});
   }
 
