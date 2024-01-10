@@ -11,7 +11,7 @@ data class ChangeUsernameDto(
     maxLength = 255
   )
   @field:Size(
-    message = "newUsername must have between 2 and 255 characters.",
+    message = "newUsername must have between 2 and 255 characters",
     min = 2,
     max = 255
   ) val newUsername: String

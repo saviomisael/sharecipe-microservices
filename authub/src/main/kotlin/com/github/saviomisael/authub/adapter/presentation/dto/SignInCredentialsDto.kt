@@ -11,7 +11,7 @@ data class SignInCredentialsDto(
     minLength = 2,
     maxLength = 255
   )
-  @field:Size(message = "username must have between 2 and 255 characters.", min = 2, max = 255) val username: String,
+  @field:Size(message = "username must have between 2 and 255 characters", min = 2, max = 255) val username: String,
   @field:Schema(description = "Your strong password.", minLength = 8, maxLength = 255, example = "Test123@")
   @field:ValidPassword val password: String
 )
