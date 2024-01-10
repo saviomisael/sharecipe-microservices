@@ -21,7 +21,7 @@ export class ChefClientService implements IChefClientService {
   ) {
   }
 
-  login(data: LoginCredentialsDto): void {
+  login(data: LoginCredentialsDto, loginSuccess: () => void): void {
     this.loginSubscription = this.httpClient.post<LoginCredentialsDto, TokenResponseDto>('/api/v1/chefs/tokens/', data)
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
@@ -37,6 +37,7 @@ export class ChefClientService implements IChefClientService {
       .subscribe({
         next: ({data: {expiresAt, token, username}}) => {
           this.loginFacade.login({expiresAt, token, username})
+          loginSuccess()
         }
       })
   }

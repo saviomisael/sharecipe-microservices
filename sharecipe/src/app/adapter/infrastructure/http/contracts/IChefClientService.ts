@@ -6,7 +6,7 @@ export interface IChefClientService {
 
   unsubscribeCreateAccount(): void;
 
-  login(data: LoginCredentialsDto): void;
+  login(data: LoginCredentialsDto, loginSuccess: () => void): void;
 
   unsubscribeLogin(): void;
 }

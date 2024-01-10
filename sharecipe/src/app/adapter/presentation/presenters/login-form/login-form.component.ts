@@ -1,16 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoginCredentialsDto} from "../../../infrastructure/http/requests/LoginCredentialsDto";
 import {isInvalidField} from "../../validators/isInvalidField";
 import {passwordValidator} from "../../validators/passwordValidator";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
-export class LoginFormComponent implements OnInit {
-  @Output() onLoginSubmit = new EventEmitter<LoginCredentialsDto>()
+export class LoginFormComponent implements OnInit, OnDestroy {
+  @Output() onLoginSubmit = new EventEmitter<LoginCredentialsDto>();
+  @Output() onFormChange = new EventEmitter();
+  private formChangesSubscription: Subscription | null = null;
   private formGroup!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -51,6 +54,15 @@ export class LoginFormComponent implements OnInit {
         ],
       ],
     })
+
+    this.formChangesSubscription = this.formGroup.valueChanges.subscribe(() => {
+      this.onFormChange.emit();
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.formChangesSubscription)
+      this.formChangesSubscription.unsubscribe();
   }
 
   handleSubmit(data: LoginCredentialsDto) {

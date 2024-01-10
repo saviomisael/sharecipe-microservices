@@ -1,3 +1,7 @@
 <main class="login-container">
-  <app-login-form (onLoginSubmit)="handleLoginSubmit($event)"></app-login-form>
+  <div *ngIf="errors$ | async as errors" class="errors-container">
+    <app-errors-list [errors]="errors"></app-errors-list>
+  </div>
+
+  <app-login-form (onLoginSubmit)="handleLoginSubmit($event)" (onFormChange)="handleFormChange()"></app-login-form>
 </main>
