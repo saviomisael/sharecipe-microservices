@@ -5,10 +5,13 @@ import {ChefClientService} from './http/ChefClientService';
 import {HttpClientAdapter} from './http/HttpClientAdapter';
 import {AuthService} from './services/AuthService';
 import {LocalStorageService} from './services/LocalStorageService';
-import {CreateAccountDispatcher} from './store/dispatchers/CreateAccountDispatcher';
+import {SaveAccountInfoDispatcher} from './store/dispatchers/SaveAccountInfoDispatcher';
 import {ClearCreateAccountErrorsHandler} from './store/handlers/ClearCreateAccountErrorsHandler';
 import {CreateAccountErrorHandler} from './store/handlers/CreateAccountErrorHandler';
 import {LogoutDispatcher} from "./store/dispatchers/LogoutDispatcher";
+import {LoginErrorHandler} from "./store/handlers/LoginErrorHandler";
+import {ClearLoginErrorHandler} from "./store/handlers/ClearLoginErrorHandler";
+import {LoginFacade} from "./facades/LoginFacade";
 
 @NgModule({
   imports: [HttpClientModule],
@@ -16,12 +19,15 @@ import {LogoutDispatcher} from "./store/dispatchers/LogoutDispatcher";
     ChefClientService,
     HttpClientAdapter,
     LocalStorageService,
-    CreateAccountDispatcher,
+    SaveAccountInfoDispatcher,
     CreateAccountErrorHandler,
     CreateAccountFacade,
     ClearCreateAccountErrorsHandler,
     AuthService,
-    LogoutDispatcher
+    LogoutDispatcher,
+    LoginErrorHandler,
+    ClearLoginErrorHandler,
+    LoginFacade
   ],
 })
 export class InfrastructureModule {

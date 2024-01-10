@@ -6,15 +6,45 @@ import {CreateAccountFacade} from '../facades/CreateAccountFacade';
 import {HttpClientAdapter} from './HttpClientAdapter';
 import {IChefClientService} from './contracts/IChefClientService';
 import {TokenResponseDto} from './responses/TokenResponseDto';
+import {LoginCredentialsDto} from './requests/LoginCredentialsDto';
+import {LoginFacade} from "../facades/LoginFacade";
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
   private createAccountSubscription: Subscription | null = null;
+  private loginSubscription: Subscription | null = null;
 
   constructor(
     private httpClient: HttpClientAdapter,
-    private createAccountFacade: CreateAccountFacade
+    private createAccountFacade: CreateAccountFacade,
+    private loginFacade: LoginFacade
   ) {
+  }
+
+  login(data: LoginCredentialsDto): void {
+    this.loginSubscription = this.httpClient.post<LoginCredentialsDto, TokenResponseDto>('/api/v1/chefs/tokens/', data)
+      .pipe(
+        catchError((error: HttpErrorResponse, caught) => {
+          this.unsubscribeLogin()
+
+          const errors = this.getErrorsFromResponse(error)
+
+          this.loginFacade.showErrors(errors)
+
+          return caught
+        })
+      )
+      .subscribe({
+        next: ({data: {expiresAt, token, username}}) => {
+          this.loginFacade.login({expiresAt, token, username})
+        }
+      })
+  }
+
+  unsubscribeLogin(): void {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe()
+    }
   }
 
   createAccount(chef: Chef, createdSuccess: () => void): void {
@@ -24,9 +54,7 @@ export class ChefClientService implements IChefClientService {
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeCreateAccount();
 
-          const errors = error.statusText.includes('Unknown')
-            ? ['Service unavailable, try again later']
-            : error.error.errors;
+          const errors = this.getErrorsFromResponse(error);
 
           this.createAccountFacade.showErrors(errors);
 
@@ -49,5 +77,11 @@ export class ChefClientService implements IChefClientService {
     if (this.createAccountSubscription) {
       this.createAccountSubscription.unsubscribe();
     }
+  }
+
+  private getErrorsFromResponse(error: HttpErrorResponse) {
+    return error.statusText.includes('Unknown')
+      ? ['Service unavailable, try again later']
+      : error.error.errors;
   }
 }

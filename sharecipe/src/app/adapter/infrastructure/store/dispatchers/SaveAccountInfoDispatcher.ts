@@ -11,7 +11,7 @@ export interface CreateAccountDispatcherParams {
 }
 
 @Injectable()
-export class CreateAccountDispatcher
+export class SaveAccountInfoDispatcher
   implements IDispatcher<CreateAccountDispatcherParams> {
   constructor(
     private store: Store,

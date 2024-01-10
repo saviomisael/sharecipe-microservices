@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {TokenResponseDto} from '../http/responses/TokenResponseDto';
-import {CreateAccountDispatcher} from '../store/dispatchers/CreateAccountDispatcher';
+import {SaveAccountInfoDispatcher} from '../store/dispatchers/SaveAccountInfoDispatcher';
 import {CreateAccountErrorHandler} from '../store/handlers/CreateAccountErrorHandler';
 
 @Injectable()
 export class CreateAccountFacade {
   constructor(
-    private createAccountDispatcher: CreateAccountDispatcher,
+    private createAccountDispatcher: SaveAccountInfoDispatcher,
     private createAccountErrorHandler: CreateAccountErrorHandler
   ) {
   }
