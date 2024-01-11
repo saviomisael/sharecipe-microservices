@@ -1,5 +1,6 @@
 import {createReducer, on} from '@ngrx/store';
 import {
+  clearChangePasswordErrorsAndMessage,
   clearCreateAccountErrors,
   clearLoginErrors,
   logout,
@@ -17,7 +18,7 @@ export interface AccountState {
   createAccountErrors: string[];
   loginErrors: string[];
   changePasswordErrors: string[];
-  changePasswordSuccessMessage: boolean;
+  showChangePasswordSuccessMessage: boolean;
 }
 
 const initialState: AccountState = {
@@ -27,7 +28,7 @@ const initialState: AccountState = {
   createAccountErrors: [],
   loginErrors: [],
   changePasswordErrors: [],
-  changePasswordSuccessMessage: false
+  showChangePasswordSuccessMessage: false
 };
 
 export const accountReducer = createReducer(
@@ -72,11 +73,16 @@ export const accountReducer = createReducer(
   on(showChangePasswordErrors, (state: AccountState, {errors}): AccountState => ({
     ...state,
     changePasswordErrors: errors,
-    changePasswordSuccessMessage: false
+    showChangePasswordSuccessMessage: false
   })),
   on(showChangePasswordSuccessMessage, (state: AccountState): AccountState => ({
     ...state,
-    changePasswordSuccessMessage: true,
+    showChangePasswordSuccessMessage: true,
+    changePasswordErrors: []
+  })),
+  on(clearChangePasswordErrorsAndMessage, (state: AccountState): AccountState => ({
+    ...state,
+    showChangePasswordSuccessMessage: false,
     changePasswordErrors: []
   }))
 );

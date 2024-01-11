@@ -35,3 +35,5 @@ export const showChangePasswordErrors = createAction(
 export const showChangePasswordSuccessMessage = createAction(
   '[CHANGE PASSWORD] Show success message'
 )
+
+export const clearChangePasswordErrorsAndMessage = createAction('[CHANGE PASSWORD] Clear errors and message')
