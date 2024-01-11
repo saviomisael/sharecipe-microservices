@@ -8,11 +8,18 @@ export class HttpClientAdapter {
   constructor(private httpClient: HttpClient) {
   }
 
-  post = <T, R>(apiUrl: string, body: T) =>
+  post = <B, R>(apiUrl: string, body: B) =>
     this.httpClient.post<ResponseDto<R>>(`${environment.url}${apiUrl}`, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       }),
     });
+
+  patch = <B, R>(apiUrl: string, body: B) => this.httpClient.patch<ResponseDto<R>>(`${environment.url}${apiUrl}`, body, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    }),
+  })
 }

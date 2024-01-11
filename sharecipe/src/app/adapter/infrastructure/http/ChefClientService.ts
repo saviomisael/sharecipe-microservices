@@ -8,17 +8,45 @@ import {IChefClientService} from './contracts/IChefClientService';
 import {TokenResponseDto} from './responses/TokenResponseDto';
 import {LoginCredentialsDto} from './requests/LoginCredentialsDto';
 import {LoginFacade} from "../facades/LoginFacade";
+import {ChangePasswordFacade} from "../facades/ChangePasswordFacade";
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
   private createAccountSubscription: Subscription | null = null;
   private loginSubscription: Subscription | null = null;
+  private changePasswordSubscription: Subscription | null = null;
 
   constructor(
     private httpClient: HttpClientAdapter,
     private createAccountFacade: CreateAccountFacade,
-    private loginFacade: LoginFacade
+    private loginFacade: LoginFacade,
+    private changePasswordFacade: ChangePasswordFacade
   ) {
+  }
+
+  changePassword(password: string): void {
+    this.changePasswordSubscription = this.httpClient.patch<{ password: string }, null>('/api/chefs/passwords',
+      {password})
+      .pipe(
+        catchError((error: HttpErrorResponse, caught) => {
+          this.changePasswordFacade.showErrors(
+            error.statusText.includes('Unknown')
+              ? ['Service unavailable, try again later']
+              : ['Your not authorized to change your password']
+          )
+
+          return caught
+        })
+      ).subscribe({
+        next: () => {
+          this.changePasswordFacade.showSuccessMessage()
+        }
+      })
+
+  }
+
+  unsubscribeChangePassword(): void {
+    this.changePasswordSubscription?.unsubscribe();
   }
 
   login(data: LoginCredentialsDto, loginSuccess: () => void): void {
@@ -43,9 +71,7 @@ export class ChefClientService implements IChefClientService {
   }
 
   unsubscribeLogin(): void {
-    if (this.loginSubscription) {
-      this.loginSubscription.unsubscribe()
-    }
+    this.loginSubscription?.unsubscribe()
   }
 
   createAccount(chef: Chef, createdSuccess: () => void): void {
@@ -75,9 +101,7 @@ export class ChefClientService implements IChefClientService {
   }
 
   unsubscribeCreateAccount() {
-    if (this.createAccountSubscription) {
-      this.createAccountSubscription.unsubscribe();
-    }
+    this.createAccountSubscription?.unsubscribe();
   }
 
   private getErrorsFromResponse(error: HttpErrorResponse) {

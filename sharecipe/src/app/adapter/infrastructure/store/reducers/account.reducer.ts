@@ -4,6 +4,8 @@ import {
   clearLoginErrors,
   logout,
   setAccountInfo,
+  showChangePasswordErrors,
+  showChangePasswordSuccessMessage,
   showCreateAccountErrors,
   showLoginErrors,
 } from '../actions/account.actions';
@@ -14,6 +16,8 @@ export interface AccountState {
   expiresAt: string;
   createAccountErrors: string[];
   loginErrors: string[];
+  changePasswordErrors: string[];
+  changePasswordSuccessMessage: boolean;
 }
 
 const initialState: AccountState = {
@@ -21,7 +25,9 @@ const initialState: AccountState = {
   username: '',
   expiresAt: '',
   createAccountErrors: [],
-  loginErrors: []
+  loginErrors: [],
+  changePasswordErrors: [],
+  changePasswordSuccessMessage: false
 };
 
 export const accountReducer = createReducer(
@@ -62,5 +68,15 @@ export const accountReducer = createReducer(
   on(clearLoginErrors, (state: AccountState): AccountState => ({
     ...state,
     loginErrors: []
+  })),
+  on(showChangePasswordErrors, (state: AccountState, {errors}): AccountState => ({
+    ...state,
+    changePasswordErrors: errors,
+    changePasswordSuccessMessage: false
+  })),
+  on(showChangePasswordSuccessMessage, (state: AccountState): AccountState => ({
+    ...state,
+    changePasswordSuccessMessage: true,
+    changePasswordErrors: []
   }))
 );

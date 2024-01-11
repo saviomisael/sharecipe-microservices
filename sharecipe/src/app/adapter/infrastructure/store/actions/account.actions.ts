@@ -26,3 +26,12 @@ export const showLoginErrors = createAction(
 )
 
 export const clearLoginErrors = createAction('[LOGIN] clear login errors')
+
+export const showChangePasswordErrors = createAction(
+  '[CHANGE PASSWORD] Show errors',
+  props<{ errors: string[] }>()
+)
+
+export const showChangePasswordSuccessMessage = createAction(
+  '[CHANGE PASSWORD] Show success message'
+)

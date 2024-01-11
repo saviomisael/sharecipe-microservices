@@ -12,6 +12,9 @@ import {LogoutDispatcher} from "./store/dispatchers/LogoutDispatcher";
 import {LoginErrorHandler} from "./store/handlers/LoginErrorHandler";
 import {ClearLoginErrorHandler} from "./store/handlers/ClearLoginErrorHandler";
 import {LoginFacade} from "./facades/LoginFacade";
+import {ChangePasswordFacade} from "./facades/ChangePasswordFacade";
+import {ShowChangePasswordErrorsHandler} from "./store/handlers/ShowChangePasswordErrorsHandler";
+import {ShowChangePasswordSuccessMessageHandler} from "./store/handlers/ShowChangePasswordSuccessMessageHandler";
 
 @NgModule({
   imports: [HttpClientModule],
@@ -27,7 +30,10 @@ import {LoginFacade} from "./facades/LoginFacade";
     LogoutDispatcher,
     LoginErrorHandler,
     ClearLoginErrorHandler,
-    LoginFacade
+    LoginFacade,
+    ChangePasswordFacade,
+    ShowChangePasswordErrorsHandler,
+    ShowChangePasswordSuccessMessageHandler
   ],
 })
 export class InfrastructureModule {

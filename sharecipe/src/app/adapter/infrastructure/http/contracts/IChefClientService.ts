@@ -9,4 +9,8 @@ export interface IChefClientService {
   login(data: LoginCredentialsDto, loginSuccess: () => void): void;
 
   unsubscribeLogin(): void;
+
+  changePassword(password: string): void;
+
+  unsubscribeChangePassword(): void;
 }
