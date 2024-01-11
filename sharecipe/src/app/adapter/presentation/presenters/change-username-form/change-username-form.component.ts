@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {passwordValidator} from "../../validators/passwordValidator";
 import {isInvalidField} from "../../validators/isInvalidField";
 
 interface ChangeUsernameFormData {

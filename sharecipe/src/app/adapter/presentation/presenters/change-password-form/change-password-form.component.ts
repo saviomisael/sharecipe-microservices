@@ -14,10 +14,9 @@ interface ChangePasswordFormData {
   styleUrl: './change-password-form.component.scss'
 })
 export class ChangePasswordFormComponent implements OnInit, OnDestroy {
-  private formGroup!: FormGroup;
-
   @Output() onChangePassword = new EventEmitter<string>();
   @Output() onFormChange = new EventEmitter();
+  private formGroup!: FormGroup;
   private formChangesSubscription: Subscription | null = null;
 
   constructor(private readonly formBuilder: FormBuilder) {

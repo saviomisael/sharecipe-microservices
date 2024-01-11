@@ -3,5 +3,5 @@
     <app-errors-list [errors]="errors"></app-errors-list>
   </div>
 
-  <app-login-form (onLoginSubmit)="handleLoginSubmit($event)" (onFormChange)="handleFormChange()"></app-login-form>
+  <app-login-form (onFormChange)="handleFormChange()" (onLoginSubmit)="handleLoginSubmit($event)"></app-login-form>
 </main>
