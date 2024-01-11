@@ -6,9 +6,10 @@ import {MainHeaderWrapperComponent} from "./main-header-wrapper/main-header-wrap
 import {HomeContainerComponent} from "./home-container/home-container.component";
 import {InfrastructureModule} from "../../infrastructure/infrastructure.module";
 import {LoginContainerComponent} from "./login-container/login-container.component";
+import {ChangePasswordWrapperComponent} from "./change-password-wrapper/change-password-wrapper.component";
 
 @NgModule({
-  declarations: [CreateAccountContainerComponent, MainHeaderWrapperComponent, HomeContainerComponent, LoginContainerComponent],
+  declarations: [CreateAccountContainerComponent, MainHeaderWrapperComponent, HomeContainerComponent, LoginContainerComponent, ChangePasswordWrapperComponent],
   imports: [PresentersModule, CommonModule, InfrastructureModule],
   exports: [CreateAccountContainerComponent, HomeContainerComponent, LoginContainerComponent],
 })
