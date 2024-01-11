@@ -4,7 +4,6 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {Chef} from '../../../../core/models/Chef';
 import {ChefClientService} from '../../../infrastructure/http/ChefClientService';
-import {AuthService} from '../../../infrastructure/services/AuthService';
 import {ClearCreateAccountErrorsHandler} from '../../../infrastructure/store/handlers/ClearCreateAccountErrorsHandler';
 import {selectCreateAccountErrors} from '../../../infrastructure/store/selectors/account.selectors';
 
