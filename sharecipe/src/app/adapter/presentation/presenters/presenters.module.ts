@@ -12,6 +12,7 @@ import {MainHeaderComponent} from './main-header/main-header.component';
 import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component';
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {RouterModule} from "@angular/router";
+import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {RouterModule} from "@angular/router";
     SharecipeLogoComponent,
     ErrorsListComponent,
     MainHeaderComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ChangePasswordFormComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import {RouterModule} from "@angular/router";
     SharecipeLogoComponent,
     ErrorsListComponent,
     MainHeaderComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ChangePasswordFormComponent
   ],
 })
 export class PresentersModule {
