@@ -1,0 +1,21 @@
+<form class="change-username-form" (ngSubmit)="handleSubmit(form.value)" [formGroup]="form">
+  <mat-form-field class="input-box">
+    <mat-label>Username</mat-label>
+    <input class="input" formControlName="username" matInput type="text"/>
+    <mat-icon matSuffix>account_circle</mat-icon>
+    <mat-hint *ngIf="isInvalidUsername" class="hint"
+    >Username must have between 2 and 255 characters
+    </mat-hint
+    >
+  </mat-form-field>
+
+  <button
+    [disabled]="form.invalid"
+    class="change-username-submit"
+    color="primary"
+    mat-stroked-button
+    type="submit"
+  >
+    Change Username
+  </button>
+</form>

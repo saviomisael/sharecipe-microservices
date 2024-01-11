@@ -13,6 +13,7 @@ import {SharecipeLogoComponent} from './sharecipe-logo/sharecipe-logo.component'
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {RouterModule} from "@angular/router";
 import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
+import {ChangeUsernameFormComponent} from "./change-username-form/change-username-form.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {ChangePasswordFormComponent} from "./change-password-form/change-passwor
     ErrorsListComponent,
     MainHeaderComponent,
     LoginFormComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    ChangeUsernameFormComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import {ChangePasswordFormComponent} from "./change-password-form/change-passwor
     ErrorsListComponent,
     MainHeaderComponent,
     LoginFormComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    ChangeUsernameFormComponent
   ],
 })
 export class PresentersModule {
