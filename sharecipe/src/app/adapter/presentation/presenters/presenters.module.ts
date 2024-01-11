@@ -14,6 +14,7 @@ import {LoginFormComponent} from "./login-form/login-form.component";
 import {RouterModule} from "@angular/router";
 import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
 import {ChangeUsernameFormComponent} from "./change-username-form/change-username-form.component";
+import {AlertMessageComponent} from "./alert-message/alert-message.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ChangeUsernameFormComponent} from "./change-username-form/change-usernam
     MainHeaderComponent,
     LoginFormComponent,
     ChangePasswordFormComponent,
-    ChangeUsernameFormComponent
+    ChangeUsernameFormComponent,
+    AlertMessageComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,8 @@ import {ChangeUsernameFormComponent} from "./change-username-form/change-usernam
     MainHeaderComponent,
     LoginFormComponent,
     ChangePasswordFormComponent,
-    ChangeUsernameFormComponent
+    ChangeUsernameFormComponent,
+    AlertMessageComponent
   ],
 })
 export class PresentersModule {

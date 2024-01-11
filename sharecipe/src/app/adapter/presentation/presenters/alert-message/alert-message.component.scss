@@ -1,0 +1,51 @@
+.alert-message {
+  font-family: "Dosis Bold", cursive;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  color: white;
+  padding: 1rem;
+  width: 35vw;
+  margin: 0 auto;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 10%, 100% 90%, 70% 100%, 30% 100%, 0 90%, 0 13%);
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > * {
+    margin: 0;
+  }
+
+  & > .message {
+    flex: 1;
+  }
+
+  & > .btn {
+    background: none;
+    border: none;
+    color: white;
+    font-family: sans-serif;
+    font-size: 2rem;
+    height: 3rem;
+    width: 3rem;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  &.-error {
+    background: #86352e;
+
+    & > .btn {
+      border: 1px solid #f8933f;
+    }
+  }
+
+  &.-success {
+    background: #f8933f;
+
+    & > .btn {
+      border: 1px solid #86352e;
+    }
+  }
+}
