@@ -60,8 +60,7 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.formChangesSubscription)
-      this.formChangesSubscription.unsubscribe();
+    this.formChangesSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {

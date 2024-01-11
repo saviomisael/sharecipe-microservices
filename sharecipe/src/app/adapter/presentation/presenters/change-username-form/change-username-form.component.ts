@@ -48,8 +48,7 @@ export class ChangeUsernameFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.formChangesSubscription)
-      this.formChangesSubscription.unsubscribe();
+    this.formChangesSubscription?.unsubscribe();
   }
 
   handleSubmit({username}: ChangeUsernameFormData) {
