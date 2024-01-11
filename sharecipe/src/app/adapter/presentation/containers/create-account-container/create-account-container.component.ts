@@ -20,7 +20,6 @@ export class CreateAccountContainerComponent implements OnDestroy, OnInit {
     private chefClientService: ChefClientService,
     private store: Store,
     private clearCreateAccountErrorsHandler: ClearCreateAccountErrorsHandler,
-    private authService: AuthService,
     private router: Router
   ) {
   }
