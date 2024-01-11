@@ -22,3 +22,13 @@ export const selectLoginErrors = createSelector(
   selectAccountState,
   ({loginErrors}: AccountState) => loginErrors
 )
+
+export const selectChangePasswordErrors = createSelector(
+  selectAccountState,
+  ({changePasswordErrors}: AccountState) => changePasswordErrors[0] ?? ''
+)
+
+export const selectShowChangePasswordSuccessMessage = createSelector(
+  selectAccountState,
+  ({showChangePasswordSuccessMessage}: AccountState) => showChangePasswordSuccessMessage
+)
