@@ -15,7 +15,6 @@ interface ChangePasswordFormData {
 })
 export class ChangePasswordFormComponent implements OnInit, OnDestroy {
   @Output() onChangePassword = new EventEmitter<string>();
-  @Output() onFormChange = new EventEmitter();
   private formGroup!: FormGroup;
   private formChangesSubscription: Subscription | null = null;
 
@@ -45,10 +44,6 @@ export class ChangePasswordFormComponent implements OnInit, OnDestroy {
           passwordValidator,
         ],
       ],
-    });
-
-    this.formChangesSubscription = this.formGroup.valueChanges.subscribe(() => {
-      this.onFormChange.emit();
     });
   }
 
