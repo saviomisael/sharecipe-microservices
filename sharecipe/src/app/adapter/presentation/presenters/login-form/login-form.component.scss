@@ -20,13 +20,5 @@
 }
 
 .create-account-link {
-  text-align: center;
-  color: lighten(#f8933f, 10%);
-  text-transform: uppercase;
-  align-self: center;
-  font-size: 1.3rem !important;
-
-  &:hover {
-    border-bottom: 1px solid #f8933f;
-  }
+  @extend %link-box;
 }

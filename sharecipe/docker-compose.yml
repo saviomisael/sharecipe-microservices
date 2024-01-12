@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:4000"
+      - "80:4200"
     networks:
       - frontend
 

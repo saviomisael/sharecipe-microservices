@@ -3,6 +3,7 @@
 
 .change-username-form {
   @extend %form-center;
+  @extend %form-border;
 }
 
 .input-box {

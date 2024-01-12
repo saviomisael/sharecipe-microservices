@@ -1,4 +1,4 @@
-<form (ngSubmit)="handleSubmit(form.value)" [formGroup]="form" class="change-username-form">
+<form (ngSubmit)="handleSubmit(form.value)" [formGroup]="form" class="change-username-form" @fadeInOut>
   <mat-form-field class="input-box">
     <mat-label>Username</mat-label>
     <input class="input" formControlName="username" matInput type="text"/>
@@ -13,7 +13,7 @@
     [disabled]="form.invalid"
     class="change-username-submit"
     color="primary"
-    mat-stroked-button
+    mat-flat-button
     type="submit"
   >
     Change Username

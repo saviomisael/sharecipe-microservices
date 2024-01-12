@@ -12,4 +12,6 @@ COPY . .
 
 RUN ng build
 
+EXPOSE 4200
+
 CMD ["node", "./dist/sharecipe/server/server.mjs"]

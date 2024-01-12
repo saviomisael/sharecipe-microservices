@@ -31,6 +31,7 @@ export class ChangeUsernameWrapperComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chefClient.unsubscribeChangeUsername();
+    this.clearChangeUsernameErrorHandler.handle();
   }
 
   handleAlertClose() {

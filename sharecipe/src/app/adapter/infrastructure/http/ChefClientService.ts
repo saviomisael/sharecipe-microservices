@@ -11,6 +11,8 @@ import {LoginFacade} from "../facades/LoginFacade";
 import {ChangePasswordFacade} from "../facades/ChangePasswordFacade";
 import {ChangeUsernameFacade} from "../facades/ChangeUsernameFacade";
 import {ChangeUsernameDto} from "./requests/ChangeUsernameDto";
+import {Store} from "@ngrx/store";
+import {selectToken} from "../store/selectors/account.selectors";
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
@@ -24,12 +26,13 @@ export class ChefClientService implements IChefClientService {
     private createAccountFacade: CreateAccountFacade,
     private loginFacade: LoginFacade,
     private changePasswordFacade: ChangePasswordFacade,
-    private changeUsernameFacade: ChangeUsernameFacade
+    private changeUsernameFacade: ChangeUsernameFacade,
+    private store: Store
   ) {
   }
 
-  changeUsername(newUsername: string): void {
-    this.changeUsernameSubscription = this.httpClient.patch<ChangeUsernameDto, TokenResponseDto>('/api/chefs/usernames', {newUsername})
+  async changeUsername(newUsername: string): Promise<void> {
+    this.changeUsernameSubscription = this.httpClient.patchWithAuth<ChangeUsernameDto, TokenResponseDto>('/api/v1/chefs/usernames/', {newUsername}, await this.getToken())
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeChangeUsername();
@@ -50,9 +53,14 @@ export class ChefClientService implements IChefClientService {
     this.changeUsernameSubscription?.unsubscribe();
   }
 
-  changePassword(password: string): void {
-    this.changePasswordSubscription = this.httpClient.patch<{ password: string }, null>('/api/chefs/passwords',
-      {password})
+  async changePassword(password: string): Promise<void> {
+    this.changePasswordSubscription = this.httpClient.patchWithAuth<{
+      password: string
+    }, null>(
+      '/api/v1/chefs/passwords/',
+      {password},
+      await this.getToken()
+    )
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeChangePassword();
@@ -136,5 +144,14 @@ export class ChefClientService implements IChefClientService {
     return error.statusText.includes('Unknown')
       ? ['Service unavailable, try again later']
       : error.error.errors;
+  }
+
+  private getToken(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.store.select(selectToken).subscribe({
+        next: resolve,
+        error: reject
+      })
+    })
   }
 }

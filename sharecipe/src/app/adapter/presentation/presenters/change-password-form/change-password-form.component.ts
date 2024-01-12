@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {isInvalidField} from "../../validators/isInvalidField";
 import {passwordValidator} from "../../validators/passwordValidator";
+import {fadeInOutAnimation} from "../../animations/fadeInOutAnimation";
 
 interface ChangePasswordFormData {
   password: string
@@ -11,7 +12,8 @@ interface ChangePasswordFormData {
 @Component({
   selector: 'app-change-password-form',
   templateUrl: './change-password-form.component.html',
-  styleUrl: './change-password-form.component.scss'
+  styleUrl: './change-password-form.component.scss',
+  animations: [fadeInOutAnimation]
 })
 export class ChangePasswordFormComponent implements OnInit, OnDestroy {
   @Output() onChangePassword = new EventEmitter<string>();
@@ -27,6 +29,10 @@ export class ChangePasswordFormComponent implements OnInit, OnDestroy {
 
   get form() {
     return this.formGroup
+  }
+
+  get buttonStyles() {
+    return this.isInvalidPassword ? 'change-password-submit -error' : 'change-password-submit'
   }
 
   ngOnDestroy(): void {

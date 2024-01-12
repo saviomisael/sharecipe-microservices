@@ -6,6 +6,9 @@ import {HomeContainerComponent} from "../adapter/presentation/containers/home-co
 import {privateRouteGuard} from "../adapter/infrastructure/guards/private-route.guard";
 import {LoginContainerComponent} from "../adapter/presentation/containers/login-container/login-container.component";
 import {publicRouteGuard} from "../adapter/infrastructure/guards/public-route.guard";
+import {
+  ProfileContainerComponent
+} from "../adapter/presentation/containers/profile-container/profile-container.component";
 
 export const routes: Routes = [
   {
@@ -22,5 +25,10 @@ export const routes: Routes = [
     path: 'login',
     component: LoginContainerComponent,
     canActivate: [publicRouteGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileContainerComponent,
+    canActivate: [privateRouteGuard]
   }
 ];

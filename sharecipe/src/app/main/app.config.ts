@@ -10,6 +10,9 @@ import {routes} from './app.routes';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {AuthService} from "../adapter/infrastructure/services/AuthService";
 import {LocalStorageService} from "../adapter/infrastructure/services/LocalStorageService";
+import {
+  ClearChangePasswordErrorsAndMessageHandler
+} from "../adapter/infrastructure/store/handlers/ClearChangePasswordErrorsAndMessageHandler";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(rootReducer),
     provideStoreDevtools({maxAge: 25, logOnly: !isDevMode()}),
     AuthService,
-    LocalStorageService
+    LocalStorageService,
+    ClearChangePasswordErrorsAndMessageHandler
   ],
 };

@@ -8,6 +8,7 @@ import {InfrastructureModule} from "../../infrastructure/infrastructure.module";
 import {LoginContainerComponent} from "./login-container/login-container.component";
 import {ChangePasswordWrapperComponent} from "./change-password-wrapper/change-password-wrapper.component";
 import {ChangeUsernameWrapperComponent} from "./change-username-wrapper/change-username-wrapper.component";
+import {ProfileContainerComponent} from "./profile-container/profile-container.component";
 
 @NgModule({
   declarations: [
@@ -16,10 +17,11 @@ import {ChangeUsernameWrapperComponent} from "./change-username-wrapper/change-u
     HomeContainerComponent,
     LoginContainerComponent,
     ChangePasswordWrapperComponent,
-    ChangeUsernameWrapperComponent
+    ChangeUsernameWrapperComponent,
+    ProfileContainerComponent
   ],
   imports: [PresentersModule, CommonModule, InfrastructureModule],
-  exports: [CreateAccountContainerComponent, HomeContainerComponent, LoginContainerComponent],
+  exports: [CreateAccountContainerComponent, HomeContainerComponent, LoginContainerComponent, ProfileContainerComponent],
 })
 export class ContainersModule {
 }

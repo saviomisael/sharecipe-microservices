@@ -10,11 +10,11 @@ export interface IChefClientService {
 
   unsubscribeLogin(): void;
 
-  changePassword(password: string): void;
+  changePassword(password: string): Promise<void>;
 
   unsubscribeChangePassword(): void;
 
-  changeUsername(username: string): void;
+  changeUsername(username: string): Promise<void>;
 
   unsubscribeChangeUsername(): void;
 }

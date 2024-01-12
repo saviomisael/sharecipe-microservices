@@ -31,6 +31,7 @@ export class ChangePasswordWrapperComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chefClient.unsubscribeChangePassword();
+    this.clearChangePasswordErrorsAndMessageHandler.handle();
   }
 
   handleChangePassword(newPassword: string) {

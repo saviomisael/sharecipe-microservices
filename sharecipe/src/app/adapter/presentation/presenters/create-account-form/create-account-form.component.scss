@@ -17,3 +17,7 @@
   align-self: center;
   text-transform: uppercase;
 }
+
+.login-link {
+  @extend %link-box;
+}
