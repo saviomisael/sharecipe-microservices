@@ -42,3 +42,8 @@ export const selectShowChangeUsernameSuccessMessage = createSelector(
   selectAccountState,
   ({showChangeUsernameSuccessMessage}: AccountState) => showChangeUsernameSuccessMessage
 );
+
+export const selectToken = createSelector(
+  selectAccountState,
+  ({token}: AccountState) => token
+)
