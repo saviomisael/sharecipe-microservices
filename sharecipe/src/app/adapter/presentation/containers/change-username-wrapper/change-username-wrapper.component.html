@@ -1,0 +1,13 @@
+<section class="change-username-wrapper">
+  <div *ngIf="error$ | async as error">
+    <app-alert-message [@fadeInOut]="error" *ngIf="error" message="You can't use this username" type="error"
+                       (onCloseClick)="handleAlertClose()"></app-alert-message>
+  </div>
+
+  <div *ngIf="success$ | async as success">
+    <app-alert-message [@fadeInOut]="success" message="Username changed successfully" type="success"
+                       (onCloseClick)="handleAlertClose()"></app-alert-message>
+  </div>
+
+  <app-change-username-form (onChangeUsername)="handleChangeUsername($event)"></app-change-username-form>
+</section>

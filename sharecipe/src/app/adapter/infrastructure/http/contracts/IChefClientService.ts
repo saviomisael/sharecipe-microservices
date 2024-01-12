@@ -13,4 +13,8 @@ export interface IChefClientService {
   changePassword(password: string): void;
 
   unsubscribeChangePassword(): void;
+
+  changeUsername(username: string): void;
+
+  unsubscribeChangeUsername(): void;
 }

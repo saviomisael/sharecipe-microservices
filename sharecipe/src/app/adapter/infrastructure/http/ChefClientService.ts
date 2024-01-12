@@ -9,19 +9,45 @@ import {TokenResponseDto} from './responses/TokenResponseDto';
 import {LoginCredentialsDto} from './requests/LoginCredentialsDto';
 import {LoginFacade} from "../facades/LoginFacade";
 import {ChangePasswordFacade} from "../facades/ChangePasswordFacade";
+import {ChangeUsernameFacade} from "../facades/ChangeUsernameFacade";
+import {ChangeUsernameDto} from "./requests/ChangeUsernameDto";
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
   private createAccountSubscription: Subscription | null = null;
   private loginSubscription: Subscription | null = null;
   private changePasswordSubscription: Subscription | null = null;
+  private changeUsernameSubscription: Subscription | null = null;
 
   constructor(
     private httpClient: HttpClientAdapter,
     private createAccountFacade: CreateAccountFacade,
     private loginFacade: LoginFacade,
-    private changePasswordFacade: ChangePasswordFacade
+    private changePasswordFacade: ChangePasswordFacade,
+    private changeUsernameFacade: ChangeUsernameFacade
   ) {
+  }
+
+  changeUsername(newUsername: string): void {
+    this.changeUsernameSubscription = this.httpClient.patch<ChangeUsernameDto, TokenResponseDto>('/api/chefs/usernames', {newUsername})
+      .pipe(
+        catchError((error: HttpErrorResponse, caught) => {
+          this.unsubscribeChangeUsername();
+
+          this.changeUsernameFacade.showErrors()
+
+          return caught
+        })
+      )
+      .subscribe({
+        next: ({data}) => {
+          this.changeUsernameFacade.showSuccessMessage(data.username, data.expiresAt, data.token);
+        }
+      })
+  }
+
+  unsubscribeChangeUsername(): void {
+    this.changeUsernameSubscription?.unsubscribe();
   }
 
   changePassword(password: string): void {
@@ -29,11 +55,13 @@ export class ChefClientService implements IChefClientService {
       {password})
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
+          this.unsubscribeChangePassword();
+
           this.changePasswordFacade.showErrors(
             error.statusText.includes('Unknown')
               ? ['Service unavailable, try again later']
               : ['Your not authorized to change your password']
-          )
+          );
 
           return caught
         })

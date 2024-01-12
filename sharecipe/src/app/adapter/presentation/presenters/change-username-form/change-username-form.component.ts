@@ -1,6 +1,5 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {isInvalidField} from "../../validators/isInvalidField";
 
 interface ChangeUsernameFormData {
@@ -12,11 +11,9 @@ interface ChangeUsernameFormData {
   templateUrl: './change-username-form.component.html',
   styleUrl: './change-username-form.component.scss'
 })
-export class ChangeUsernameFormComponent implements OnInit, OnDestroy {
+export class ChangeUsernameFormComponent implements OnInit {
   @Output() onChangeUsername = new EventEmitter<string>();
-  @Output() onFormChange = new EventEmitter();
   private formGroup!: FormGroup;
-  private formChangesSubscription: Subscription | null = null;
 
   constructor(private readonly formBuilder: FormBuilder) {
   }
@@ -40,14 +37,6 @@ export class ChangeUsernameFormComponent implements OnInit, OnDestroy {
         ],
       ],
     });
-
-    this.formChangesSubscription = this.formGroup.valueChanges.subscribe(() => {
-      this.onFormChange.emit();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.formChangesSubscription?.unsubscribe();
   }
 
   handleSubmit({username}: ChangeUsernameFormData) {
