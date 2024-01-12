@@ -14,8 +14,8 @@ export interface CreateAccountDispatcherParams {
 export class SaveAccountInfoDispatcher
   implements IDispatcher<CreateAccountDispatcherParams> {
   constructor(
-    private store: Store,
-    private localService: LocalStorageService
+    protected store: Store,
+    protected localService: LocalStorageService
   ) {
   }
 

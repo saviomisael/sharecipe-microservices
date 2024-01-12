@@ -15,6 +15,10 @@ import {LoginFacade} from "./facades/LoginFacade";
 import {ChangePasswordFacade} from "./facades/ChangePasswordFacade";
 import {ShowChangePasswordErrorsHandler} from "./store/handlers/ShowChangePasswordErrorsHandler";
 import {ShowChangePasswordSuccessMessageHandler} from "./store/handlers/ShowChangePasswordSuccessMessageHandler";
+import {ChangeUsernameFacade} from "./facades/ChangeUsernameFacade";
+import {ChangeUsernameSuccessDispatcher} from "./store/dispatchers/ChangeUsernameSuccessDispatcher";
+import {ClearChangeUsernameErrorAndMessageHandler} from "./store/handlers/ClearChangeUsernameErrorAndMessageHandler";
+import {ShowChangeUsernameErrorHandler} from "./store/handlers/ShowChangeUsernameErrorHandler";
 
 @NgModule({
   imports: [HttpClientModule],
@@ -33,7 +37,11 @@ import {ShowChangePasswordSuccessMessageHandler} from "./store/handlers/ShowChan
     LoginFacade,
     ChangePasswordFacade,
     ShowChangePasswordErrorsHandler,
-    ShowChangePasswordSuccessMessageHandler
+    ShowChangePasswordSuccessMessageHandler,
+    ChangeUsernameFacade,
+    ChangeUsernameSuccessDispatcher,
+    ClearChangeUsernameErrorAndMessageHandler,
+    ShowChangeUsernameErrorHandler
   ],
 })
 export class InfrastructureModule {

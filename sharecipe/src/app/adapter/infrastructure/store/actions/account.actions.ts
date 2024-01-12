@@ -18,22 +18,26 @@ export const clearCreateAccountErrors = createAction(
   '[ACCOUNT] Clear create account errors'
 );
 
-export const logout = createAction('[ACCOUNT] logout')
+export const logout = createAction('[ACCOUNT] logout');
 
 export const showLoginErrors = createAction(
   '[LOGIN] Show login errors',
   props<{ errors: string[] }>()
-)
+);
 
-export const clearLoginErrors = createAction('[LOGIN] clear login errors')
+export const clearLoginErrors = createAction('[LOGIN] clear login errors');
 
 export const showChangePasswordErrors = createAction(
   '[CHANGE PASSWORD] Show errors',
   props<{ errors: string[] }>()
-)
+);
 
-export const showChangePasswordSuccessMessage = createAction(
-  '[CHANGE PASSWORD] Show success message'
-)
+export const showChangePasswordSuccessMessage = createAction('[CHANGE PASSWORD] Show success message');
 
-export const clearChangePasswordErrorsAndMessage = createAction('[CHANGE PASSWORD] Clear errors and message')
+export const clearChangePasswordErrorsAndMessage = createAction('[CHANGE PASSWORD] Clear errors and message');
+
+export const showChangeUsernameError = createAction('[CHANGE USERNAME] Show errors');
+
+export const showChangeUsernameSuccessMessage = createAction('[CHANGE USERNAME] Show success message');
+
+export const clearChangeUsernameErrorAndMessage = createAction('[CHANGE USERNAME] Clear error and message');
