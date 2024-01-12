@@ -1,6 +1,6 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {catchError, Subscription} from 'rxjs';
+import {catchError, Observable, Subscription} from 'rxjs';
 import {Chef} from '../../../core/models/Chef';
 import {CreateAccountFacade} from '../facades/CreateAccountFacade';
 import {HttpClientAdapter} from './HttpClientAdapter';
@@ -13,6 +13,7 @@ import {ChangeUsernameFacade} from "../facades/ChangeUsernameFacade";
 import {ChangeUsernameDto} from "./requests/ChangeUsernameDto";
 import {Store} from "@ngrx/store";
 import {selectToken} from "../store/selectors/account.selectors";
+import {RefreshTokenFacade} from "../facades/RefreshTokenFacade";
 
 @Injectable()
 export class ChefClientService implements IChefClientService {
@@ -27,12 +28,37 @@ export class ChefClientService implements IChefClientService {
     private loginFacade: LoginFacade,
     private changePasswordFacade: ChangePasswordFacade,
     private changeUsernameFacade: ChangeUsernameFacade,
-    private store: Store
+    private store: Store,
+    private refreshTokenFacade: RefreshTokenFacade
   ) {
   }
 
+  refreshToken(token: string): void {
+    const refreshTokenSubscription = this.httpClient.postRefreshToken<TokenResponseDto>('/api/v1/chefs/tokens/refresh-tokens/', token)
+      .pipe(
+        catchError((error, caught) => {
+          refreshTokenSubscription?.unsubscribe();
+
+          this.refreshTokenFacade.clearToken();
+
+          return caught
+        })
+      )
+      .subscribe({
+        next: ({data: {token, expiresAt, username}}) => {
+          this.refreshTokenFacade.saveRefreshToken({token, expiresAt, username});
+          refreshTokenSubscription?.unsubscribe();
+        }
+      });
+  }
+
   async changeUsername(newUsername: string): Promise<void> {
-    this.changeUsernameSubscription = this.httpClient.patchWithAuth<ChangeUsernameDto, TokenResponseDto>('/api/v1/chefs/usernames/', {newUsername}, await this.getToken())
+    this.changeUsernameSubscription = this.httpClient
+      .patchWithAuth<ChangeUsernameDto, TokenResponseDto>(
+        '/api/v1/chefs/usernames/',
+        {newUsername},
+        await this.getToken()
+      )
       .pipe(
         catchError((error: HttpErrorResponse, caught) => {
           this.unsubscribeChangeUsername();

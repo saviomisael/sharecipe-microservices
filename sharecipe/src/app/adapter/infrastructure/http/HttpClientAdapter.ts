@@ -16,6 +16,14 @@ export class HttpClientAdapter {
       }),
     });
 
+  postRefreshToken = <R>(apiUrl: string, token: string) => this.httpClient.post<ResponseDto<R>>(`${environment.url}${apiUrl}`, {}, {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': `Bearer ${token}`
+    })
+  })
+
   patchWithAuth = <B, R>(apiUrl: string, body: B, token: string) => this.httpClient.patch<ResponseDto<R>>(`${environment.url}${apiUrl}`, body, {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

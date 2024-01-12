@@ -23,6 +23,14 @@ export class LocalStorageService {
     };
   }
 
+  isLoggedIn() {
+    const expiresAt = this.getCurrentUser().expiresAt;
+
+    if (!expiresAt) return false;
+
+    return new Date() < new Date(expiresAt);
+  }
+
   logout() {
     localStorage.removeItem('t')
     localStorage.removeItem('e')

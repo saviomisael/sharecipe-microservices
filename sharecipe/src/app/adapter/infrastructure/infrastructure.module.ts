@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {CreateAccountFacade} from './facades/CreateAccountFacade';
 import {ChefClientService} from './http/ChefClientService';
@@ -19,6 +19,8 @@ import {ChangeUsernameFacade} from "./facades/ChangeUsernameFacade";
 import {ChangeUsernameSuccessDispatcher} from "./store/dispatchers/ChangeUsernameSuccessDispatcher";
 import {ClearChangeUsernameErrorAndMessageHandler} from "./store/handlers/ClearChangeUsernameErrorAndMessageHandler";
 import {ShowChangeUsernameErrorHandler} from "./store/handlers/ShowChangeUsernameErrorHandler";
+import {RefreshTokenFacade} from "./facades/RefreshTokenFacade";
+import {RefreshTokenInterceptor} from "./http/interceptors/RefreshTokenInterceptor";
 
 @NgModule({
   imports: [HttpClientModule],
@@ -41,7 +43,13 @@ import {ShowChangeUsernameErrorHandler} from "./store/handlers/ShowChangeUsernam
     ChangeUsernameFacade,
     ChangeUsernameSuccessDispatcher,
     ClearChangeUsernameErrorAndMessageHandler,
-    ShowChangeUsernameErrorHandler
+    ShowChangeUsernameErrorHandler,
+    RefreshTokenFacade,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true
+    }
   ],
 })
 export class InfrastructureModule {

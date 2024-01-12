@@ -17,4 +17,6 @@ export interface IChefClientService {
   changeUsername(username: string): Promise<void>;
 
   unsubscribeChangeUsername(): void;
+
+  refreshToken(token: string): void;
 }
