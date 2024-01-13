@@ -65,7 +65,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit(data: LoginCredentialsDto) {
-    // TODO - Disable button after request to backend
     if (this.form.valid) {
       this.onLoginSubmit.emit(data)
     }
