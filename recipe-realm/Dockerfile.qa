@@ -1,0 +1,23 @@
+FROM node:20
+
+ENV PORT 8889
+
+ENV DBPASSWD sharecipe
+
+ENV DBUSER sharecipe
+
+ENV DBNAME RecipeRealmQA
+
+WORKDIR /recipe-realm-qa
+
+COPY package*.json /
+
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 8889
+
+CMD [ "node", "dist/main.js" ]

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  reciperealm:
+    build:
+      context: .
+      dockerfile: Dockerfile.qa
+    network_mode: host
+    restart: always
+    depends_on:
+      mongodb:
+        condition: service_healthy
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sharecipe
+      MONGO_INITDB_ROOT_PASSWORD: sharecipe
+    volumes:
+      - mongodata:/data/db
+    healthcheck:
+      test: ['CMD', 'echo', 'db.runCommand("ping").ok']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mongodata: {}
