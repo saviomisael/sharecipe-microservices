@@ -4,7 +4,7 @@ import {
   HealthCheckService,
   MongooseHealthIndicator,
 } from '@nestjs/terminus';
-import { MongoString } from '../../infrastructure/persistence/MongoConnection.providers';
+import { MongoString } from '../../infrastructure/persistence/providers/MongoConnection.providers';
 
 @Controller('api/v1/health')
 export class HealthController {
