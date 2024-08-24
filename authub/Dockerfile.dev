@@ -12,4 +12,4 @@ RUN ./mvnw clean package -DskipTests
 
 EXPOSE 8001
 
-CMD ["java", "-Dspring.profiles.active=dev", "-jar", "./target/authub-1.0.0.jar"]
+CMD ["java", "-Xmx250m", "-Dspring.profiles.active=dev", "-jar", "./target/authub-1.0.0.jar"]
